@@ -1,7 +1,6 @@
 import { SafeAreaView, TextInput, Text } from "react-native";
 import styles from "../styles";
 import { useState } from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function Login({navigation}){
     const [email, setEmail] = useState('');
