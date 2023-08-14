@@ -1,11 +1,11 @@
-import { Text, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import styles from "../styles";
-import Card from "../components/Card";
+import ProfileCard from "../components/ProfileCard";
 
 export default function Profile() {
     return (
         <SafeAreaView style={styles.container}>
-            <Card />
+            <ProfileCard />
         </SafeAreaView>
     );
 }

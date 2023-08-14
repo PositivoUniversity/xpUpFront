@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 30,
     },
-    containerCard:{
-        backgroundColor: 'whitesmoke',
+    defaultCard:{
+        backgroundColor: 'white',
         height: 160,
         width: '80%',
         borderRadius: 10,
