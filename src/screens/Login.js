@@ -9,7 +9,7 @@ export default function Login({navigation}){
     const handleLogin = () => {
         if(email === 'adm' && password === 'adm'){
             alert('Login realizado com sucesso!');
-            navigation.navigate('Dashboard');
+            navigation.navigate('home');
         }else{
             alert('Email ou senha incorretos!');
         }
