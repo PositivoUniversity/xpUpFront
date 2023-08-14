@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#1A1818',
-        justifyContent: 'center',
-        padding: 10,
+        height: '100%',
     },
     containerLogin: {
         alignItems: 'center',
+        marginTop: 300,
     },
     containerInput: {
         backgroundColor: '#383131',
@@ -68,6 +67,16 @@ const styles = StyleSheet.create({
         color: 'whitesmoke',
         fontWeight: 'bold',
         fontSize: 30,
+    },
+    containerCard:{
+        backgroundColor: 'whitesmoke',
+        height: 160,
+        width: '80%',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginStart: 40,    
+        marginTop: 20,
     },
 });
 

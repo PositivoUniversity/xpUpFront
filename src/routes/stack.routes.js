@@ -14,7 +14,7 @@ export default function StackRoutes() {
             />
 
             <Stack.Screen 
-                name="Dashboard" 
+                name="home" 
                 component={DrawerRoutes} 
             />
         </Stack.Navigator>
