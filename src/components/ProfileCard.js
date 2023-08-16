@@ -1,11 +1,17 @@
-import { SafeAreaView } from 'react-native'
-
-import styles from '../styles'
+import { View } from 'react-native'
 
 export default function ProfileCard(){
     return(
-        <SafeAreaView style={styles.defaultCard}>
+        <View style={
+            {
+                backgroundColor: '#E5E5E5',
+                height: 160,
+                width: '80%',
+                borderRadius: 10,
+                marginTop: 20,
+            }
+        }>
             
-        </SafeAreaView>
+        </View>
     )
 }

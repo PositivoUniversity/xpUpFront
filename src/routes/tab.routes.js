@@ -8,23 +8,41 @@ const Tab = createBottomTabNavigator();
 
 export default function TabRoutes() {
     return (
-        <Tab.Navigator screenOptions={{headerShown: false}}>
+        <Tab.Navigator screenOptions={
+            {
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: "#1A1818",
+                    borderTopColor: "transparent",
+                },
+                tabBarItemStyle: {
+                    borderRadius: 15,
+                },
+                tabBarActiveBackgroundColor: "#A101FE",
+                tabBarActiveTintColor: "#fff",
+                tabBarInactiveTintColor: "#fff",
+            }
+            }>
             <Tab.Screen 
                 name="dashboard" 
                 component={Dashboard} 
-                options={{
-                    tabBarIcon: ({color, size}) => <Feather name="home" size={size} color={color} />,
-                    tabBarLabel: "Dashboard "
-                }}
+                options={
+                    {
+                        tabBarIcon: ({color, size}) => <Feather name="home" size={size} color={color} />,
+                        tabBarLabel: "Dashboard "
+                    }
+                }
             />
 
             <Tab.Screen 
                 name="groups" 
                 component={Groups}
-                options={{
-                    tabBarIcon: ({color, size}) => <Feather name="plus" size={size} color={color} />,
-                    tabBarLabel: "Groups"
-                }} 
+                options={
+                    {
+                        tabBarIcon: ({color, size}) => <Feather name="plus" size={size} color={color} />,
+                        tabBarLabel: "Groups"
+                    }
+                } 
             />
         </Tab.Navigator>
     );
