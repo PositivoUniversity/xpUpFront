@@ -7,23 +7,23 @@ import Groups from "../screens/Groups";
 
 const Tab = createBottomTabNavigator();
 
+const tabBarOptions = {
+    headerShown: false,
+    tabBarStyle: {
+        backgroundColor: "#1A1818",
+        borderTopColor: "transparent",
+    },
+    tabBarItemStyle: {
+        borderRadius: 15,
+    },
+    tabBarActiveBackgroundColor: "#A101FE",
+    tabBarActiveTintColor: "#fff",
+    tabBarInactiveTintColor: "#fff",
+};
+
 export default function TabRoutes() {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-                tabBarStyle: {
-                    backgroundColor: "#1A1818",
-                    borderTopColor: "transparent",
-                },
-                tabBarItemStyle: {
-                    borderRadius: 15,
-                },
-                tabBarActiveBackgroundColor: "#A101FE",
-                tabBarActiveTintColor: "#fff",
-                tabBarInactiveTintColor: "#fff",
-            }}
-        >
+        <Tab.Navigator screenOptions={tabBarOptions}>
             <Tab.Screen
                 name="dashboard"
                 component={Dashboard}
@@ -34,7 +34,6 @@ export default function TabRoutes() {
                     tabBarLabel: "Dashboard",
                 }}
             />
-
             <Tab.Screen
                 name="groups"
                 component={Groups}
