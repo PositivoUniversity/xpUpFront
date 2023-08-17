@@ -1,10 +1,8 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {Feather} from '@expo/vector-icons';
-
 import TabRoutes from './tab.routes';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
-import DefaultLogo from '../components/DefaultLogo';
 
 const Drawer = createDrawerNavigator();
 

@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 
-export default function ProfileCard(){
-    return(
+export default function ProfileCard() {
+    return (
         <View style={
             {
                 backgroundColor: '#E5E5E5',
@@ -11,7 +11,6 @@ export default function ProfileCard(){
                 marginTop: 20,
             }
         }>
-            
         </View>
     )
 }

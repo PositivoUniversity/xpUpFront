@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "../screens/Login";
 import DrawerRoutes from "./drawer.routes";
-import Profile from "../screens/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,12 +16,10 @@ export default function StackRoutes() {
                 name="login" 
                 component={Login} 
             />
-
             <Stack.Screen 
                 name="home" 
                 component={DrawerRoutes} 
             />
-            
         </Stack.Navigator>
     );
 }

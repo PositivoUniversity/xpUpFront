@@ -1,8 +1,7 @@
 import { Text, SafeAreaView } from "react-native"
-import DefaultLogo from "../components/DefaultLogo"
 
-export default function Settings(){
-    return(
+export default function Settings() {
+    return (
         <SafeAreaView style={
             {
                 backgroundColor: '#1A1818',
@@ -11,7 +10,6 @@ export default function Settings(){
                 justifyContent: 'center',
             }
         }>
-
             <Text style={
                 {
                     color: 'whitesmoke',
