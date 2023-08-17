@@ -10,7 +10,6 @@ export default function Dashboard(){
                 justifyContent: 'center',
             }  
         }>
-
             <Text style={
             {
                 color: 'whitesmoke',

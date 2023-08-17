@@ -1,7 +1,7 @@
-import {View, Image} from 'react-native';
+import { View, Image } from 'react-native';
 
-export default function DefaultLogo(){
-    return(
+export default function DefaultLogo() {
+    return (
         <View style={
             {
                 width: '10%',
@@ -13,7 +13,7 @@ export default function DefaultLogo(){
                     width: '100%',
                     height: '100%',
                 }
-            }/>
+            } />
         </View>
     )
 }

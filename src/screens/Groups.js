@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, View } from "react-native";
+import { Text, SafeAreaView } from "react-native";
 
 export default function News() {
     return (
@@ -10,7 +10,6 @@ export default function News() {
                 justifyContent: 'center',
             }
         }>
-
             <Text style={
                 {
                     color: 'whitesmoke',
