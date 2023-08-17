@@ -1,7 +1,8 @@
-import { Text, SafeAreaView, View } from "react-native";
+import { Text, SafeAreaView } from "react-native"
+import DefaultLogo from "../components/DefaultLogo"
 
-export default function News() {
-    return (
+export default function Settings(){
+    return(
         <SafeAreaView style={
             {
                 backgroundColor: '#1A1818',
@@ -17,7 +18,7 @@ export default function News() {
                     fontWeight: 'bold',
                     fontSize: 30,
                 }
-            }>Groups</Text>
+            }>Settings</Text>
         </SafeAreaView>
-    );
+    )
 }
