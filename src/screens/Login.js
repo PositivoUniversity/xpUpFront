@@ -1,6 +1,7 @@
-import { SafeAreaView, TextInput, Text, View } from "react-native";
+import { SafeAreaView, TextInput, Text, View, Button } from "react-native";
 import { useState } from "react";
 import Logo from "../components/Logo";
+import DefaultButton from "../components/DefaultButton";
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
@@ -85,27 +86,27 @@ export default function Login({ navigation }) {
                     }>Cadastre-se</Text>
                 </View>
 
-                <View style={
-                    {
-                        backgroundColor: '#A101FE',
-                        height: 40,
-                        width: '55%',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 10,
-                    }
-                }>
-
-                    <Text style={
+                <DefaultButton 
+                    text="Entrar" 
+                    onPress={handleLogin} 
+                    styleButton={
                         {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
+                            backgroundColor: '#A101FE',
+                            height: 45,
+                            width: '60%',
                             borderRadius: 10,
-                            padding: 10,
+                            marginTop: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
                         }
-                    } onPress={handleLogin}>Entrar</Text>
-                </View>
+                    }
+                    styleText={
+                        {
+                            color: '#fff',
+                            fontSize: 18,
+                        }
+                    }
+                    />
             </View>
         </SafeAreaView>
     )
