@@ -86,7 +86,27 @@ export default function Login({ navigation }) {
                     }>Cadastre-se</Text>
                 </View>
 
-                <DefaultButton text="Entrar" onPress={handleLogin} />
+                <DefaultButton 
+                    text="Entrar" 
+                    onPress={handleLogin} 
+                    styleButton={
+                        {
+                            backgroundColor: '#A101FE',
+                            height: 45,
+                            width: '60%',
+                            borderRadius: 10,
+                            marginTop: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }
+                    }
+                    styleText={
+                        {
+                            color: '#fff',
+                            fontSize: 18,
+                        }
+                    }
+                    />
             </View>
         </SafeAreaView>
     )
