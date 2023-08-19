@@ -1,9 +1,14 @@
-import { SafeAreaView, TextInput, Text, View, Button } from "react-native";
-import { useState } from "react";
+import React from "react";
+import {
+    SafeAreaView,
+    TextInput,
+    View,
+} from "react-native";
+import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,20 +20,29 @@ export default function Login({ navigation }) {
             alert('Email ou senha incorretos!');
         }
     }
+
+    const goToRegister = () => {
+        navigation.navigate('register');
+    }
+
+    const goToForgotPassword = () => { // TODO:    INMPLEMENTAR DEPOIS A LOGICA PARA ESTA TELA
+        alert('Ainda não temos essa tela');
+    }
+
     return (
         <SafeAreaView style={
             {
                 backgroundColor: '#1A1818',
-                height: '100%',
+                height: '100%'
             }
         }>
             <View style={
                 {
                     alignItems: 'center',
-                    marginTop: 120,
+                    marginTop: 120
                 }
             }>
-                <Logo />
+                <Logo/>
                 <View style={
                     {
                         height: 150,
@@ -36,59 +50,66 @@ export default function Login({ navigation }) {
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: 20,
+                        marginTop: 20
                     }
                 }>
-                    <TextInput value={email} onChangeText={setEmail} style={
-                        {
-                            backgroundColor: 'whitesmoke',
-                            height: 50,
-                            width: '80%',
-                            borderRadius: 10,
-                            padding: 10,
-                            marginBottom: 15,
+                    <TextInput value={email}
+                        onChangeText={setEmail}
+                        style={
+                            {
+                                backgroundColor: 'whitesmoke',
+                                height: 50,
+                                width: '80%',
+                                borderRadius: 10,
+                                padding: 10,
+                                marginBottom: 15
+                            }
                         }
-                    } placeholder="Email" />
+                        placeholder="Email"/>
 
-                    <TextInput value={password} onChangeText={setPassword} style={
-                        {
-                            backgroundColor: 'whitesmoke',
-                            height: 50,
-                            width: '80%',
-                            borderRadius: 10,
-                            padding: 10,
+                    <TextInput value={password}
+                        onChangeText={setPassword}
+                        style={
+                            {
+                                backgroundColor: 'whitesmoke',
+                                height: 50,
+                                width: '80%',
+                                borderRadius: 10,
+                                padding: 10
+                            }
                         }
-                    } placeholder="Senha" secureTextEntry={true} />
-                </View >
+                        placeholder="Senha"
+                        secureTextEntry={true}/>
+                </View>
 
                 <View style={
                     {
                         flexDirection: 'row',
-                        display: 'flex',
+                        justifyContent: 'space-between',
+                        width: '60%',
+                        marginTop: 20
                     }
                 }>
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            justifyContent: 'space-between',
-                        }
-                    }>Esqueceu a senha?</Text>
-
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            paddingLeft: 10,
-                        }
-                    }>Cadastre-se</Text>
+                    <DefaultButton text="Cadastre-se"
+                        onPress={goToRegister}
+                        styleText={
+                            {
+                                color: '#fff',
+                                fontSize: 14
+                            }
+                        }/>
+                    <DefaultButton text="Esqueceu a senha?"
+                        onPress={goToForgotPassword}
+                        styleText={
+                            {
+                                color: '#fff',
+                                fontSize: 14
+                            }
+                        }/>
                 </View>
 
-                <DefaultButton 
-                    text="Entrar" 
-                    onPress={handleLogin} 
+                <DefaultButton text="Entrar"
+                    onPress={handleLogin}
                     styleButton={
                         {
                             backgroundColor: '#A101FE',
@@ -97,16 +118,15 @@ export default function Login({ navigation }) {
                             borderRadius: 10,
                             marginTop: 20,
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'center'
                         }
                     }
                     styleText={
                         {
                             color: '#fff',
-                            fontSize: 18,
+                            fontSize: 18
                         }
-                    }
-                    />
+                    }/>
             </View>
         </SafeAreaView>
     )
