@@ -11,19 +11,20 @@ export default function Register({navigation}) {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const handleRegister = () => {
-        if (firstName !== '' && lastName !== '' && email !== '' && password !== '' && passwordConfirm !== '') {
-            if (password === passwordConfirm) {
-                alert('Cadastro realizado com sucesso.');
-                navigation.navigate('home');
-            } else {
-                alert('Senhas não são identicas.');
-            }
-
-        } else {
-            alert('Os campos não podem ser vazios.');
+        if (!firstName || !lastName || !email || !password || !passwordConfirm) {
+            alert('Por favor, preencha todos os campos.');
+            return;
         }
 
-    }
+        if (password !== passwordConfirm) {
+            alert('As senhas não correspondem.');
+            return;
+        }
+
+        alert('Cadastro realizado com sucesso.');
+        navigation.navigate('home');
+    };
+
 
     const goToLogin = () => {
         navigation.navigate('login');
