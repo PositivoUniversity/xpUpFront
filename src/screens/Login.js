@@ -1,9 +1,5 @@
 import React from "react";
-import {
-    SafeAreaView,
-    TextInput,
-    View,
-} from "react-native";
+import {SafeAreaView, TextInput, View} from "react-native";
 import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
@@ -25,8 +21,8 @@ export default function Login({navigation}) {
         navigation.navigate('register');
     }
 
-    const goToForgotPassword = () => { // TODO:    INMPLEMENTAR DEPOIS A LOGICA PARA ESTA TELA
-        alert('Ainda não temos essa tela');
+    const goToRecovery = () => { // TODO:    INMPLEMENTAR DEPOIS A LOGICA PARA ESTA TELA
+        navigation.navigate('recovery');
     }
 
     return (
@@ -99,7 +95,7 @@ export default function Login({navigation}) {
                             }
                         }/>
                     <DefaultButton text="Esqueceu a senha?"
-                        onPress={goToForgotPassword}
+                        onPress={goToRecovery}
                         styleText={
                             {
                                 color: '#fff',

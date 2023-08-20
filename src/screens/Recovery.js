@@ -4,20 +4,11 @@ import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 
-export default function Register({navigation}) {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+export default function Recovery({navigation}) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
 
-    const handleRegister = () => {
-        if (password === passwordConfirm && password != '') {
-            alert('Cadastro realizado com sucesso.');
-            navigation.navigate('home');
-        } else {
-            alert('Senhas não são identicas.');
-        }
+    const handleRecovery = () => {
+        alert('Instruções de Recuperação de Senha enviados para o Email fornecido.');
     }
 
     const goToLogin = () => {
@@ -54,34 +45,15 @@ export default function Register({navigation}) {
                             fontWeight: 'bold',
                             fontSize: 30
                         }
-                    }>Cadastro</Text>
-                    <TextInput value={firstName}
-                        onChangeText={setFirstName}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginTop: 225,
-                                marginBottom: 15
-                            }
+                    }>Recuperação de Senha</Text>
+                    <Text style={
+                        {
+                            color: 'whitesmoke',
+                            fontWeight: 'bold',
+                            fontSize: 10
                         }
-                        placeholder="Nome"/>
-                    <TextInput value={lastName}
-                        onChangeText={setLastName}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginBottom: 15
-                            }
-                        }
-                        placeholder="Sobrenome"/>
+                    }>Informe o Email da Conta</Text>
+
                     <TextInput value={email}
                         onChangeText={setEmail}
                         style={
@@ -91,47 +63,21 @@ export default function Register({navigation}) {
                                 width: '80%',
                                 borderRadius: 10,
                                 padding: 10,
-                                marginBottom: 15
+                                marginBottom: 10,
+                                marginTop: 15
                             }
                         }
                         placeholder="Email"/>
 
-
-                    <TextInput value={password}
-                        onChangeText={setPassword}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10
-                            }
-                        }
-                        placeholder="Senha"
-                        secureTextEntry={true}/>
-                    <TextInput value={passwordConfirm}
-                        onChangeText={setPasswordConfirm}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginTop: 15
-                            }
-                        }
-                        placeholder="Confirmar Senha"/>
-                    <DefaultButton text="Concluir Cadastro"
-                        onPress={handleRegister}
+                    <DefaultButton text="Recuperar Senha"
+                        onPress={handleRecovery}
                         styleButton={
                             {
                                 backgroundColor: '#A101FE',
                                 height: 45,
                                 width: '60%',
                                 borderRadius: 10,
-                                marginTop: 20,
+                                marginTop: 10,
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }
