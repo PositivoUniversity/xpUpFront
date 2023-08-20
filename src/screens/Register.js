@@ -1,4 +1,3 @@
-import React from "react";
 import {SafeAreaView, TextInput, Text, View} from "react-native";
 import {useState} from "react";
 import Logo from "../components/Logo";
@@ -55,6 +54,7 @@ export default function Register({navigation}) {
                             fontSize: 30
                         }
                     }>Cadastro</Text>
+
                     <TextInput value={firstName}
                         onChangeText={setFirstName}
                         style={
@@ -69,6 +69,7 @@ export default function Register({navigation}) {
                             }
                         }
                         placeholder="Nome"/>
+
                     <TextInput value={lastName}
                         onChangeText={setLastName}
                         style={
@@ -162,8 +163,6 @@ export default function Register({navigation}) {
 
 
             </View>
-
         </SafeAreaView>
-
     )
 }
