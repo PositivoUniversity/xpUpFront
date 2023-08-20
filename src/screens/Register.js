@@ -11,12 +11,18 @@ export default function Register({navigation}) {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const handleRegister = () => {
-        if (password === passwordConfirm && password != '') {
-            alert('Cadastro realizado com sucesso.');
-            navigation.navigate('home');
+        if (firstName !== '' && lastName !== '' && email !== '' && password !== '' && passwordConfirm !== '') {
+            if (password === passwordConfirm) {
+                alert('Cadastro realizado com sucesso.');
+                navigation.navigate('home');
+            } else {
+                alert('Senhas não são identicas.');
+            }
+
         } else {
-            alert('Senhas não são identicas.');
+            alert('Os campos não podem ser vazios.');
         }
+
     }
 
     const goToLogin = () => {
