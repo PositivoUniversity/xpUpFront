@@ -12,8 +12,8 @@ export default function Logo() {
         }>
             <Image source={require('../../assets/img/logo.png')} style={
                 {
-                    width: '100%',
-                    height: '100%',
+                    width: '90%',
+                    height: '90%',
                 }
             } />
         </View>

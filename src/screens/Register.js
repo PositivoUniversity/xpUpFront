@@ -130,7 +130,9 @@ export default function Register({navigation}) {
                                 marginTop: 15
                             }
                         }
-                        placeholder="Confirmar Senha"/>
+                        placeholder="Confirmar Senha"
+                        secureTextEntry={true}
+                        />
                     <DefaultButton text="Concluir Cadastro"
                         onPress={handleRegister}
                         styleButton={
