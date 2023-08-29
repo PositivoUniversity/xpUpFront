@@ -1,112 +1,148 @@
-import { SafeAreaView, TextInput, Text, View, Button } from "react-native";
-import { useState } from "react";
+import React from "react";
+import {SafeAreaView, View, Text} from "react-native";
+import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
+import DefaultInput from "../components/DefaultInput";
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    //TODO: IMPLEMENTAR LOGICA DE LOGIN
     const handleLogin = () => {
-        if (email === 'adm' && password === 'adm') {
-            alert('Login realizado com sucesso!');
+        //if (email === 'adm' && password === 'adm') {
             navigation.navigate('home');
-        } else {
-            alert('Email ou senha incorretos!');
-        }
+        //} else {
+        //    alert('Email ou senha incorretos!');
+        //}
     }
+
+    const goToRegister = () => {
+        navigation.navigate('register');
+    }
+
+    const goToRecovery = () => { // TODO:    INMPLEMENTAR DEPOIS A LOGICA PARA ESTA TELA
+        navigation.navigate('recovery');
+    }
+
     return (
         <SafeAreaView style={
             {
                 backgroundColor: '#1A1818',
-                height: '100%',
+                height: '100%'
             }
         }>
             <View style={
                 {
                     alignItems: 'center',
-                    marginTop: 120,
+                    marginTop: 50
                 }
             }>
-                <Logo />
+                <Logo/>
+
+                <Text style={
+                    {
+                        color: '#FCA311',
+                        fontSize: 60,
+                        height: 70,
+                        fontWeight: 'bold',
+                        marginBottom: 20
+                    }
+                }>
+                    XP UP
+                </Text>
+
                 <View style={
                     {
-                        height: 150,
+                        height: 90,
                         width: '80%',
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: 20,
+                        marginTop: 40
                     }
                 }>
-                    <TextInput value={email} onChangeText={setEmail} style={
-                        {
-                            backgroundColor: 'whitesmoke',
-                            height: 50,
-                            width: '80%',
-                            borderRadius: 10,
-                            padding: 10,
-                            marginBottom: 15,
-                        }
-                    } placeholder="Email" />
+                    
+                    <DefaultInput label="Email"
+                        //TODO: LOGICA PRA LOGAR
+                    />
 
-                    <TextInput value={password} onChangeText={setPassword} style={
-                        {
-                            backgroundColor: 'whitesmoke',
-                            height: 50,
-                            width: '80%',
-                            borderRadius: 10,
-                            padding: 10,
-                        }
-                    } placeholder="Senha" secureTextEntry={true} />
-                </View >
+                    <DefaultInput label="Senha" 
+                        //TODO: LOGICA PRA LOGAR
+                    />
+                </View>
 
                 <View style={
                     {
                         flexDirection: 'row',
-                        display: 'flex',
+                        justifyContent: 'space-between',
+                        width: '78%',
+                        marginTop: 30
                     }
                 }>
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            justifyContent: 'space-between',
-                        }
-                    }>Esqueceu a senha?</Text>
-
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            paddingLeft: 10,
-                        }
-                    }>Cadastre-se</Text>
+                    <DefaultButton text="Esqueceu a senha?"
+                        onPress={goToRecovery}
+                        styleText={
+                            {
+                                color: '#FCA311',
+                                fontSize: 14
+                            }
+                        }/>
                 </View>
 
-                <DefaultButton 
-                    text="Entrar" 
-                    onPress={handleLogin} 
+                <DefaultButton text="Entrar"
+                    onPress={handleLogin}
                     styleButton={
                         {
                             backgroundColor: '#A101FE',
-                            height: 45,
-                            width: '60%',
+                            height: 60,
+                            width: '80%',
                             borderRadius: 10,
-                            marginTop: 20,
+                            marginTop: 40,
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'center'
                         }
                     }
                     styleText={
                         {
                             color: '#fff',
-                            fontSize: 18,
+                            fontSize: 22,
+                            fontWeight: 'bold'
                         }
+                    }/>
+            </View>
+
+            <View style={
+                {
+                    flexDirection: 'column',
+                    padding: 46,
+                    marginTop: 10,
+                    justifyContent: 'space-between',
+                }
+            }>
+            <Text style={
+                    {
+                        color: '#d5d5d5',
+                        fontSize: 14
                     }
-                    />
+                }> Não possui conta? </Text>
+        
+            <DefaultButton text=" Cadastre-se"
+                        onPress={goToRegister}
+                        styleButton={
+                            {
+                                backgroundColor: '#1A1818',
+                                height: 60,
+                                width: '30%',
+                            }
+                        }
+                        styleText={
+                            {
+                                color: '#FCA311',
+                                fontSize: 14
+                            }
+                        }/>
             </View>
         </SafeAreaView>
     )

@@ -1,4 +1,4 @@
-import { SafeAreaView } from "react-native";
+import {SafeAreaView} from "react-native";
 import ProfileCard from "../components/ProfileCard";
 
 export default function Profile() {
@@ -7,10 +7,10 @@ export default function Profile() {
             {
                 backgroundColor: '#1A1818',
                 height: '100%',
-                alignItems: 'center',
+                alignItems: 'center'
             }
         }>
-            <ProfileCard />
+            <ProfileCard/>
         </SafeAreaView>
     );
 }
