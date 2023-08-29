@@ -31,7 +31,7 @@ export default function DefaultInput({ label }) {
                     left: 5,
                     top: animatedPlaceholderY,
                     fontSize: isFocused ? 14 : 16,
-                    color: isFocused ? '#d5d5d5' : '#A101FE',
+                    color: isFocused ? '#a101fe' : '#d5d5d5',
                 }}
             >
                 {label}
@@ -48,7 +48,7 @@ export default function DefaultInput({ label }) {
                     borderTopColor: 'transparent',
                     borderLeftColor: 'transparent',
                     borderRightColor: 'transparent',
-                    borderBottomColor: '#000',
+                    borderBottomColor: '#d5d5d5',
                     borderWidth: 2,
                     color: '#d5d5d5',
                     paddingLeft: 5,

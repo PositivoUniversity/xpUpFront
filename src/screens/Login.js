@@ -1,6 +1,5 @@
 import React from "react";
 import {SafeAreaView, View, Text} from "react-native";
-import { TextInput } from "@react-native-material/core";
 import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
@@ -10,12 +9,13 @@ export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    //TODO: IMPLEMENTAR LOGICA DE LOGIN
     const handleLogin = () => {
-        if (email === 'adm' && password === 'adm') {
+        //if (email === 'adm' && password === 'adm') {
             navigation.navigate('home');
-        } else {
-            alert('Email ou senha incorretos!');
-        }
+        //} else {
+        //    alert('Email ou senha incorretos!');
+        //}
     }
 
     const goToRegister = () => {
@@ -64,9 +64,13 @@ export default function Login({navigation}) {
                     }
                 }>
                     
-                    <DefaultInput label="Email"/>
+                    <DefaultInput label="Email"
+                        //TODO: LOGICA PRA LOGAR
+                    />
 
-                    <DefaultInput label="Senha" />
+                    <DefaultInput label="Senha" 
+                        //TODO: LOGICA PRA LOGAR
+                    />
                 </View>
 
                 <View style={
@@ -126,6 +130,13 @@ export default function Login({navigation}) {
         
             <DefaultButton text=" Cadastre-se"
                         onPress={goToRegister}
+                        styleButton={
+                            {
+                                backgroundColor: '#1A1818',
+                                height: 60,
+                                width: '30%',
+                            }
+                        }
                         styleText={
                             {
                                 color: '#FCA311',
