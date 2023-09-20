@@ -8,14 +8,15 @@ import DefaultPage from "../components/DefaultPage";
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState(''); 
 
     const handleLogin = () => {
-        if (email === 'adm' && password === 'adm') {
-            navigation.navigate('menu');
-        } else {
-            alert('Email ou senha incorretos!');
+        if (email != 'admin' || password != 'admin') {
+            alert('Email ou senha incorretos.');
+            return;
         }
+        
+        navigation.navigate('menu');
     }
 
     const goToRegister = () => {
