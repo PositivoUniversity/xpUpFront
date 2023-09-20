@@ -1,8 +1,10 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Feather} from '@expo/vector-icons';
-import TabRoutes from './tab.routes';
+import Dashboard from '../screens/Dashboard';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
+import Login from '../screens/Login';
+import ConfirmLogout from '../components/ConfirmLogout';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,8 +31,8 @@ export default function DrawerRoutes() {
             }
         }>
 
-            <Drawer.Screen name="menu"
-                component={TabRoutes}
+            <Drawer.Screen name="home"
+                component={Dashboard}
                 options={
                     {
                         drawerIcon: (
@@ -40,7 +42,8 @@ export default function DrawerRoutes() {
                             color={color}/>,
                         drawerLabel: 'Dashboard'
                     }
-                }/>
+                }
+            />
 
             <Drawer.Screen name="profile"
                 component={Profile}
@@ -53,7 +56,8 @@ export default function DrawerRoutes() {
                             color={color}/>,
                         drawerLabel: 'Profile'
                     }
-                }/>
+                }
+            />
 
             <Drawer.Screen name="settings"
                 component={Settings}
@@ -66,7 +70,22 @@ export default function DrawerRoutes() {
                             color={color}/>,
                         drawerLabel: 'Settings'
                     }
-                }/>
+                }
+            />
+
+            <Drawer.Screen name="logout"
+                component={ConfirmLogout}
+                options={
+                    {
+                        drawerIcon: (
+                            {size, color}
+                        ) => <Feather name="log-out"
+                            size={size}
+                            color={color}/>,
+                        drawerLabel: 'Logout',
+                    }
+                }
+            />
 
         </Drawer.Navigator>
     );

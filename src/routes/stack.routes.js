@@ -14,13 +14,20 @@ export default function StackRoutes() {
                 {headerShown: false}
         }>
             <Stack.Screen name="login"
-                component={Login}/>
-            <Stack.Screen name="home"
-                component={DrawerRoutes}/>
+                component={Login}
+            />
+
+            <Stack.Screen name="menu"
+                component={DrawerRoutes}
+            />
+
             <Stack.Screen name="register"
-                component={Register}/>
+                component={Register}
+            />
+
             <Stack.Screen name="recovery"
-                component={Recovery}/>
+                component={Recovery}
+            />
         </Stack.Navigator>
     );
 }

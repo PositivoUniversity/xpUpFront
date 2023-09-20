@@ -1,8 +1,10 @@
 import React from "react";
-import {SafeAreaView, TextInput, Text, View} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
+import DefaultPage from "../components/DefaultPage";
+import DefaultInput from "../components/DefaultInput";
 
 export default function Recovery({navigation}) {
     const [email, setEmail] = useState('');
@@ -16,100 +18,71 @@ export default function Recovery({navigation}) {
     }
 
     return (
-        <SafeAreaView style={
-            {
-                backgroundColor: '#1A1818',
-                height: '100%'
-            }
-        }>
-            <View style={
-                {
-                    alignItems: 'center',
-                    marginTop: 120
-                }
-            }>
+        <DefaultPage>
+            <View style={styles.container}>
                 <Logo/>
-                <View style={
-                    {
-                        height: 150,
-                        width: '80%',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 20
-                    }
-                }>
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 30
-                        }
-                    }>Recuperação de Senha</Text>
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 10
-                        }
-                    }>Informe o Email da Conta</Text>
+                <View style={styles.containerInput}>
+                    <Text style={styles.title}>Recuperação de Senha</Text>
+                    <Text style={styles.subtitle}>Informe o Email da Conta</Text>
 
-                    <TextInput value={email}
-                        onChangeText={setEmail}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginBottom: 10,
-                                marginTop: 15
-                            }
-                        }
-                        placeholder="Email"/>
+                    <DefaultInput label="Email" />
 
                     <DefaultButton text="Recuperar Senha"
                         onPress={handleRecovery}
-                        styleButton={
-                            {
-                                backgroundColor: '#A101FE',
-                                height: 45,
-                                width: '60%',
-                                borderRadius: 10,
-                                marginTop: 10,
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }
-                        }
-                        styleText={
-                            {
-                                color: '#fff',
-                                fontSize: 18
-                            }
-                        }/>
+                        styleButton={styles.btn}
+                        styleText={styles.btnText}/>
                     <DefaultButton text="Já possui conta?"
                         onPress={goToLogin}
-                        styleText={
-                            {
-                                color: '#fff',
-                                marginTop: 10,
-                                fontSize: 14
-                            }
-                        }/>
+                        styleText={styles.haveAccount}/>
                 </View>
-
-                <View style={
-                    {
-                        flexDirection: 'row',
-                        display: 'flex'
-                    }
-                }></View>
-
-
             </View>
 
-        </SafeAreaView>
+        </DefaultPage>
 
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        marginTop: 120
+    },
+    containerInput: {
+        height: 150,
+        width: '80%',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
+    },
+    title: {
+        color: '#d5d5d5',
+        fontWeight: 'bold',
+        fontSize: 30
+    },
+    subtitle: {
+        color: '#FCA311',
+        fontWeight: 'bold',
+        fontSize: 14,
+        marginBottom: 20
+    },
+    btn: {
+        backgroundColor: '#A101FE',
+        height: 45,
+        width: '60%',
+        borderRadius: 10,
+        marginTop: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
+    },
+    btnText: {
+        color: '#fff',
+        fontSize: 18
+    },
+    haveAccount: {
+        color: '#FCA311',
+        marginTop: 10,
+        fontSize: 14
+    }
+})

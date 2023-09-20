@@ -1,22 +1,21 @@
-import { Text, SafeAreaView } from "react-native"
+import { Text, StyleSheet } from "react-native"
+import DefaultPage from "../components/DefaultPage"
 
 export default function Settings() {
     return (
-        <SafeAreaView style={
-            {
-                backgroundColor: '#1A1818',
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }
-        }>
-            <Text style={
-                {
-                    color: 'whitesmoke',
-                    fontWeight: 'bold',
-                    fontSize: 30,
-                }
-            }>Settings</Text>
-        </SafeAreaView>
+        <DefaultPage>
+            <Text style={styles.text}>Settings</Text>
+        </DefaultPage>
     )
 }
+
+const styles = StyleSheet.create({
+    text: {
+        color: '#d5d5d5',
+        fontWeight: 'bold',
+        fontSize: 30,
+        marginTop: 290,
+        marginLeft: 150,
+        marginRight: 150,
+    }
+})
