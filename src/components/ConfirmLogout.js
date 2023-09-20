@@ -17,12 +17,13 @@ export default function ConfirmLogout({navigation}){
                 <Text style={styles.text}>Tem certeza que deseja sair?</Text>
 
                 <View style={styles.containerButtons}>
-                    <DefaultButton text="Sim" onPress={handleLogout} 
-                        styleButton={styles.btn} 
-                        styleText={styles.textButton}
-                        />
                     <DefaultButton text="Não" onPress={goToDashboard} 
                     styleButton={styles.btn} 
+                        styleText={styles.textButton}
+                    />
+
+                    <DefaultButton text="Sim" onPress={handleLogout} 
+                        styleButton={styles.btn} 
                         styleText={styles.textButton}
                     />
                 </View>
