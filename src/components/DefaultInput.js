@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { TextInput, Animated, StyleSheet } from 'react-native';
 
-export default function DefaultInput({label, value, onChangeText}) {
+export default function DefaultInput({ label, value, onChangeText }) {
     const [isFocused, setIsFocused] = useState(false);
-    const animatedPlaceholderY = useState(new Animated.Value(isFocused ? -20 : 0))[0];
+    const animatedPlaceholderY = new Animated.Value(isFocused ? -20 : 0);
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -43,7 +43,7 @@ export default function DefaultInput({label, value, onChangeText}) {
                 value={value}
                 onChangeText={onChangeText}
                 selectionColor="#d5d5d5"
-                secureTextEntry={label === 'Senha' ? true : false || label === 'Confirmar Senha' ? true : false}
+                secureTextEntry={label === 'Senha' || label === 'Confirmar Senha'}
                 style={styles.input}
             />
         </Animated.View>
@@ -52,8 +52,8 @@ export default function DefaultInput({label, value, onChangeText}) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20, 
-        width: "100%"
+        marginTop: 20,
+        width: '100%',
     },
     input: {
         width: '100%',
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
         color: '#d5d5d5',
         paddingLeft: 5,
         textAlign: 'center',
-        marginBottom: 10
-    }
+        marginBottom: 10,
+    },
 });

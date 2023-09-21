@@ -15,7 +15,6 @@ export default function Login({navigation}) {
             alert('Email ou senha incorretos.');
             return;
         }
-        
         navigation.navigate('menu');
     }
 
