@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { TextInput, Animated } from 'react-native';
+import { TextInput, Animated, StyleSheet } from 'react-native';
 
-export default function DefaultInput({ label }) {
+export default function DefaultInput({ label, value, onChangeText }) {
     const [isFocused, setIsFocused] = useState(false);
-    const animatedPlaceholderY = useState(new Animated.Value(isFocused ? -20 : 0))[0];
+    const animatedPlaceholderY = new Animated.Value(isFocused ? -20 : 0);
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -24,7 +24,7 @@ export default function DefaultInput({ label }) {
     };
 
     return (
-        <Animated.View style={{ marginTop: 20, width: "100%" }}>
+        <Animated.View style={styles.container}>
             <Animated.Text
                 style={{
                     position: 'absolute',
@@ -40,22 +40,32 @@ export default function DefaultInput({ label }) {
                 placeholderTextColor="#d5d5d5"
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                value={value}
+                onChangeText={onChangeText}
                 selectionColor="#d5d5d5"
-                secureTextEntry={label === 'Senha' ? true : false}
-                style={{
-                    width: '100%',
-                    height: 40,
-                    borderTopColor: 'transparent',
-                    borderLeftColor: 'transparent',
-                    borderRightColor: 'transparent',
-                    borderBottomColor: '#d5d5d5',
-                    borderWidth: 2,
-                    color: '#d5d5d5',
-                    paddingLeft: 5,
-                    textAlign: 'center',
-                    marginBottom: 10,
-                }}
+                secureTextEntry={label === 'Senha' || label === 'Confirmar Senha'}
+                style={styles.input}
             />
         </Animated.View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 20,
+        width: '100%',
+    },
+    input: {
+        width: '100%',
+        height: 40,
+        borderTopColor: 'transparent',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: '#d5d5d5',
+        borderWidth: 2,
+        color: '#d5d5d5',
+        paddingLeft: 5,
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+});

@@ -1,7 +1,9 @@
-import {SafeAreaView, TextInput, Text, View} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
+import DefaultPage from "../components/DefaultPage";
+import DefaultInput from "../components/DefaultInput";
 
 export default function Register({navigation}) {
     const [firstName, setFirstName] = useState('');
@@ -21,8 +23,7 @@ export default function Register({navigation}) {
             return;
         }
 
-        alert('Cadastro realizado com sucesso.');
-        navigation.navigate('home');
+        navigation.navigate('menu');
     };
 
 
@@ -31,147 +32,91 @@ export default function Register({navigation}) {
     }
 
     return (
-        <SafeAreaView style={
-            {
-                backgroundColor: '#1A1818',
-                height: '100%'
-            }
-        }>
-            <View style={
-                {
-                    alignItems: 'center',
-                    marginTop: 120
-                }
-            }>
+        <DefaultPage>
+            <View style={styles.container}>
                 <Logo/>
-                <View style={
-                    {
-                        height: 150,
-                        width: '80%',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 20
-                    }
-                }>
-                    <Text style={
-                        {
-                            color: 'whitesmoke',
-                            fontWeight: 'bold',
-                            fontSize: 30
-                        }
-                    }>Cadastro</Text>
 
-                    <TextInput value={firstName}
+                <View style={styles.containerInput}>
+                    <Text style={styles.title}>Cadastro</Text>
+
+                    <DefaultInput label="Nome"
+                        value={firstName}
                         onChangeText={setFirstName}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginTop: 225,
-                                marginBottom: 15
-                            }
-                        }
-                        placeholder="Nome"/>
+                    />
 
-                    <TextInput value={lastName}
+                    <DefaultInput label="Sobrenome"
+                        value={lastName}
                         onChangeText={setLastName}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginBottom: 15
-                            }
-                        }
-                        placeholder="Sobrenome"/>
-                    <TextInput value={email}
+                    />
+
+                    <DefaultInput label="Email"
+                        value={email}
                         onChangeText={setEmail}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginBottom: 15
-                            }
-                        }
-                        placeholder="Email"/>
+                    />
 
-
-                    <TextInput value={password}
+                    <DefaultInput label="Senha" 
+                        value={password}
                         onChangeText={setPassword}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10
-                            }
-                        }
-                        placeholder="Senha"
-                        secureTextEntry={true}/>
-                    <TextInput value={passwordConfirm}
-                        onChangeText={setPasswordConfirm}
-                        style={
-                            {
-                                backgroundColor: 'whitesmoke',
-                                height: 50,
-                                width: '80%',
-                                borderRadius: 10,
-                                padding: 10,
-                                marginTop: 15
-                            }
-                        }
-                        placeholder="Confirmar Senha"
                         secureTextEntry={true}
-                        />
+                    />
+
+                    <DefaultInput label="Confirmar Senha" 
+                        value={passwordConfirm}
+                        onChangeText={setPasswordConfirm}
+                        secureTextEntry={true}
+                    />
+                    
                     <DefaultButton text="Concluir Cadastro"
                         onPress={handleRegister}
-                        styleButton={
-                            {
-                                backgroundColor: '#A101FE',
-                                height: 45,
-                                width: '60%',
-                                borderRadius: 10,
-                                marginTop: 20,
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }
-                        }
-                        styleText={
-                            {
-                                color: '#fff',
-                                fontSize: 18
-                            }
-                        }/>
+                        styleButton={styles.btn}
+                        styleText={styles.btnText}
+                    />
+
                     <DefaultButton text="Já possui conta?"
                         onPress={goToLogin}
-                        styleText={
-                            {
-                                color: '#fff',
-                                marginTop: 10,
-                                fontSize: 14
-                            }
-                        }/>
+                        styleText={styles.haveAccount}
+                    />
                 </View>
-
-                <View style={
-                    {
-                        flexDirection: 'row',
-                        display: 'flex'
-                    }
-                }></View>
-
-
             </View>
-        </SafeAreaView>
+        </DefaultPage>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        marginTop: 30
+    },
+    containerInput: {
+        height: 200,
+        width: '80%',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 140
+    },
+    title: {
+        color: '#d5d5d5',
+        fontWeight: 'bold',
+        fontSize: 30,
+        marginBottom: 20
+    },
+    btn: {
+        backgroundColor: '#A101FE',
+        height: 45,
+        width: '60%',
+        borderRadius: 10,
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    btnText: {
+        color: '#fff',
+        fontSize: 18
+    },
+    haveAccount: {
+        color: '#FCA311',
+        marginTop: 10,
+        fontSize: 14
+    }
+})

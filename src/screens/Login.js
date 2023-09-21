@@ -1,149 +1,139 @@
 import React from "react";
-import {SafeAreaView, View, Text} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 import {useState} from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 import DefaultInput from "../components/DefaultInput";
+import DefaultPage from "../components/DefaultPage";
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState(''); 
 
-    //TODO: IMPLEMENTAR LOGICA DE LOGIN
     const handleLogin = () => {
-        //if (email === 'adm' && password === 'adm') {
-            navigation.navigate('home');
-        //} else {
-        //    alert('Email ou senha incorretos!');
-        //}
+        if (email != 'admin' || password != 'admin') {
+            alert('Email ou senha incorretos.');
+            return;
+        }
+        navigation.navigate('menu');
     }
 
     const goToRegister = () => {
         navigation.navigate('register');
     }
 
-    const goToRecovery = () => { // TODO:    INMPLEMENTAR DEPOIS A LOGICA PARA ESTA TELA
+    const goToRecovery = () => {
         navigation.navigate('recovery');
     }
 
     return (
-        <SafeAreaView style={
-            {
-                backgroundColor: '#1A1818',
-                height: '100%'
-            }
-        }>
-            <View style={
-                {
-                    alignItems: 'center',
-                    marginTop: 50
-                }
-            }>
+        <DefaultPage>
+            <View style={styles.container}>
                 <Logo/>
 
-                <Text style={
-                    {
-                        color: '#FCA311',
-                        fontSize: 60,
-                        height: 70,
-                        fontWeight: 'bold',
-                        marginBottom: 20
-                    }
-                }>
-                    XP UP
-                </Text>
+                <Text style={styles.nameApp}> XP UP </Text>
 
-                <View style={
-                    {
-                        height: 90,
-                        width: '80%',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 40
-                    }
-                }>
-                    
-                    <DefaultInput label="Email"
-                        //TODO: LOGICA PRA LOGAR
+                <View style={styles.containerFormLogin}>
+                    <DefaultInput label="Email" 
+                        value={email}
+                        onChangeText={setEmail}
                     />
 
                     <DefaultInput label="Senha" 
-                        //TODO: LOGICA PRA LOGAR
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={true}
                     />
                 </View>
 
-                <View style={
-                    {
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        width: '78%',
-                        marginTop: 30
-                    }
-                }>
+                <View style={styles.rememberPassword}>
                     <DefaultButton text="Esqueceu a senha?"
                         onPress={goToRecovery}
-                        styleText={
-                            {
-                                color: '#FCA311',
-                                fontSize: 14
-                            }
-                        }/>
+                        styleText={styles.btnRecoveryPassword}
+                    />
                 </View>
 
                 <DefaultButton text="Entrar"
                     onPress={handleLogin}
-                    styleButton={
-                        {
-                            backgroundColor: '#A101FE',
-                            height: 60,
-                            width: '80%',
-                            borderRadius: 10,
-                            marginTop: 40,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }
-                    }
-                    styleText={
-                        {
-                            color: '#fff',
-                            fontSize: 22,
-                            fontWeight: 'bold'
-                        }
-                    }/>
+                    styleButton={styles.btnLogin}
+                    styleText={styles.btnLoginText}
+                />
             </View>
 
-            <View style={
-                {
-                    flexDirection: 'column',
-                    padding: 46,
-                    marginTop: 10,
-                    justifyContent: 'space-between',
-                }
-            }>
-            <Text style={
-                    {
-                        color: '#d5d5d5',
-                        fontSize: 14
-                    }
-                }> Não possui conta? </Text>
-        
-            <DefaultButton text=" Cadastre-se"
-                        onPress={goToRegister}
-                        styleButton={
-                            {
-                                backgroundColor: '#1A1818',
-                                height: 60,
-                                width: '30%',
-                            }
-                        }
-                        styleText={
-                            {
-                                color: '#FCA311',
-                                fontSize: 14
-                            }
-                        }/>
+            <View style={styles.containerSignIn}>
+                <Text style={styles.textSignIn}> Não possui conta? </Text>
+            
+                <DefaultButton text=" Cadastre-se"
+                            onPress={goToRegister}
+                            styleButton={styles.btnSignIn}
+                            styleText={styles.btnTextSignIn}
+                />
             </View>
-        </SafeAreaView>
+        </DefaultPage>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        marginTop: 50
+    },
+    nameApp: {
+        color: '#FCA311',
+        fontSize: 60,
+        height: 70,
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    containerFormLogin: {
+        height: 90,
+        width: '80%',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 40
+    },
+    rememberPassword: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '78%',
+        marginTop: 30
+    },
+    containerSignIn:{
+        flexDirection: 'column',
+        padding: 46,
+        marginTop: 10,
+        justifyContent: 'space-between'
+    },
+    textSignIn: {
+        color: '#d5d5d5',
+        fontSize: 14
+    },
+    btnRecoveryPassword: {
+        color: '#FCA311',
+        fontSize: 14
+    },
+    btnLogin: {
+        backgroundColor: '#A101FE',
+        height: 60,
+        width: '80%',
+        borderRadius: 10,
+        marginTop: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    btnLoginText: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    btnSignIn: {
+        backgroundColor: '#1A1818',
+        height: 60,
+        width: '30%'
+    },
+    btnTextSignIn: {
+        color: '#FCA311',
+        fontSize: 14
+    }
+});
