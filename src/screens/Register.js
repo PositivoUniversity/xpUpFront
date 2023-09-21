@@ -23,7 +23,6 @@ export default function Register({navigation}) {
             return;
         }
 
-        alert('Cadastro realizado com sucesso.');
         navigation.navigate('menu');
     };
 
