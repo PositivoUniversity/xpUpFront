@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import DefaultPage from "../components/DefaultPage";
 import { FlatList } from "react-native-gesture-handler";
-import { loadData } from '../../connection';
 import { loadCourses } from '../../api/courses-api';
 
 export default function Dashboard() {
