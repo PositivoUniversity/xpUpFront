@@ -3,13 +3,12 @@ import { loadData } from "../connection";
 
 const URL = config.URL
 const COURSES = '/courses';
+// alterar conforme o final do end-point
 
 export const loadCourses = async () => {
     try {
         const data = await loadData(URL + COURSES);
-        console.log(URL, "aquiii")
         return data;
-
     } catch (error) {
         console.error('Erro ao buscar cursos:', error);
         throw error;
