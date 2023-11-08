@@ -11,10 +11,10 @@ export default function Login({navigation}) {
     const [password, setPassword] = useState(''); 
 
     const handleLogin = () => {
-        if (email != 'admin' || password != 'admin') {
-            alert('Email ou senha incorretos.');
-            return;
-        }
+        // if (email != 'admin' || password != 'admin') {
+        //     alert('Email ou senha incorretos.');
+        //     return;
+        // }
         navigation.navigate('menu');
     }
 

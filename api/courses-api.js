@@ -2,7 +2,7 @@ import config from "../config";
 import { loadData } from "../connection";
 
 const URL = config.URL
-const COURSES = '/courses';
+const COURSES = '/courses/';
 // alterar conforme o final do end-point
 
 export const loadCourses = async () => {
