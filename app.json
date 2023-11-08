@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "XPUP",
-    "slug": "XPUP",
+    "name": "xpup",
+    "slug": "xpup",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
+    "ios": {  
       "supportsTablet": true
     },
     "android": {
@@ -22,14 +22,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pedro736.ph.BlackBird"
+      "package": "com.pedro736.ph.xpup"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "36bc4015-7c56-4331-9424-32820733bea3"
+        "projectId": "e8fabe0e-159f-462b-ad10-a866e91ddf33"
       }
     }
   }
