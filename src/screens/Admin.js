@@ -1,25 +1,48 @@
 import DefaultPage from "../components/DefaultPage";
-import DefaultCard from "../components/DefaultCard";
 import { StyleSheet } from "react-native";
+import DefaultDataTable from "../components/DefaultDataTable";
+import { loadUsers } from "../../api/users-api";
+import { useEffect, useState } from "react";
+import { Text } from "react-native";
 
 export default function Admin() {
+
+
+    const customActions = () => {
+        return <Text style={styles.styleText} onClick={() => console.log(`Clicou`)}>aqui</Text>;
+    };
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const userData = await loadUsers();
+                setData(userData);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        };
+        loadData();
+    }, []);
+    const collums = ['Nome', 'Email', 'Regra',];
+    const cellData = {
+        Nome: 'email',
+        Email: 'email',
+        Regra: 'nat',
+    };
     return (
         <DefaultPage>
-            <DefaultCard
-                styleCard={styles.container}
-            />
+            {data.results && data.results.length > 0 ? (
+                <DefaultDataTable actions={customActions} textAction={'Ações'} cellData={cellData} columnNames={collums} data={data.results} textStyle={styles.styleText} />
+            ) : (
+                <Text>Carregando dados...</Text>
+
+            )}
         </DefaultPage>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#d5d5d5',
-        height: 180,
-        width: '80%',
-        borderRadius: 10,
-        marginTop: 20,
-        marginLeft: 40,
-        marginRight: 40,
-    }
+    styleText: {
+        color: 'white',
+    },
 })
