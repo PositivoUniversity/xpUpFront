@@ -1,10 +1,11 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Feather} from '@expo/vector-icons';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Feather } from '@expo/vector-icons';
 import Dashboard from '../screens/Dashboard';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
 import Login from '../screens/Login';
 import ConfirmLogout from '../components/ConfirmLogout';
+import Admin from '../screens/Admin';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,10 +37,10 @@ export default function DrawerRoutes() {
                 options={
                     {
                         drawerIcon: (
-                            {size, color}
+                            { size, color }
                         ) => <Feather name="home"
                             size={size}
-                            color={color}/>,
+                            color={color} />,
                         drawerLabel: 'Dashboard'
                     }
                 }
@@ -50,11 +51,24 @@ export default function DrawerRoutes() {
                 options={
                     {
                         drawerIcon: (
-                            {size, color}
+                            { size, color }
                         ) => <Feather name="user"
                             size={size}
-                            color={color}/>,
+                            color={color} />,
                         drawerLabel: 'Profile'
+                    }
+                }
+            />
+            <Drawer.Screen name="Admin"
+                component={Admin}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="edit"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar usuário'
                     }
                 }
             />
@@ -64,10 +78,10 @@ export default function DrawerRoutes() {
                 options={
                     {
                         drawerIcon: (
-                            {size, color}
+                            { size, color }
                         ) => <Feather name="settings"
                             size={size}
-                            color={color}/>,
+                            color={color} />,
                         drawerLabel: 'Settings'
                     }
                 }
@@ -78,10 +92,10 @@ export default function DrawerRoutes() {
                 options={
                     {
                         drawerIcon: (
-                            {size, color}
+                            { size, color }
                         ) => <Feather name="log-out"
                             size={size}
-                            color={color}/>,
+                            color={color} />,
                         drawerLabel: 'Logout',
                     }
                 }

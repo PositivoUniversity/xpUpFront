@@ -6,7 +6,6 @@ import { loadCourses } from '../../api/courses-api';
 
 export default function Dashboard() {
     const [data, setData] = useState([]);
-
     useEffect(() => {
         const loadData = async () => {
             try {
