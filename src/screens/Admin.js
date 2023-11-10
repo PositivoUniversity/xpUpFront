@@ -35,7 +35,6 @@ export default function Admin() {
                 <DefaultDataTable actions={customActions} textAction={'Ações'} cellData={cellData} columnNames={collums} data={data.results} textStyle={styles.styleText} />
             ) : (
                 <Text>Carregando dados...</Text>
-
             )}
         </DefaultPage>
     );
