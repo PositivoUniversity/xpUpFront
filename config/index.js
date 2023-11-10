@@ -1,3 +1,3 @@
-import { URL } from '@env'
+import { URL, URL_API } from '@env'
 
-export default { URL }
+export default { URL, URL_API }
