@@ -11,7 +11,6 @@ export default function DefaultDataTable({
     data,
     styleDataTable,
     styleHeader,
-    actions,
     textStyle,
     cellData,
     textedit,
@@ -36,7 +35,7 @@ export default function DefaultDataTable({
                     {renderCellContent(columnName, item[cellData[columnName]])}
                 </DataTable.Cell>
             ))}
-            {actions && (
+            {textedit && (
                 <DataTable.Cell>
                     <TouchableOpacity onPress={() => onpressEdit(item)}>
                         <Feather name="edit" size={24} color="white" />

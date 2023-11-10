@@ -33,9 +33,10 @@ export default function Admin() {
             {data && data.length > 0 ? (
                 <DefaultDataTable
                     isHeader={false}
-                    actions={() => null}
                     cellData={cellData}
                     columnNames={collums}
+                    textDelete={' '}
+                    textedit={' '}
                     data={data}
                     textStyle={styles.styleText}
                     onpressDelete={() => console.log('Deletar Usuário Pressionado')}
