@@ -25,16 +25,16 @@ export default function Admin() {
     }, []);
     const collums = ['Nome', 'Email', 'Regra',];
     const cellData = {
-        Nome: 'email',
+        Nome: 'name',
         Email: 'email',
-        Regra: 'nat',
+        Regra: 'role'
     };
     return (
         <DefaultPage>
             {data && data.length > 0 ? (
                 <DefaultDataTable actions={customActions} textAction={'Ações'} cellData={cellData} columnNames={collums} data={data} textStyle={styles.styleText} />
             ) : (
-                <Text>Carregando dados...</Text>
+                <Text>Nenhum usuário</Text>
             )}
         </DefaultPage>
     );

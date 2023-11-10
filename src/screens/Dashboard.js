@@ -6,17 +6,17 @@ import { loadCourses } from '../../api/courses-api';
 
 export default function Dashboard() {
     const [data, setData] = useState([]);
-    useEffect(() => {
-        const loadData = async () => {
-            try {
-                const courseData = await loadCourses();
-                setData(courseData);
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
-            }
-        };
-        loadData();
-    }, []); 
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         try {
+    //             const courseData = await loadCourses();
+    //             setData(courseData);
+    //         } catch (error) {
+    //             console.error('Erro ao buscar dados:', error);
+    //         }
+    //     };
+    //     loadData();
+    // }, []);
 
     const renderItem = ({ item }) => (
         <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: 'gray' }}>
@@ -27,11 +27,11 @@ export default function Dashboard() {
 
     return (
         <DefaultPage>
-            <FlatList
+            {/* <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
-            />
+            /> */}
         </DefaultPage>
     );
 }
