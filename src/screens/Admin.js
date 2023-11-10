@@ -18,7 +18,7 @@ export default function Admin() {
                 const userData = await loadUsers();
                 setData(userData);
             } catch (error) {
-                console.error('Erro ao buscar dados:', error);
+                console.error('Erro ao buscar dados de usuário:', error);
             }
         };
         loadData();
@@ -31,8 +31,8 @@ export default function Admin() {
     };
     return (
         <DefaultPage>
-            {data.results && data.results.length > 0 ? (
-                <DefaultDataTable actions={customActions} textAction={'Ações'} cellData={cellData} columnNames={collums} data={data.results} textStyle={styles.styleText} />
+            {data && data.length > 0 ? (
+                <DefaultDataTable actions={customActions} textAction={'Ações'} cellData={cellData} columnNames={collums} data={data} textStyle={styles.styleText} />
             ) : (
                 <Text>Carregando dados...</Text>
             )}
