@@ -3,6 +3,8 @@ import { View, TouchableOpacity } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import { getRoleLabel } from '../../utils/string-utils';
+import { StyleSheet } from 'react-native';
+
 
 export default function DefaultDataTable({
     columnNames,
@@ -12,7 +14,11 @@ export default function DefaultDataTable({
     actions,
     textStyle,
     cellData,
-    textAction,
+    textedit,
+    textDelete,
+    onpressEdit,
+    onpressDelete,
+    isHeader
 }) {
 
     const renderCellContent = (columnName, cellValue) => {
@@ -32,27 +38,41 @@ export default function DefaultDataTable({
             ))}
             {actions && (
                 <DataTable.Cell>
-                    <TouchableOpacity onPress={() => console.log('cliquei')}>
+                    <TouchableOpacity onPress={() => onpressEdit(item)}>
                         <Feather name="edit" size={24} color="white" />
+                    </TouchableOpacity>
+                </DataTable.Cell>
+            )}
+            {textDelete && (
+                <DataTable.Cell>
+                    <TouchableOpacity onPress={() => onpressDelete(item)}>
+                        <Feather name="delete" size={24} color="white" onPress={onpressDelete} />
                     </TouchableOpacity>
                 </DataTable.Cell>
             )}
         </DataTable.Row>
     ));
 
+
     return (
         <View>
             <DataTable style={styleDataTable}>
                 <DataTable.Header style={styleHeader}>
                     {columnNames.map((columnName, index) => (
-                        <DataTable.Title key={index} textStyle={textStyle}>
+                        <DataTable.Title key={index} textStyle={textStyle} style={isHeader ? styles : styles.header} >
                             {columnName}
                         </DataTable.Title>
                     ))}
-                    {actions && <DataTable.Title textStyle={textStyle}>{textAction}</DataTable.Title>}
+                    {textedit && <DataTable.Title textStyle={textStyle}>{textedit}</DataTable.Title>}
+                    {textDelete && <DataTable.Title textStyle={textStyle}>{textDelete}</DataTable.Title>}
                 </DataTable.Header>
                 {rows}
             </DataTable>
-        </View>
+        </View >
     );
 }
+const styles = StyleSheet.create({
+    header: {
+        display: 'none'
+    },
+});

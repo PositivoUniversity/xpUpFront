@@ -32,12 +32,14 @@ export default function Admin() {
         <DefaultPage>
             {data && data.length > 0 ? (
                 <DefaultDataTable
+                    isHeader={false}
                     actions={() => null}
-                    textAction={'Ações'}
                     cellData={cellData}
                     columnNames={collums}
                     data={data}
                     textStyle={styles.styleText}
+                    onpressDelete={() => console.log('Deletar Usuário Pressionado')}
+                    onpressEdit={() => console.log('Editar Usuário Pressionado')}
                 />
             ) : (
                 <Text>Nenhum usuário</Text>
@@ -48,7 +50,6 @@ export default function Admin() {
                 actions={[
                     { icon: 'pencil', label: 'Editar Usuário', onPress: () => console.log('Editar Usuário Pressionado'), labelStyle: { color: 'white' } },
                     { icon: 'plus', label: 'Criar Novo Usuário', onPress: () => console.log('Criar Novo Usuário Pressionado'), labelStyle: { color: 'white' } },
-                    { icon: 'eye', label: 'Ver Todos os Usuários', onPress: () => console.log('Ver Todos os Usuários Pressionado'), labelStyle: { color: 'white' } },
                 ]}
                 onStateChange={({ open }) => setFABOpen(open)}
                 theme={{ colors: { background: 'transparent' } }}
