@@ -17,3 +17,26 @@ export function loadData(url, options = {}) {
             console.error(`Error fetching ${url}: ${error}`);
         });
 }
+
+export const sendData = async (url, urlParams) => {
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(urlParams),
+        };
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error for send data:', error);
+        throw error;
+    }
+};
+

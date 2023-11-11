@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FAB } from 'react-native-paper';
 import DefaultPage from '../components/DefaultPage';
 import DefaultDataTable from '../components/DefaultDataTable';
-import { loadUsers } from '../../api/users-api';
+import { createUser, loadUsers } from '../../api/users-api';
 import DefaultModal from '../components/DefaultModal';
 import DefaultInput from '../components/DefaultInput';
 import { Picker } from '@react-native-picker/picker';
@@ -22,9 +22,29 @@ export default function Admin() {
 
     const sendUser = () => {
         setModalVisible((value) => !value);
-        console.log('Usuário enviado');
-        console.log(name, email, passwordTip, password, selectedCourse)
+        sendUserData();
     }
+
+    const sendUserData = async () => {
+        try {
+            const urlParams = {
+                name: name,
+                email: email,
+                passwordTip: passwordTip,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                password: password,
+                role: 2,
+                course: selectedCourse,
+
+            };
+            await createUser(urlParams);
+        } catch (error) {
+            console.error('Erro ao criar usuário:', error);
+        }
+    };
+
+
 
     const handleCreateUser = () => {
         setModalVisible((value) => !value);
