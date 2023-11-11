@@ -1,9 +1,12 @@
-import { loadData, sendData } from "../connection";
+import { deleteData, editData, loadData, sendData } from "../connection";
 import config from "../config";
 
 const URL = config.URL_API
 const URL_USERS = URL + '/users'
 const URL_CREATE_USER = URL + '/Users/createUserDto'
+const URL_EDIT_USER = URL + '/Users'
+const URL_DELETE_USER = URL + '/Users/:id'
+
 
 export const loadUsers = async () => {
     try {
@@ -24,3 +27,26 @@ export const createUser = async (urlParams) => {
         throw error;
     }
 }
+
+export const editUser = async (urlParams) => {
+    try {
+        const response = await editData(URL_EDIT_USER, urlParams);
+        return response;
+    } catch (error) {
+        console.error('Erro ao Editar usuário:', error);
+        console.log(URL_EDIT_USER)
+        throw error;
+    }
+}
+
+export const deleteUser = async () => {
+    try {
+        const response = await deleteData(URL_DELETE_USER);
+        return response;
+    } catch (error) {
+        console.error('Erro ao remvoer usuário:', error);
+        console.log(URL_DELETE_USER)
+        throw error;
+    }
+}
+
