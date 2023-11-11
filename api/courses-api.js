@@ -2,7 +2,7 @@ import config from "../config";
 import { loadData } from "../connection";
 
 const URL = config.URL_API
-const COURSES = 'courses';
+const COURSES = '/courses';
 
 export const loadCourses = async () => {
     try {
