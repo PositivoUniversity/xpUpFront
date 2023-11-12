@@ -6,6 +6,7 @@ import Settings from '../screens/Settings';
 import Login from '../screens/Login';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
+import Events from '../screens/Events';
 
 const Drawer = createDrawerNavigator();
 
@@ -59,6 +60,20 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+            <Drawer.Screen name="Criar Evento"
+                component={Events}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="calendar"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Criar Evento',
+                    }
+                }
+            />
+
             <Drawer.Screen name="Admin"
                 component={Admin}
                 options={
@@ -100,6 +115,8 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+
+            
 
         </Drawer.Navigator>
     );
