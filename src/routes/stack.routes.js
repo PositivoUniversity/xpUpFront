@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Recovery from "../screens/Recovery";
+import Dashboard from "../screens/Dashboard";
 import DrawerRoutes from "./drawer.routes";
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,9 @@ export default function StackRoutes() {
 
             <Stack.Screen name="recovery"
                 component={Recovery}
+            />
+            <Stack.Screen name="dashboard"
+                component={Dashboard}
             />
         </Stack.Navigator>
     );

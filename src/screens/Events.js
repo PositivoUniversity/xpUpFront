@@ -13,7 +13,7 @@ export default function Events({ navigation }) {
     const [description, setDescription] = useState('');
 
     const goToHome = async () => {
-        navigation.navigate('menu');
+        navigation.navigate('dashboard');
     };
     const sendEvent = () => {
         sendEventData();
