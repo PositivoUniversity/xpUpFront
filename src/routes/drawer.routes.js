@@ -88,6 +88,20 @@ export default function DrawerRoutes() {
                 }
             />
 
+            <Drawer.Screen name="Course"
+                component={Course}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="edit"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar Cursos'
+                    }
+                }
+            />
+
             <Drawer.Screen name="settings"
                 component={Settings}
                 options={
