@@ -10,7 +10,6 @@ import { Picker } from '@react-native-picker/picker';
 import { loadCourses } from '../../api/courses-api';
 
 export default function Admin() {
-    const [data, setData] = useState([]);
     const [isFABOpen, setFABOpen] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
@@ -20,7 +19,24 @@ export default function Admin() {
     const [password, setPassword] = useState([]);
     const [course, setCourse] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState('');
-
+    const [data, setData] = useState([]);
+    const [formState, setFormState] = useState({
+        name: name,
+        email: email,
+        passwordTip: passwordTip,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        password: password,
+        role: 2,
+        course: selectedCourse,
+    });
+    const handleChange = (field, value) => {
+        setFormState(prevState => ({
+            ...prevState,
+            [field]: value,
+        }));
+        console.log(value)
+    };
     const sendUser = () => {
         setModalVisible((value) => !value);
         sendUserData();
@@ -137,29 +153,29 @@ export default function Admin() {
                             </Picker>
                         </View>
                     </DefaultModal>
-                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit);  }} sendData={handleEditUser}>
+                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={handleEditUser}>
                         <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
                             value={name}
-                            onChangeText={setName}
+                            onChangeText={value => handleChange('name', value)}
                         />
                         <DefaultInput label="Email"
                             value={email}
-                            onChangeText={setEmail}
+                            onChangeText={value => handleChange('email', value)}
                         />
                         <DefaultInput label="Dica de Senha"
                             value={passwordTip}
-                            onChangeText={setPasswordTip}
+                            onChangeText={value => handleChange('passwordTip', value)}
                         />
                         <DefaultInput label="Senha"
                             value={password}
-                            onChangeText={setPassword}
+                            onChangeText={value => handleChange('password', value)}
                         />
                         <View style={styles.pickerContainer}>
                             <Text>Curso</Text>
                             <Picker
                                 selectedValue={selectedCourse}
-                                onValueChange={(itemValue) => setSelectedCourse(itemValue)}
+                                onValueChange={value => handleChange('course', value)}
                                 style={styles.picker}
                             >
                                 <Picker.Item label="Selecione um curso" value="" />
