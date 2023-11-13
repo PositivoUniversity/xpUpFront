@@ -1,11 +1,11 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Feather } from '@expo/vector-icons';
-import Dashboard from '../screens/Dashboard';
-import Profile from '../screens/Profile';
-import Settings from '../screens/Settings';
-import Login from '../screens/Login';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
+import Dashboard from '../screens/Dashboard';
+import News from '../screens/News';
+import Profile from '../screens/Profile';
+import Settings from '../screens/Settings';
 
 const Drawer = createDrawerNavigator();
 
@@ -59,6 +59,21 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+
+            <Drawer.Screen name="news"
+                component={News}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="file-text"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Notícia',
+                    }
+                }
+            />
+
             <Drawer.Screen name="Admin"
                 component={Admin}
                 options={
