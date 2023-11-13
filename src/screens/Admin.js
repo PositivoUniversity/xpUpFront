@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { ActivityIndicator, FAB } from 'react-native-paper';
 import DefaultPage from '../components/DefaultPage';
 import DefaultDataTable from '../components/DefaultDataTable';
-import { createUser, loadUsers } from '../../api/users-api';
+import { createUser, editUser, loadUsers } from '../../api/users-api';
 import DefaultModal from '../components/DefaultModal';
 import DefaultInput from '../components/DefaultInput';
 import { Picker } from '@react-native-picker/picker';
@@ -24,7 +24,6 @@ export default function Admin() {
     const sendUser = () => {
         setModalVisible((value) => !value);
         sendUserData();
-        clearInputs();
     }
 
     const sendUserData = async () => {
@@ -49,21 +48,16 @@ export default function Admin() {
         setModalVisible((value) => !value);
     }
     const handleEditUser = (selectedUser) => {
-        setModalVisibleEdit((value) => !value);
+        console.log(selectedUser, 'user')
+        setModalVisibleEdit(true);
         if (selectedUser) {
             setName(selectedUser.name);
             setEmail(selectedUser.email);
-            setPasswordTip(selectedUser.passwordTip);
-            setPassword(selectedUser.password);
+            setPasswordTip('');
+            setPassword('');
             setSelectedCourse(selectedUser.course);
         }
-    }
-    const clearInputs = () => {
-        setName('');
-        setEmail('');
-        setPasswordTip('');
-        setPassword('');
-        setSelectedCourse('');
+
     }
     useEffect(() => {
         const loadData = async () => {
@@ -111,7 +105,7 @@ export default function Admin() {
                         onpressDelete={() => console.log('Deletar Usuário Pressionado')}
                         onpressEdit={(user) => handleEditUser(user)}
                     />
-                    <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); clearInputs(); }} sendData={sendUser}>
+                    <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={sendUser}>
                         <Text>Cadastrar um Professor</Text>
                         <DefaultInput label="Nome"
                             value={name}
@@ -143,8 +137,8 @@ export default function Admin() {
                             </Picker>
                         </View>
                     </DefaultModal>
-                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); clearInputs(); }} sendData={handleEditUser}>
-                        <Text>Editar o Professor </Text>
+                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit);  }} sendData={handleEditUser}>
+                        <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
                             value={name}
                             onChangeText={setName}
@@ -177,7 +171,10 @@ export default function Admin() {
                     </DefaultModal>
                 </View>
             ) : (
-                <Text>Nenhum usuário</Text>
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="purple" />
+                    <Text style={styles.loadingText}>Carregando Professores...</Text>
+                </View>
             )}
             <FAB.Group
                 open={isFABOpen}
@@ -204,5 +201,14 @@ const styles = StyleSheet.create({
         width: '100%',
         borderColor: 'gray',
         borderWidth: 1,
+    },
+    loadingText: {
+        color: 'white',
+        marginTop: 10,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
