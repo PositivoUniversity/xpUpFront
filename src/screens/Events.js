@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from 'react-native';
 import DefaultPage from '../components/DefaultPage';
 import Logo from '../components/Logo';
 import DefaultButton from '../components/DefaultButton';
@@ -12,21 +12,13 @@ export default function Events({ navigation }) {
     const [subtitle, setSubtitle] = useState('');
     const [description, setDescription] = useState('');
 
-    const goToHome = () => {
+    const goToHome = async () => {
         navigation.navigate('menu');
     };
-
-    
     const sendEvent = () => {
-        console.log('SendEvent:', 'Title:', title, 'Subtitle:',subtitle, 'Description:',description)
         sendEventData();
     };
-
-
     const sendEventData = async () => {
-        
-        
-        console.log('SendEventData Pré Json: -----', 'Title:', title, 'Subtitle:',subtitle, 'Description:',description)
         try {
             const urlParams = {
                 title: title,
@@ -36,9 +28,8 @@ export default function Events({ navigation }) {
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
-            console.log('SendEventData Pós Json: -----', 'Title:', title, 'Subtitle:', subtitle, 'Description:', description, 'UserID:', urlParams.usersId, 'Data de Criacao:', urlParams.createdAt, 'Data de Update:', urlParams.updatedAt)
-            console.log(urlParams)
             await createEvent(urlParams);
+            await goToHome();
         } catch (error) {
             console.error('Error creating event in Events.js:', error);
             throw error;
@@ -47,46 +38,64 @@ export default function Events({ navigation }) {
 
     return (
         <DefaultPage>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+          >
             <View style={styles.container}>
-                <Logo />
-
-                <View style={styles.containerInput}>
-                    <Text style={styles.title}>Criação de Eventos</Text>
-
-                    <DefaultInput
-                        label="Titulo"
-                        value={title}
-                        onChangeText={setTitle}
-                    />
-
-                    <DefaultInput
-                        label="Subtitulo"
-                        value={subtitle}
-                        onChangeText={setSubtitle}
-                    />
-
-                    <DefaultInput
-                        label="Descricao"
-                        value={description}
-                        onChangeText={setDescription}
-                    />
-
-                    <DefaultButton
-                        text="Concluir Criação"
-                        onPress={sendEvent}
-                        styleButton={styles.btn}
-                        styleText={styles.btnText}
-                    />
-                </View>
+              <View style={styles.containerLogo}>
+                <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
+              </View>
+    
+              <View style={styles.containerInput}>
+                <Text style={styles.title}>Criação de Eventos</Text>
+    
+                <DefaultInput
+                  label="Titulo"
+                  value={title}
+                  onChangeText={setTitle}
+                />
+    
+                <DefaultInput
+                  label="Subtitulo"
+                  value={subtitle}
+                  onChangeText={setSubtitle}
+                />
+    
+                <DefaultTextBox
+                  label="Descricao"
+                  value={description}
+                  onChangeText={setDescription}
+                />
+    
+                <DefaultButton
+                  text="Concluir Criação"
+                  onPress={sendEvent}
+                  styleButton={styles.btn}
+                  styleText={styles.btnText}
+                />
+              </View>
             </View>
+          </KeyboardAvoidingView>
         </DefaultPage>
-    );
+      );
+    
 }
 
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        marginTop: 30,
+        justifyContent: 'center',
+        marginTop: 0,
+        flex: 1
+    },
+    logo: {
+        width: 50,
+        height: 50,
+        resizeMode: 'contain'
+    },
+    containerLogo: {
+        marginBottom: 0,
     },
     containerInput: {
         height: 200,
@@ -99,8 +108,8 @@ const styles = StyleSheet.create({
     title: {
         color: '#d5d5d5',
         fontWeight: 'bold',
-        fontSize: 30,
-        marginBottom: 20,
+        fontSize: 20,
+        marginBottom: 0,
     },
     btn: {
         backgroundColor: '#A101FE',
@@ -108,6 +117,7 @@ const styles = StyleSheet.create({
         width: '60%',
         borderRadius: 10,
         marginTop: 20,
+        marginBottom: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
