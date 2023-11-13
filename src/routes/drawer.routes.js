@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
 import Dashboard from '../screens/Dashboard';
+import Events from '../screens/Events';
 import News from '../screens/News';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
@@ -59,6 +60,20 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+            <Drawer.Screen name="Criar Evento"
+                component={Events}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="calendar"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Criar Evento',
+                    }
+                }
+            />
+
 
             <Drawer.Screen name="news"
                 component={News}
@@ -115,6 +130,8 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+
+            
 
         </Drawer.Navigator>
     );
