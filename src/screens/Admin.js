@@ -21,7 +21,27 @@ export default function Admin() {
     const [selectedCourse, setSelectedCourse] = useState('');
     const [data, setData] = useState([]);
     const [dataEditUser, setDataEditUser] = useState([]);
+    const [editCourse, setEditCourse] = useState([]);
 
+    const [formState, setFormState] = useState({
+        name: name,
+        email: email,
+        passwordTip: passwordTip,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        password: password,
+        role: 2,
+        course: selectedCourse,
+
+    });
+
+    const handleChange = (field, value) => {
+        setFormState(prevState => ({
+            ...prevState,
+            [field]: value,
+        }));
+        console.log(formState);
+    };
     const sendUser = () => {
         setModalVisible((value) => !value);
         sendUserData();
@@ -50,15 +70,19 @@ export default function Admin() {
     }
     const handleEditUser = (selectedUser) => {
         setDataEditUser(selectedUser);
-        console.log(selectedUser, 'user')
         setModalVisibleEdit(true);
+
+
+
         if (selectedUser) {
-            setName(selectedUser.name);
+            setFormState(selectedUser),
+                setName(selectedUser.name);
             setEmail(selectedUser.email);
             setPasswordTip('');
             setPassword('');
             setSelectedCourse(selectedUser.course);
         }
+        console.log(formState, 'formmm $$$$$$$$$$$$$$$$$$$$$$$')
     }
 
     const doPut = async () => {
@@ -66,20 +90,18 @@ export default function Admin() {
 
         try {
             const urlParams = {
-                id: userEditData.id,
-                name: userEditData.name,
-                email: userEditData.email,
-                passwordTip: userEditData.passwordTip,
-                createdAt: userEditData.createdAt,
-                updatedAt: new Date(),
-                password: userEditData.password,
-                role: userEditData.role,
-                course: userEditData.course,
+                id: formState.id,
+                name: formState.name,
+                email: formState.email,
+                password: password,
+                passwordTip: formState.passwordTip,
+                role: 2,
+                course: 5,
             };
             console.log(urlParams, 'urlParams')
-            await editUser(urlParams, userEditData.id);
+            await editUser(urlParams, formState.id);
         } catch (error) {
-            console.error('Erro ao criar usuário:', error);
+            console.error('Erro ao editar usuário:', error);
         }
 
     }
@@ -164,20 +186,20 @@ export default function Admin() {
                     <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={doPut}>
                         <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
-                            value={name}
-                            onChangeText={value => setName(value)}
+                            value={formState.name}
+                            onChangeText={value => handleChange('name', value)}
                         />
                         <DefaultInput label="Email"
-                            value={email}
-                            onChangeText={value => setEmail(value)}
+                            value={formState.email}
+                            onChangeText={value => handleChange('email', value)}
                         />
                         <DefaultInput label="Dica de Senha"
-                            value={passwordTip}
-                            onChangeText={value => setPasswordTip(value)}
+                            value={formState.passwordTip}
+                            onChangeText={value => handleChange('passwordTip', value)}
                         />
-                        <DefaultInput label="Senha"
-                            value={password}
-                            onChangeText={value => setPassword(value)}
+                        <DefaultInput label="Nova Senha"
+                            value={formState.password}
+                            onChangeText={value => handleChange('password', value)}
                         />
                         <View style={styles.pickerContainer}>
                             <Text>Curso</Text>
@@ -186,7 +208,7 @@ export default function Admin() {
                                 onValueChange={value => handleChange('course', value)}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="Selecione um curso" value="" />
+                                <Picker.Item label="Selecione um curso" value={formState.course} />
                                 {course.map((courseItem) => (
                                     <Picker.Item key={courseItem.id} label={courseItem.name} value={courseItem.id} />
                                 ))}

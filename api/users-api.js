@@ -28,7 +28,7 @@ export const createUser = async (urlParams) => {
 }
 
 export const editUser = async (urlParams, id) => {
-    const URL_EDIT_USER = URL + '/User/editUser/' + id
+    const URL_EDIT_USER = URL + '/Users/editUser/' + id
     try {
         const response = await editData(URL_EDIT_USER, urlParams);
         return response;
