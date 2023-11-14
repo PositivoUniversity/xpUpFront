@@ -4,7 +4,6 @@ import config from "../config";
 const URL = config.URL_API
 const URL_USERS = URL + '/users'
 const URL_CREATE_USER = URL + '/Users/createUserDto'
-const URL_EDIT_USER = URL + '/Users'
 const URL_DELETE_USER = URL + '/Users/:id'
 
 
@@ -28,7 +27,8 @@ export const createUser = async (urlParams) => {
     }
 }
 
-export const editUser = async (urlParams) => {
+export const editUser = async (urlParams, id) => {
+    const URL_EDIT_USER = URL + '/User/editUser/' + id
     try {
         const response = await editData(URL_EDIT_USER, urlParams);
         return response;

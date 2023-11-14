@@ -20,23 +20,8 @@ export default function Admin() {
     const [course, setCourse] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [data, setData] = useState([]);
-    const [formState, setFormState] = useState({
-        name: name,
-        email: email,
-        passwordTip: passwordTip,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        password: password,
-        role: 2,
-        course: selectedCourse,
-    });
-    const handleChange = (field, value) => {
-        setFormState(prevState => ({
-            ...prevState,
-            [field]: value,
-        }));
-        console.log(value)
-    };
+    const [dataEditUser, setDataEditUser] = useState([]);
+
     const sendUser = () => {
         setModalVisible((value) => !value);
         sendUserData();
@@ -64,6 +49,7 @@ export default function Admin() {
         setModalVisible((value) => !value);
     }
     const handleEditUser = (selectedUser) => {
+        setDataEditUser(selectedUser);
         console.log(selectedUser, 'user')
         setModalVisibleEdit(true);
         if (selectedUser) {
@@ -72,6 +58,28 @@ export default function Admin() {
             setPasswordTip('');
             setPassword('');
             setSelectedCourse(selectedUser.course);
+        }
+    }
+
+    const doPut = async () => {
+        const userEditData = dataEditUser;
+
+        try {
+            const urlParams = {
+                id: userEditData.id,
+                name: userEditData.name,
+                email: userEditData.email,
+                passwordTip: userEditData.passwordTip,
+                createdAt: userEditData.createdAt,
+                updatedAt: new Date(),
+                password: userEditData.password,
+                role: userEditData.role,
+                course: userEditData.course,
+            };
+            console.log(urlParams, 'urlParams')
+            await editUser(urlParams, userEditData.id);
+        } catch (error) {
+            console.error('Erro ao criar usuário:', error);
         }
 
     }
@@ -153,23 +161,23 @@ export default function Admin() {
                             </Picker>
                         </View>
                     </DefaultModal>
-                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={handleEditUser}>
+                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={doPut}>
                         <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
                             value={name}
-                            onChangeText={value => handleChange('name', value)}
+                            onChangeText={value => setName(value)}
                         />
                         <DefaultInput label="Email"
                             value={email}
-                            onChangeText={value => handleChange('email', value)}
+                            onChangeText={value => setEmail(value)}
                         />
                         <DefaultInput label="Dica de Senha"
                             value={passwordTip}
-                            onChangeText={value => handleChange('passwordTip', value)}
+                            onChangeText={value => setPasswordTip(value)}
                         />
                         <DefaultInput label="Senha"
                             value={password}
-                            onChangeText={value => handleChange('password', value)}
+                            onChangeText={value => setPassword(value)}
                         />
                         <View style={styles.pickerContainer}>
                             <Text>Curso</Text>
