@@ -1,5 +1,5 @@
 import config from "../config";
-import { loadData, sendData } from "../connection";
+import { deleteData, loadData, sendData } from "../connection";
 
 const URL = config.URL_API
 const URL_NEWS = URL + '/News'
@@ -22,6 +22,17 @@ export const createNews = async (params) => {
     } catch (error) {
         console.error('Erro ao tentar criar notícia:', error);
         console.log(URL_CREATE_NEWS)
+        throw error;
+    }
+}
+
+export const deleteNews = async (params) => {
+    try {
+        const response = await deleteData(URL_NEWS + "/" + params);
+        return response;
+    } catch (error) {
+        console.error('Erro ao tentar deletar notícia:', error);
+        console.log(URL_NEWS)
         throw error;
     }
 }

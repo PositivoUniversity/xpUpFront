@@ -4,6 +4,7 @@ import { createNews } from '../../api/news-api';
 import DefaultButton from '../components/DefaultButton';
 import DefaultInput from '../components/DefaultInput';
 import DefaultPage from '../components/DefaultPage';
+import DefaultTextBox from '../components/DefaultTextBox';
 import Logo from '../components/Logo';
 
 export default function News({ navigation }) {
@@ -26,15 +27,6 @@ export default function News({ navigation }) {
           console.error('Erro ao criar usuário:', error);
       }
   };
-  
-  // {
-  //   "title": "string",
-  //   "subtitle": "string",
-  //   "description": "string",
-  //   "publishedBy": 0,
-  //   "createdAt": "2023-11-13T01:55:52.795Z",
-  //   "updatedAt": "2023-11-13T01:55:52.795Z"
-  // }
 
     return (
       <DefaultPage>
@@ -56,7 +48,7 @@ export default function News({ navigation }) {
               onChangeText={setSubtitle}
             />
 
-            <DefaultInput
+            <DefaultTextBox
               label="Descricao"
               value={description}
               onChangeText={setDescription}

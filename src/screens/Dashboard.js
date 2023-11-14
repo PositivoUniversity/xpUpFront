@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { loadNews } from '../../api/news-api';
 import DefaultPage from "../components/DefaultPage";
 import NewsCard from '../components/NewsCard';
@@ -17,13 +17,6 @@ export default function Dashboard() {
         };
         loadNewsData();
     }, []); 
-
-    const renderItem = ({ item }) => (
-        <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: 'gray' }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: "white" }}>{item.title}</Text>
-            <Text>{item.body}</Text>
-        </View>
-    );
 
     return (
         <DefaultPage>
