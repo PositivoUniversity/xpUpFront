@@ -6,7 +6,6 @@ const URL_USERS = URL + '/users'
 const URL_CREATE_USER = URL + '/Users/createUserDto'
 const URL_DELETE_USER = URL + '/Users/:id'
 
-
 export const loadUsers = async () => {
     try {
         const data = await loadData(URL_USERS);
@@ -16,6 +15,7 @@ export const loadUsers = async () => {
         throw error;
     }
 }
+
 export const createUser = async (urlParams) => {
     try {
         const response = await sendData(URL_CREATE_USER, urlParams);
@@ -31,7 +31,12 @@ export const editUser = async (urlParams, id) => {
     const URL_EDIT_USER = URL + '/Users/editUser/' + id
     try {
         const response = await editData(URL_EDIT_USER, urlParams);
-        return response;
+        if (!response) {
+            console.log('Resposta vazia ou nula');
+            return;
+        }
+        return response
+
     } catch (error) {
         console.error('Erro ao Editar usuário:', error);
         console.log(URL_EDIT_USER)

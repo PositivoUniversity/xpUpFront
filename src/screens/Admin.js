@@ -36,11 +36,10 @@ export default function Admin() {
     });
 
     const handleChange = (field, value) => {
-        setFormState(prevState => ({
-            ...prevState,
-            [field]: value,
-        }));
-        console.log(formState);
+        setFormState(prevState => {
+            const newState = { ...prevState, [field]: value };
+            return newState;
+        });
     };
     const sendUser = () => {
         setModalVisible((value) => !value);
@@ -71,18 +70,10 @@ export default function Admin() {
     const handleEditUser = (selectedUser) => {
         setDataEditUser(selectedUser);
         setModalVisibleEdit(true);
-
-
-
         if (selectedUser) {
-            setFormState(selectedUser),
-                setName(selectedUser.name);
-            setEmail(selectedUser.email);
-            setPasswordTip('');
-            setPassword('');
-            setSelectedCourse(selectedUser.course);
+            setFormState(selectedUser);
         }
-        console.log(formState, 'formmm $$$$$$$$$$$$$$$$$$$$$$$')
+
     }
 
     const doPut = async () => {
@@ -93,17 +84,16 @@ export default function Admin() {
                 id: formState.id,
                 name: formState.name,
                 email: formState.email,
-                password: password,
+                password: formState.password,
                 passwordTip: formState.passwordTip,
                 role: 2,
-                course: 5,
+                course: formState.course,
             };
-            console.log(urlParams, 'urlParams')
+            console.log(urlParams, "aqui")
             await editUser(urlParams, formState.id);
         } catch (error) {
             console.error('Erro ao editar usuário:', error);
         }
-
     }
     useEffect(() => {
         const loadData = async () => {
@@ -204,7 +194,7 @@ export default function Admin() {
                         <View style={styles.pickerContainer}>
                             <Text>Curso</Text>
                             <Picker
-                                selectedValue={selectedCourse}
+                                selectedValue={formState.course}
                                 onValueChange={value => handleChange('course', value)}
                                 style={styles.picker}
                             >

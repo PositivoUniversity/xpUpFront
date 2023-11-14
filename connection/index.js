@@ -49,13 +49,14 @@ export const editData = async (url, urlParams) => {
             },
             body: JSON.stringify(urlParams),
         };
+
         const response = await fetch(url, options);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();
+        return response.json();  
     } catch (error) {
         console.error('Error for edit data:', error);
         throw error;
