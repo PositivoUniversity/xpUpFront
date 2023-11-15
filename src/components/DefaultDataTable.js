@@ -29,23 +29,23 @@ export default function DefaultDataTable({
     };
 
     const rows = data.map((item, index) => (
-        <DataTable.Row key={index}>
+        <DataTable.Row key={index} style={styles.cell}  >
             {columnNames.map((columnName, columnIndex) => (
-                <DataTable.Cell key={columnIndex} textStyle={textStyle}>
+                <DataTable.Cell key={columnIndex} textStyle={textStyle} >
                     {renderCellContent(columnName, item[cellData[columnName]])}
                 </DataTable.Cell>
             ))}
             {textedit && (
-                <DataTable.Cell>
+                <DataTable.Cell >
                     <TouchableOpacity onPress={() => onpressEdit(item)}>
-                        <Feather name="edit" size={24} color="white" />
+                        <Feather name="edit" size={24} color="black" />
                     </TouchableOpacity>
                 </DataTable.Cell>
             )}
             {textDelete && (
-                <DataTable.Cell>
+                <DataTable.Cell >
                     <TouchableOpacity onPress={() => onpressDelete(item)}>
-                        <Feather name="delete" size={24} color="white" />
+                        <Feather name="delete" size={24} color="black" />
                     </TouchableOpacity>
                 </DataTable.Cell>
             )}
@@ -55,8 +55,8 @@ export default function DefaultDataTable({
 
     return (
         <View>
-            <DataTable style={styleDataTable}>
-                <DataTable.Header style={styleHeader}>
+            <DataTable style={styleDataTable} >
+                <DataTable.Header style={styles.firstLine}>
                     {columnNames.map((columnName, index) => (
                         <DataTable.Title key={index} textStyle={textStyle} style={isHeader ? styles : styles.header} >
                             {columnName}
@@ -72,6 +72,23 @@ export default function DefaultDataTable({
 }
 const styles = StyleSheet.create({
     header: {
-        display: 'none'
+        display: 'none',
     },
+    cell: {
+        backgroundColor: 'white',
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
+        borderTopStartRadius: 20,
+        borderRadius: 17,
+        marginBottom: 15,
+
+    },
+    firstLine: {
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
+        borderTopStartRadius: 20,
+        borderRadius: 17,
+        marginBottom: 15,
+    }
+
 });

@@ -238,7 +238,7 @@ export default function Admin() {
 
 const styles = StyleSheet.create({
     styleText: {
-        color: 'white',
+        color: 'black',
     },
     pickerContainer: {
         marginTop: 10,
