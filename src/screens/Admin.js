@@ -45,6 +45,14 @@ export default function Admin() {
     const sendUser = () => {
         setModalVisible((value) => !value);
         sendUserData();
+        loadUsers();
+        clearInput();
+    }
+    const clearInput = () => {
+        setName('');
+        setEmail('');
+        setPasswordTip('');
+        setPassword('');
     }
 
     const sendUserData = async () => {
@@ -63,6 +71,9 @@ export default function Admin() {
             await createUser(urlParams);
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
+        } finally {
+            clearInput();
+            loadUsers();
         }
     };
     const handleCreateUser = () => {
@@ -81,6 +92,9 @@ export default function Admin() {
 
         } catch (error) {
             console.error('Erro ao remover usuário:', error);
+        } finally {
+            clearInput();
+            loadUsers();
         }
     }
 
@@ -98,8 +112,12 @@ export default function Admin() {
             await editUser(urlParams, formState.id);
             setModalVisibleEdit(false);
             setIsPasswordChanged(false);
+            await loadUsers();
         } catch (error) {
             console.error('Erro ao editar usuário:', error);
+        } finally {
+            clearInput();
+            loadUsers();
         }
     }
     useEffect(() => {
@@ -113,7 +131,7 @@ export default function Admin() {
             }
         };
         loadData();
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         const loadCourse = async () => {
