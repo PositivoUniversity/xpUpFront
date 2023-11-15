@@ -77,7 +77,7 @@ export const deleteData = async (url) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();
+        return JSON.stringify(response);
     } catch (error) {
         console.error('Error for delete data:', error);
         throw error;

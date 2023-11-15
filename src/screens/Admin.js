@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ActivityIndicator, FAB } from 'react-native-paper';
 import DefaultPage from '../components/DefaultPage';
 import DefaultDataTable from '../components/DefaultDataTable';
-import { createUser, editUser, loadUsers } from '../../api/users-api';
+import { createUser, deleteUser, editUser, loadUsers } from '../../api/users-api';
 import DefaultModal from '../components/DefaultModal';
 import DefaultInput from '../components/DefaultInput';
 import { Picker } from '@react-native-picker/picker';
@@ -75,6 +75,14 @@ export default function Admin() {
             setFormState(selectedUser);
         }
     }
+    const removeUser = async (selectedUser) => {
+        try {
+            await deleteUser(selectedUser.id);
+
+        } catch (error) {
+            console.error('Erro ao remover usuário:', error);
+        }
+    }
 
     const sendEditUser = async () => {
         try {
@@ -137,7 +145,7 @@ export default function Admin() {
                         textedit={' '}
                         data={data}
                         textStyle={styles.styleText}
-                        onpressDelete={() => console.log('Deletar Usuário Pressionado')}
+                        onpressDelete={(user) => removeUser(user)}
                         onpressEdit={(user) => handleEditUser(user)}
                     />
                     <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={sendUser}>

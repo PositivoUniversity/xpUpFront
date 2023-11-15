@@ -4,7 +4,6 @@ import config from "../config";
 const URL = config.URL_API
 const URL_USERS = URL + '/users'
 const URL_CREATE_USER = URL + '/Users/createUserDto'
-const URL_DELETE_USER = URL + '/Users/:id'
 
 export const loadUsers = async () => {
     try {
@@ -19,7 +18,7 @@ export const loadUsers = async () => {
 export const createUser = async (urlParams) => {
     try {
         const response = await sendData(URL_CREATE_USER, urlParams);
-        return response;
+        return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
         console.log(URL_CREATE_USER)
@@ -35,7 +34,7 @@ export const editUser = async (urlParams, id) => {
             console.log('Resposta vazia ou nula');
             return;
         }
-        return response
+        return JSON.stringify(response);
 
     } catch (error) {
         console.error('Erro ao Editar usuário:', error);
@@ -44,10 +43,11 @@ export const editUser = async (urlParams, id) => {
     }
 }
 
-export const deleteUser = async () => {
+export const deleteUser = async (id) => {
+    const URL_DELETE_USER = URL + '/Users/' + id
     try {
         const response = await deleteData(URL_DELETE_USER);
-        return response;
+        return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao remvoer usuário:', error);
         console.log(URL_DELETE_USER)

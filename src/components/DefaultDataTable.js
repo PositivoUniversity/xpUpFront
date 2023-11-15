@@ -45,7 +45,7 @@ export default function DefaultDataTable({
             {textDelete && (
                 <DataTable.Cell>
                     <TouchableOpacity onPress={() => onpressDelete(item)}>
-                        <Feather name="delete" size={24} color="white" onPress={onpressDelete} />
+                        <Feather name="delete" size={24} color="white" />
                     </TouchableOpacity>
                 </DataTable.Cell>
             )}
