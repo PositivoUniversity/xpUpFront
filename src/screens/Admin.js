@@ -13,10 +13,10 @@ export default function Admin() {
     const [isFABOpen, setFABOpen] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
-    const [name, setName] = useState([]);
-    const [email, setEmail] = useState([]);
-    const [passwordTip, setPasswordTip] = useState([]);
-    const [password, setPassword] = useState([]);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [passwordTip, setPasswordTip] = useState('');
+    const [password, setPassword] = useState('');
     const [course, setCourse] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [data, setData] = useState([]);
@@ -166,6 +166,7 @@ export default function Admin() {
                                 style={styles.picker}
                             >
                                 <Picker.Item label="Selecione um curso" value="" />
+
                                 {course.map((courseItem) => (
                                     <Picker.Item key={courseItem.id} label={courseItem.name} value={courseItem.id} />
                                 ))}
