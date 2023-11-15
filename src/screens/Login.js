@@ -8,15 +8,33 @@ import DefaultPage from "../components/DefaultPage";
 
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState(''); 
+    const [isEmailError, setIsEmailError] = useState(false);
+    const [password, setPassword] = useState('');
+    const [isPasswordEmpty, setIsPasswordEmpty] = useState(false); 
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
 
-    const handleLogin = () => {
-        // if (email != 'admin' || password != 'admin') {
-        //     alert('Email ou senha incorretos.');
-        //     return;
-        // }
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      };
+    
+      const handleLogin = () => {
+        setIsEmailError(false);
+        setIsPasswordEmpty(false);
+    
+        if (!validateEmail(email)) {
+          setIsEmailError(true);
+          setEmailErrorMessage('E-mail inválido');
+          return;
+        }
+    
+        if (password.trim() === '') {
+          setIsPasswordEmpty(true);
+          return;
+        }
+    
         navigation.navigate('menu');
-    }
+      };    
 
     const goToRegister = () => {
         navigation.navigate('register');
