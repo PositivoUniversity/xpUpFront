@@ -43,7 +43,7 @@ export const sendData = async (url, urlParams) => {
 export const editData = async (url, urlParams) => {
     try {
         const options = {
-            method: 'PUT', 
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -56,7 +56,7 @@ export const editData = async (url, urlParams) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();  
+        return JSON.stringify(response);
     } catch (error) {
         console.error('Error for edit data:', error);
         throw error;

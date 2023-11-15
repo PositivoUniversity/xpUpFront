@@ -21,7 +21,8 @@ export default function Admin() {
     const [selectedCourse, setSelectedCourse] = useState('');
     const [data, setData] = useState([]);
     const [dataEditUser, setDataEditUser] = useState([]);
-    const [editCourse, setEditCourse] = useState([]);
+    const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
 
     const [formState, setFormState] = useState({
         name: name,
@@ -73,12 +74,9 @@ export default function Admin() {
         if (selectedUser) {
             setFormState(selectedUser);
         }
-
     }
 
-    const doPut = async () => {
-        const userEditData = dataEditUser;
-
+    const sendEditUser = async () => {
         try {
             const urlParams = {
                 id: formState.id,
@@ -89,8 +87,9 @@ export default function Admin() {
                 role: 2,
                 course: formState.course,
             };
-            console.log(urlParams, "aqui")
             await editUser(urlParams, formState.id);
+            setModalVisibleEdit(false);
+            setIsPasswordChanged(false);
         } catch (error) {
             console.error('Erro ao editar usuário:', error);
         }
@@ -105,7 +104,7 @@ export default function Admin() {
             }
         };
         loadData();
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         const loadCourse = async () => {
@@ -173,7 +172,7 @@ export default function Admin() {
                             </Picker>
                         </View>
                     </DefaultModal>
-                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={doPut}>
+                    <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={sendEditUser}>
                         <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
                             value={formState.name}
@@ -188,8 +187,11 @@ export default function Admin() {
                             onChangeText={value => handleChange('passwordTip', value)}
                         />
                         <DefaultInput label="Nova Senha"
-                            value={formState.password}
-                            onChangeText={value => handleChange('password', value)}
+                            value={isPasswordChanged ? formState.password : ''}
+                            onChangeText={(value) => {
+                                handleChange('password', value);
+                                setIsPasswordChanged(true);
+                            }}
                         />
                         <View style={styles.pickerContainer}>
                             <Text>Curso</Text>
