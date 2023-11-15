@@ -106,13 +106,14 @@ export default function Admin() {
         const loadData = async () => {
             try {
                 const userData = await loadUsers();
-                setData(userData);
+                const filteredData = userData.filter((item) => item.role === 2);
+                setData(filteredData);
             } catch (error) {
                 console.error('Erro ao buscar dados de usuário:', error);
             }
         };
         loadData();
-    }, [data]);
+    }, []);
 
     useEffect(() => {
         const loadCourse = async () => {
