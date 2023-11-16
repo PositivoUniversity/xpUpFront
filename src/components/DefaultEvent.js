@@ -28,7 +28,7 @@ export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData
   useEffect(() => {
     const loadUserDetails = async (item) => {
       try {
-        console.log(item);
+        console.log(item , "DefaultEvent.js linha 31");
         const userDetailsId = await loadUsers(usersId);
         return userDetailsId;
       } catch (error) {
@@ -40,7 +40,7 @@ export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData
     events.forEach(async (item) => {
       const userDetails = await loadUserDetails(item.usersId);
     });
-  }, [events]);
+  }, []);
 
   return (
     <View style={styles.container}>
