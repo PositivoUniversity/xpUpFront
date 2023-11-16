@@ -170,6 +170,11 @@ export default function Register({ navigation }) {
                         secureTextEntry={true}
                     />
 
+                    <DefaultInput label="Dica de Senha"
+                        value={passwordTip}
+                        onChangeText={setPasswordTip}
+                    />
+
                     <View style={styles.selectCourse}>
                         <RNPickerSelect
                             placeholder={{ label: 'Selecione o curso', value: null }}
