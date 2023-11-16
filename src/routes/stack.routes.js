@@ -1,12 +1,13 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Recovery from "../screens/Recovery";
+import Dashboard from "../screens/Dashboard";
+import Events from "../screens/Events";
+import EventsEdit from "../screens/EventsEdit";
 import DrawerRoutes from "./drawer.routes";
 
 const Stack = createNativeStackNavigator();
-
 export default function StackRoutes() {
     return (
         <Stack.Navigator initialRouteName="Login"
@@ -16,17 +17,23 @@ export default function StackRoutes() {
             <Stack.Screen name="login"
                 component={Login}
             />
-
             <Stack.Screen name="menu"
                 component={DrawerRoutes}
             />
-
             <Stack.Screen name="register"
                 component={Register}
             />
-
             <Stack.Screen name="recovery"
                 component={Recovery}
+            />
+            <Stack.Screen name="events"
+                component={Events}
+            />
+            <Stack.Screen name="eventsEdit"
+                component={EventsEdit}
+            />
+            <Stack.Screen name="dashboard"
+                component={Dashboard}
             />
         </Stack.Navigator>
     );

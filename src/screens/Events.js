@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from 'react-native';
 import DefaultPage from '../components/DefaultPage';
-import Logo from '../components/Logo';
 import DefaultButton from '../components/DefaultButton';
 import DefaultTextBox from '../components/DefaultTextBox';
 import DefaultInput from '../components/DefaultInput';
@@ -13,10 +12,13 @@ export default function Events({ navigation }) {
     const [description, setDescription] = useState('');
 
     const goToHome = async () => {
-        navigation.navigate('menu');
+        navigation.navigate('dashboard');
     };
     const sendEvent = () => {
         sendEventData();
+    };
+    const getUserId = () => {
+      getUserId();
     };
     const sendEventData = async () => {
         try {
@@ -24,7 +26,7 @@ export default function Events({ navigation }) {
                 title: title,
                 subtitle: subtitle,
                 description: description,
-                usersId: 1,
+                usersId: 4,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
@@ -35,7 +37,6 @@ export default function Events({ navigation }) {
             throw error;
         }
     };
-
     return (
         <DefaultPage>
           <KeyboardAvoidingView
@@ -81,7 +82,6 @@ export default function Events({ navigation }) {
       );
     
 }
-
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
@@ -92,9 +92,11 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
+        paddingTop: 0,
         resizeMode: 'contain'
     },
     containerLogo: {
+      paddingTop: 0,
         marginBottom: 0,
     },
     containerInput: {

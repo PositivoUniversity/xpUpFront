@@ -33,7 +33,7 @@ export const sendData = async (url, urlParams) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();
+        return JSON.stringify();
     } catch (error) {
         console.error('Error for send data:', error);
         throw error;
@@ -76,7 +76,7 @@ export const deleteData = async (url) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();
+        return JSON.stringify(response);
     } catch (error) {
         console.error('Error for delete data:', error);
         throw error;

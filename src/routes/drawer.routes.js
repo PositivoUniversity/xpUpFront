@@ -7,6 +7,7 @@ import Login from '../screens/Login';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
 import Events from '../screens/Events';
+import EventsEdit from "../screens/EventsEdit";
 
 const Drawer = createDrawerNavigator();
 
@@ -70,6 +71,19 @@ export default function DrawerRoutes() {
                             size={size}
                             color={color} />,
                         drawerLabel: 'Criar Evento',
+                    }
+                }
+            />
+            <Drawer.Screen name="Editar Evento"
+                component={EventsEdit}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="tool"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar Evento',
                     }
                 }
             />
