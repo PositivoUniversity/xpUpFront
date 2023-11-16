@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { default as React, default as React, useContext, useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import { loadNews } from '../../api/news-api';
+import { AuthContext } from '../../contexts/auth';
 import DefaultPage from "../components/DefaultPage";
 import NewsCard from '../components/NewsCard';
 
 export default function Dashboard() {
+    const { user } = useContext(AuthContext);
     const [data, setData] = useState([]);
     useEffect(() => {
         const loadNewsData = async () => {
@@ -26,5 +28,3 @@ export default function Dashboard() {
         </DefaultPage>
     );
 }
-
-const styles = StyleSheet.create({});
