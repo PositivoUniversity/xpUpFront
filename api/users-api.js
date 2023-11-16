@@ -21,7 +21,6 @@ export const createUser = async (urlParams) => {
         return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
-        console.log(URL_CREATE_USER)
         throw error;
     }
 }
@@ -31,7 +30,6 @@ export const editUser = async (urlParams, id) => {
     try {
         const response = await editData(URL_EDIT_USER, urlParams);
         if (!response) {
-            console.log('Resposta vazia ou nula');
             return;
         }
         return JSON.stringify(response);
@@ -50,7 +48,6 @@ export const deleteUser = async (id) => {
         return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao remvoer usuário:', error);
-        console.log(URL_DELETE_USER)
         throw error;
     }
 }
