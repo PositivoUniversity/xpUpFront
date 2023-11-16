@@ -1,12 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+//import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { getEvent, deleteEvent } from '../../api/events-api';
+import { loadUsers } from '../../api/users-api'
 
 export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData, sendCheckinData }) {
+  
+ 
+  // useEffect(() => {
+  //   const loadDataEvents = async () => {
+  //     try {
+  //       const eventData = await getEvent();
+  //       //const userData = await loadUsers();
+  //       
+        
+  //       //const filteredUser = userData.find((user) => user.id === item.usersId);
+  //       //const filteredEvent = eventData.filter((event) => event.event.usersId === filteredUser.id);
+  //       setEvents(eventData);
+        
+  //     } catch (error) {
+  //       
+  //     }
+  //   };
+  //   loadDataEvents();
+  // }, []);
+  useEffect(() => {
+    const loadUserDetails = async (item) => {
+      try {
+        console.log(item);
+        const userDetailsId = await loadUsers(usersId);
+        return userDetailsId;
+      } catch (error) {
+        //console.error('Error fetching user details:', error);
+        return null;
+      }
+    };
+
+    events.forEach(async (item) => {
+      const userDetails = await loadUserDetails(item.usersId);
+    });
+  }, [events]);
+
   return (
     <View style={styles.container}>
       {events.length > 0 ? (
         events.map((item) => (
+
           <View key={item.id} style={styles.cardContainer}>
             <View style={styles.itemTitleContainer}>
               <Text style={styles.itemTitle}>{item.title}</Text>
@@ -22,7 +62,7 @@ export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData
               <TouchableOpacity>
               <Feather style={styles.featherPerson} name="user" />
               </TouchableOpacity>
-              <Text style={styles.featherText}>Helton</Text>
+              <Text style={styles.featherText}>{item.name}</Text>
               <View style={styles.itemLikeCheckinContainer}>
               <Text style={styles.featherText}>50</Text>
               <TouchableOpacity onPress={() => sendLikeData(item.id)}>

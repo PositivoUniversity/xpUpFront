@@ -4,24 +4,48 @@ import { Feather } from '@expo/vector-icons';
 import { FlatList } from "react-native-gesture-handler";
 import DefaultEvent from "../components/DefaultEvent";
 import { getEvent, deleteEvent } from '../../api/events-api';
+import { loadUsers } from '../../api/users-api'
 
 
 export default function Dashboard() {
+  const [user, setUser] = useState([]);
   const [events, setEvents] = useState([]);
+  const [data, setData] = useState([]);
+
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadDataUsers = async () => {
+        try {
+
+            //const userId = { id: 5 };
+            const userData = await loadUsers();
+            
+            const filteredData = userData.filter((user) => user.id === data.id);
+            setData(filteredData);
+        } catch (error) {
+            //console.error('Erro ao buscar dados de usuário:', error);
+        }
+    };
+    loadDataUsers();
+  }, [data]);
+  useEffect(() => {
+    const loadDataEvents = async () => {
       try {
-        
+        //const userData = await loadUsers();
         const eventData = await getEvent();
-        console.log(eventData);
+        //const filteredUser = userData.find((user) => user.id === events.userId);
+        //const filteredEvent = eventData.filter((event) => event.event.userId === filteredUser.id);
         setEvents(eventData);
+        //console.log(events);
       } catch (error) {
-        console.error('Erro ao buscar dados de Evento:', error);
+        //console.error('Erro ao buscar dados de Evento:', error);
       }
     };
-    loadData();
+    loadDataEvents();
   }, []);
+
+  
+
   const sendLikeData = async (item) => {
     try {
       //await likeEvent();

@@ -14,7 +14,7 @@ export function loadData(url, options = {}) {
             return response.json();
         })
         .catch(error => {
-            console.error(`Error fetching ${url}: ${error}`);
+            //console.error(`Error fetching ${url}: ${error}`);
         });
 }
 

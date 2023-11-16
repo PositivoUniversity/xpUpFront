@@ -26,7 +26,7 @@ export default function Events({ navigation }) {
                 title: title,
                 subtitle: subtitle,
                 description: description,
-                usersId: 4,
+                usersId: 5,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
