@@ -160,6 +160,7 @@ export default function Admin() {
                         isHeader={false}
                         cellData={cellData}
                         columnNames={collums}
+
                         textDelete={' '}
                         textedit={' '}
                         data={data}
@@ -170,18 +171,30 @@ export default function Admin() {
                     <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={sendUser}>
                         <Text>Cadastrar um Professor</Text>
                         <DefaultInput label="Nome"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={name}
                             onChangeText={setName}
                         />
                         <DefaultInput label="Email"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={email}
                             onChangeText={setEmail}
                         />
                         <DefaultInput label="Dica de Senha"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={passwordTip}
                             onChangeText={setPasswordTip}
                         />
                         <DefaultInput label="Senha"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={password}
                             onChangeText={setPassword}
                         />
@@ -203,18 +216,30 @@ export default function Admin() {
                     <DefaultModal isVisible={modalVisibleEdit} onClose={() => { setModalVisibleEdit(!modalVisibleEdit); }} sendData={sendEditUser}>
                         <Text>{`Editar o Professor: ${name}`}</Text>
                         <DefaultInput label="Nome"
+                            hasStile={true}
+                            hasStileColor={'black'}
+                            stylesLabel={styles.input}
                             value={formState.name}
                             onChangeText={value => handleChange('name', value)}
                         />
                         <DefaultInput label="Email"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={formState.email}
                             onChangeText={value => handleChange('email', value)}
                         />
                         <DefaultInput label="Dica de Senha"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={formState.passwordTip}
                             onChangeText={value => handleChange('passwordTip', value)}
                         />
                         <DefaultInput label="Nova Senha"
+                            hasStileColor={'black'}
+                            hasStile={true}
+                            stylesLabel={styles.input}
                             value={isPasswordChanged ? formState.password : ''}
                             onChangeText={(value) => {
                                 handleChange('password', value);
@@ -277,4 +302,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    input: {
+        width: '100%',
+        height: 40,
+        borderTopColor: 'transparent',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: '#d5d5d5',
+        borderWidth: 2,
+        color: 'black',
+        paddingLeft: 5,
+        textAlign: 'center',
+        marginBottom: 10,
+    }
 });

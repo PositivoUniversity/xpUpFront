@@ -1,3 +1,7 @@
+import React, { useContext } from 'react';
+import { Text } from 'react-native';
+import DefaultPage from "../components/DefaultPage";
+import { AuthContext } from '../../contexts/auth'
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -8,7 +12,7 @@ import { loadUsers } from '../../api/users-api'
 
 
 export default function Dashboard() {
-  const [user, setUser] = useState([]);
+    const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
@@ -81,67 +85,15 @@ export default function Dashboard() {
     }
   };
 
-  return (
-    <ScrollView style={styles.scrollView}>
-      {events.length > 0 ? (
-        events.map((item) => (
-          <DefaultEvent
-            key={item.id}
-            events={[item]}
-            sendDeleteData={sendDeleteData}
-            sendLikeData={sendLikeData}
-            sendCheckinData={sendCheckinData}
-          />
-        ))
-      ) : (
-        <Text>No events available.</Text>
-      )}
-    </ScrollView>
-  );
+    return (
+        <DefaultPage>
+            {/* <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+            /> */}
+        </DefaultPage>
+    );
 }
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#1A1818',
-    padding: 10,
-  },
-    itemContainer: {
-        padding: 20,
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start'
-    },
-      itemId: {
-        fontSize: 5,
-        color: 'white'
-      },
-      itemTitle: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-      },
-      itemSubtitle: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
-      },
-      itemDescription: {
-        color: 'gray',
-        fontSize: 10,
-        fontWeight: 'bold',
-      },
-      itemText: {
-        padding: 10,
-        paddingBottom: 0,
-      },
-      featherCalendar: {
-        color: 'blue',
-      },
-      featherHeart: {
-        color: 'red',
-      },
-      featherDelete: {
-        color: 'white',
-      }
-  });
+const styles = StyleSheet.create({});
