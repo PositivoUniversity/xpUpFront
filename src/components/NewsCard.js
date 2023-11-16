@@ -1,22 +1,23 @@
-import { Feather } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from "react-native";
+import Icon2 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { deleteNews } from '../../api/news-api';
 
 export default function NewsCard(data) {
+  console.log(data)
   const handleDelete = () => {
     console.log(data.id, typeof data.id)
     deleteNews(data.id)
   }
+  const makeLike = () => {
+    
+  }
+
   return (
     <View style={styles.container} key={data.id}>
       <View style={styles.header}>
         <Text style={styles.title}>{data.title}</Text>
-        <Feather
-          style={styles.trashIcon}
-          name="trash-2"
-          size={30}
-          onPress={handleDelete}
-        />
+        <Icon2 name="trash-alt" size={26} style={styles.trashIcon} onPress={handleDelete} />
       </View>
 
       <Text style={styles.subtitle}>{data.subtitle}</Text>
@@ -25,19 +26,12 @@ export default function NewsCard(data) {
 
       <View style={styles.footer}>
         <View style={styles.user}>
-          <Feather
-            style={styles.userIcon}
-            name="user"
-            size={30}
-          />
+          <Icon2 name="user-alt" size={26} color="#000" />
           <Text style={styles.userName}>Helton</Text>
         </View>
-        <View style={styles.actions}>
-          <Feather
-            style={styles.heartIcon}
-            name="heart"
-            size={30}
-          />
+        <View style={styles.action}>
+          <Icon name="heart-outline" size={30} color="#000" />
+          <Icon name="heart" size={30} color="#900" />
         </View>
       </View>
     </View>

@@ -2,12 +2,12 @@ import config from "../config";
 import { deleteData, loadData, sendData } from "../connection";
 
 const URL = config.URL_API
-const URL_NEWS = URL + '/News'
-const URL_CREATE_NEWS = URL + '/News/CreateNewsDto'
+const URL_LIKE = URL + '/Likes'
+const URL_CREATE_LIKE = URL + '/Likes/CreateLikesDto'
 
-export const loadNews = async () => {
+export const getLike = async () => {
     try {
-        const data = await loadData(URL_NEWS);
+        const data = await loadData(URL_LIKE);
         return data;
     } catch (error) {
         console.error('Erro ao buscar cursos:', error);
@@ -15,24 +15,24 @@ export const loadNews = async () => {
 }
 }
 
-export const createNews = async (params) => {
+export const createLike = async (params) => {
     try {
-        const response = await sendData(URL_CREATE_NEWS, params);
+        const response = await sendData(URL_CREATE_LIKE, params);
         return response;
     } catch (error) {
         console.error('Erro ao tentar criar notícia:', error);
-        console.log(URL_CREATE_NEWS)
+        console.log(URL_CREATE_LIKE)
         throw error;
     }
 }
 
-export const deleteNews = async (params) => {
+export const deleteLike = async (params) => {
     try {
-        const response = await deleteData(URL_NEWS + "/" + params);
+        const response = await deleteData(URL_LIKE + "/" + params);
         return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao tentar deletar notícia:', error);
-        console.log(URL_NEWS + "/" + params)
+        console.log(URL_LIKE + "/" + params)
         throw error;
     }
 }

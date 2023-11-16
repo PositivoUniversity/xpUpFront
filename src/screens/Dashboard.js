@@ -20,7 +20,9 @@ export default function Dashboard() {
 
     return (
         <DefaultPage>
-            {data.map((data) => NewsCard(data) )}
+            {data
+                ? (data.map((item) => NewsCard(item)))
+                : (<Text>Não existe dado para carregar...</Text>)}
         </DefaultPage>
     );
 }
