@@ -1,43 +1,94 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
+import { getRoleLabel } from '../../utils/string-utils';
+import { StyleSheet } from 'react-native';
+
 
 export default function DefaultDataTable({
     columnNames,
     data,
     styleDataTable,
     styleHeader,
-    actions,
     textStyle,
     cellData,
-    textAction
+    textedit,
+    textDelete,
+    onpressEdit,
+    onpressDelete,
+    isHeader
 }) {
+
+    const renderCellContent = (columnName, cellValue) => {
+        if (columnName === 'Regra') {
+            return getRoleLabel(cellValue);
+        } else {
+            return cellValue;
+        }
+    };
+
     const rows = data.map((item, index) => (
-        <DataTable.Row key={index}>
-            {columnNames.map((columnName, columnIndex) => (<DataTable.Cell key={columnIndex} textStyle={textStyle}>{item[cellData[columnName]]}</DataTable.Cell>
+        <DataTable.Row key={index} style={styles.cell}  >
+            {columnNames.map((columnName, columnIndex) => (
+                <DataTable.Cell key={columnIndex} textStyle={textStyle} >
+                    {renderCellContent(columnName, item[cellData[columnName]])}
+                </DataTable.Cell>
             ))}
-            {actions && (
-                <DataTable.Cell>
-                    <View>
-                        <Feather name="edit" size={24} color="white" onPress={console.log('cliquei')} />
-                    </View>
+            {textedit && (
+                <DataTable.Cell >
+                    <TouchableOpacity onPress={() => onpressEdit(item)}>
+                        <Feather name="edit" size={24} color="black" />
+                    </TouchableOpacity>
+                </DataTable.Cell>
+            )}
+            {textDelete && (
+                <DataTable.Cell >
+                    <TouchableOpacity onPress={() => onpressDelete(item)}>
+                        <Feather name="delete" size={24} color="black" />
+                    </TouchableOpacity>
                 </DataTable.Cell>
             )}
         </DataTable.Row>
     ));
+
+
     return (
         <View>
-            <DataTable style={styleDataTable}>
-                <DataTable.Header style={styleHeader}>
-                    {columnNames.map((columnName, index) => (<DataTable.Title key={index} textStyle={textStyle}>{columnName}</DataTable.Title>
+            <DataTable style={styleDataTable} >
+                <DataTable.Header style={styles.firstLine}>
+                    {columnNames.map((columnName, index) => (
+                        <DataTable.Title key={index} textStyle={textStyle} style={isHeader ? styles : styles.header} >
+                            {columnName}
+                        </DataTable.Title>
                     ))}
-                    {actions && (
-                        <DataTable.Title textStyle={textStyle}>{textAction}</DataTable.Title>
-                    )}
+                    {textedit && <DataTable.Title textStyle={textStyle}>{textedit}</DataTable.Title>}
+                    {textDelete && <DataTable.Title textStyle={textStyle}>{textDelete}</DataTable.Title>}
                 </DataTable.Header>
                 {rows}
             </DataTable>
-        </View>
+        </View >
     );
 }
+const styles = StyleSheet.create({
+    header: {
+        display: 'none',
+    },
+    cell: {
+        backgroundColor: 'white',
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
+        borderTopStartRadius: 20,
+        borderRadius: 17,
+        marginBottom: 15,
+
+    },
+    firstLine: {
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
+        borderTopStartRadius: 20,
+        borderRadius: 17,
+        marginBottom: 15,
+    }
+
+});
