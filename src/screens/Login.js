@@ -1,40 +1,21 @@
 import React from "react";
-import {View, Text, StyleSheet} from "react-native";
-import {useState} from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useState, useContext } from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 import DefaultInput from "../components/DefaultInput";
 import DefaultPage from "../components/DefaultPage";
+import { AuthContext } from '../../contexts/auth'
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
-    const [isEmailError, setIsEmailError] = useState(false);
     const [password, setPassword] = useState('');
-    const [isPasswordEmpty, setIsPasswordEmpty] = useState(false); 
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
 
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-      };
-    
-      const handleLogin = () => {
-        setIsEmailError(false);
-        setIsPasswordEmpty(false);
-    
-        if (!validateEmail(email)) {
-          setIsEmailError(true);
-          setEmailErrorMessage('E-mail inválido');
-          return;
-        }
-    
-        if (password.trim() === '') {
-          setIsPasswordEmpty(true);
-          return;
-        }
-    
-        navigation.navigate('menu');
-      };    
+    const { signIn } = useContext(AuthContext)
+
+    const handleLogin = () => {
+        signIn(email, password)
+    };
 
     const goToRegister = () => {
         navigation.navigate('register');
@@ -47,17 +28,17 @@ export default function Login({navigation}) {
     return (
         <DefaultPage>
             <View style={styles.container}>
-                <Logo/>
+                <Logo />
 
                 <Text style={styles.nameApp}> XP UP </Text>
 
                 <View style={styles.containerFormLogin}>
-                    <DefaultInput label="Email" 
+                    <DefaultInput label="Email"
                         value={email}
                         onChangeText={setEmail}
                     />
 
-                    <DefaultInput label="Senha" 
+                    <DefaultInput label="Senha"
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry={true}
@@ -70,21 +51,18 @@ export default function Login({navigation}) {
                         styleText={styles.btnRecoveryPassword}
                     />
                 </View>
-
                 <DefaultButton text="Entrar"
                     onPress={handleLogin}
                     styleButton={styles.btnLogin}
                     styleText={styles.btnLoginText}
                 />
             </View>
-
             <View style={styles.containerSignIn}>
                 <Text style={styles.textSignIn}> Não possui conta? </Text>
-            
                 <DefaultButton text=" Cadastre-se"
-                            onPress={goToRegister}
-                            styleButton={styles.btnSignIn}
-                            styleText={styles.btnTextSignIn}
+                    onPress={goToRegister}
+                    styleButton={styles.btnSignIn}
+                    styleText={styles.btnTextSignIn}
                 />
             </View>
         </DefaultPage>
@@ -117,7 +95,7 @@ const styles = StyleSheet.create({
         width: '78%',
         marginTop: 30
     },
-    containerSignIn:{
+    containerSignIn: {
         flexDirection: 'column',
         padding: 46,
         marginTop: 10,
