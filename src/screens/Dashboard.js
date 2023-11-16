@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
-import { Text } from 'react-native';
-import DefaultPage from "../components/DefaultPage";
-import { AuthContext } from '../../contexts/auth'
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { FlatList } from "react-native-gesture-handler";
+
 import DefaultEvent from "../components/DefaultEvent";
+import { AuthContext } from '../../contexts/auth'
+import { useState, useEffect } from 'react';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 import { getEvent, deleteEvent } from '../../api/events-api';
 import { loadUsers } from '../../api/users-api'
 
 
 export default function Dashboard() {
-    const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
@@ -31,21 +28,19 @@ export default function Dashboard() {
         }
     };
     loadDataUsers();
-  }, [data]);
+  }, []);
   useEffect(() => {
-    const loadDataEvents = async () => {
+    const loadEventsDetails = async () => {
       try {
-        //const userData = await loadUsers();
-        const eventData = await getEvent();
-        //const filteredUser = userData.find((user) => user.id === events.userId);
-        //const filteredEvent = eventData.filter((event) => event.event.userId === filteredUser.id);
-        setEvents(eventData);
-        //console.log(events);
+  
+        const events = await getEvent();
+        setEvents(events);
+                console.log('events aquiiiiiiii', events);
       } catch (error) {
-        //console.error('Erro ao buscar dados de Evento:', error);
+        console.error('Error ao carregar dados de eventos:', error);
       }
     };
-    loadDataEvents();
+  loadEventsDetails();
   }, []);
 
   
@@ -85,15 +80,68 @@ export default function Dashboard() {
     }
   };
 
-    return (
-        <DefaultPage>
-            {/* <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-            /> */}
-        </DefaultPage>
-    );
+  return (
+    <ScrollView style={styles.scrollView}>
+      <Text>Olá, {user.name}</Text>
+      {events.length > 0 ? (
+        events.map((item) => (
+          <DefaultEvent
+            key={item.id}
+            events={[item]}
+            sendDeleteData={sendDeleteData}
+            sendLikeData={sendLikeData}
+            sendCheckinData={sendCheckinData}
+          />
+        ))
+      ) : (
+        <Text>No events available.</Text>
+      )}
+    </ScrollView>
+  );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: '#1A1818',
+    padding: 10,
+  },
+    itemContainer: {
+        padding: 20,
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'white',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
+    },
+      itemId: {
+        fontSize: 5,
+        color: 'white'
+      },
+      itemTitle: {
+        color: 'white',
+        fontSize: 30,
+        fontWeight: 'bold',
+      },
+      itemSubtitle: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+      itemDescription: {
+        color: 'gray',
+        fontSize: 10,
+        fontWeight: 'bold',
+      },
+      itemText: {
+        padding: 10,
+        paddingBottom: 0,
+      },
+      featherCalendar: {
+        color: 'blue',
+      },
+      featherHeart: {
+        color: 'red',
+      },
+      featherDelete: {
+        color: 'white',
+      }
+  });

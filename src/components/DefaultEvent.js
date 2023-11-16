@@ -1,52 +1,57 @@
 import React, { useState, useEffect } from 'react';
-//import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { getEvent, deleteEvent } from '../../api/events-api';
 import { loadUsers } from '../../api/users-api'
 
-export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData, sendCheckinData }) {
+
+export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sendCheckinData }) {  
   
- 
-  // useEffect(() => {
-  //   const loadDataEvents = async () => {
-  //     try {
-  //       const eventData = await getEvent();
-  //       //const userData = await loadUsers();
-  //       
-        
-  //       //const filteredUser = userData.find((user) => user.id === item.usersId);
-  //       //const filteredEvent = eventData.filter((event) => event.event.usersId === filteredUser.id);
-  //       setEvents(eventData);
-        
-  //     } catch (error) {
-  //       
-  //     }
-  //   };
-  //   loadDataEvents();
-  // }, []);
+  const [userData, setUserData] = useState([]);
+  const [eventsData, setEventsData] = useState([]);
+  const [matchedUserName, setMatchedUserName] = useState('');
+  
   useEffect(() => {
-    const loadUserDetails = async (item) => {
+    const loadUserDetails = async () => {
       try {
-        console.log(item , "DefaultEvent.js linha 31");
-        const userDetailsId = await loadUsers(usersId);
-        return userDetailsId;
+        const userDetails = await loadUsers();
+        
+        setUserData(userDetails);
       } catch (error) {
-        //console.error('Error fetching user details:', error);
-        return null;
+        console.error('Error ao carregar dados de usuário:', error);
       }
     };
-
-    events.forEach(async (item) => {
-      const userDetails = await loadUserDetails(item.usersId);
-    });
+    loadUserDetails();
   }, []);
 
+
+  useEffect(() => {
+    const loadEventsDetails = async () => {
+      try {
+        const eventsDetails = await getEvent(); 
+        setEventsData(eventsDetails);
+      } catch (error) {
+        console.error('Error ao carregar dados de usuário:', error);
+      }
+    };
+    loadEventsDetails();
+  }, []);
+  useEffect(() => {
+  if (userData.length > 0 && eventsData.length > 0) {
+    const matchedUserNames = eventsData.map(event => {
+      const matchedUser = userData.find(user => user.id === event.usersId);
+      console.log(matchedUser)
+      return matchedUser ? matchedUser.name : 'No matching user found';
+    });
+    setMatchedUserName(matchedUserNames);
+  }
+}, [eventsData, userData]);
+
+  
   return (
     <View style={styles.container}>
       {events.length > 0 ? (
         events.map((item) => (
-
           <View key={item.id} style={styles.cardContainer}>
             <View style={styles.itemTitleContainer}>
               <Text style={styles.itemTitle}>{item.title}</Text>
@@ -62,7 +67,7 @@ export default function DefaultEvent({ events = [], sendDeleteData, sendLikeData
               <TouchableOpacity>
               <Feather style={styles.featherPerson} name="user" />
               </TouchableOpacity>
-              <Text style={styles.featherText}>{item.name}</Text>
+              <Text style={styles.featherText}>{matchedUserName}</Text>
               <View style={styles.itemLikeCheckinContainer}>
               <Text style={styles.featherText}>50</Text>
               <TouchableOpacity onPress={() => sendLikeData(item.id)}>

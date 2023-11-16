@@ -36,7 +36,6 @@ export const editUser = async (urlParams, id) => {
 
     } catch (error) {
         console.error('Erro ao Editar usuário:', error);
-        console.log(URL_EDIT_USER)
         throw error;
     }
 }

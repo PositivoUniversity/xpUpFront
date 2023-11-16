@@ -5,8 +5,11 @@ import DefaultButton from '../components/DefaultButton';
 import DefaultTextBox from '../components/DefaultTextBox';
 import DefaultInput from '../components/DefaultInput';
 import { createEvent } from '../../api/events-api';
+import { AuthContext } from '../../contexts/auth'
+import { useContext } from 'react';
 
 export default function Events({ navigation }) {
+    const { user } = useContext(AuthContext);
     const [title, setTitle] = useState('');
     const [subtitle, setSubtitle] = useState('');
     const [description, setDescription] = useState('');
@@ -26,7 +29,7 @@ export default function Events({ navigation }) {
                 title: title,
                 subtitle: subtitle,
                 description: description,
-                usersId: 5,
+                usersId: user.id,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };
