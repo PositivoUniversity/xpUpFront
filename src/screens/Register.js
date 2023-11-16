@@ -19,7 +19,7 @@ export default function Register({ navigation }) {
     const [courses, setCourses] = useState([]);
     const [course, setCourse] = useState(null);
 
-    const handleChange = (value) => {
+    const handleChangeCourse = (value) => {
         setCourse(value);
     };
 
@@ -27,38 +27,53 @@ export default function Register({ navigation }) {
         navigation.navigate('menu');
     }
 
-    const setUserRole = () => {
+    const setUserRole = async () => {
         const adminUpDomainRegex = /@xp\.up\.edu\.br$/; // Admins
         const upDomainRegex = /@up\.edu\.br$/; // Teachers
         const gmailDomainRegex = /@gmail\.com$/; // Students
         const outlookDomainRegex = /@outlook\.com$/; // Students
     
-        const lowerCaseEmail = email.toLowerCase();
+        let selectedRole = null;
     
-        const foundRole = roles.find((r) => {
-            if (adminUpDomainRegex.test(lowerCaseEmail) && r.name === "Admin") {
-                return true;
-            } else if (upDomainRegex.test(lowerCaseEmail) && r.name === "Teacher") {
-                return true;
-            } else if (
-                (gmailDomainRegex.test(lowerCaseEmail) || outlookDomainRegex.test(lowerCaseEmail)) &&
-                r.name === "User"
-            ) {
-                return true;
-            }
-            return false;
-        });
-    
-        if (foundRole) {
-            setRole(foundRole.id);
+        if (email.match(adminUpDomainRegex)) {
+            roles.forEach((role) => {
+                if (role.name === 'Admin') {
+                    setRole(role.id);
+                    selectedRole = role.id;
+                }
+            });
+        } else if (email.match(upDomainRegex)) {
+            roles.forEach((role) => {
+                if (role.name === 'Teacher') {
+                    setRole(role.id);
+                    selectedRole = role.id;
+                }
+            });
+        } else if (email.match(gmailDomainRegex)) {
+            roles.forEach((role) => {
+                if (role.name === 'User') {
+                    setRole(role.id);
+                    selectedRole = role.id;
+                }
+            });
+        } else if (email.match(outlookDomainRegex)) {
+            roles.forEach((role) => {
+                if (role.name === 'User') {
+                    setRole(role.id);
+                    selectedRole = role.id;
+                }
+            });
         } else {
-            console.log("Email inválido");
-        }        
+            console.log("No email matched");
+        }
+    
+        return selectedRole;
     };
     
     const sendUserData = async () => {
-        setUserRole();
         try {
+            const selectedRole = await setUserRole();
+            
             const urlParams = {
                 name: name,
                 email: email,
@@ -66,10 +81,10 @@ export default function Register({ navigation }) {
                 passwordTip: passwordTip,
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                role: role,
+                role: selectedRole,
                 course: course,
             };
-            console.log("NADAVE", urlParams);
+
             await registerUsers(urlParams);
             await goToHome();
         } catch (error) {
@@ -158,7 +173,7 @@ export default function Register({ navigation }) {
                     <View style={styles.selectCourse}>
                         <RNPickerSelect
                             placeholder={{ label: 'Selecione o curso', value: null }}
-                            onValueChange={(value) => handleChange(value)}
+                            onValueChange={(value) => handleChangeCourse(value)}
                             items={courses.map((course) => ({
                                 label: course.name,
                                 value: course.id,
