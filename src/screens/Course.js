@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View, } from "react-native";
 import DefaultPage from "../components/DefaultPage";
 import DefaultDataTable from "../components/DefaultDataTable";
-import { createCourses, loadCourses } from "../../api/courses-api";
+import { createCourses, deleteCourse, loadCourses } from "../../api/courses-api";
 import { ActivityIndicator, FAB } from "react-native-paper";
 import DefaultModal from '../components/DefaultModal';
 import DefaultInput from '../components/DefaultInput';
@@ -12,6 +12,11 @@ export default function Course() {
   const [isFABOpen, setFABOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState('');
+
+  const clearInputs = () => {
+    setName('');
+  }
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -21,28 +26,27 @@ export default function Course() {
         console.error('Erro ao buscar dados de cursos:', error);
       }
     };
-
     loadData();
-  }, []);
-  const handleCreateCourse = () => {
+  }, [data]);
+
+  const sendUser = () => {
     setModalVisible((value) => !value);
+    sendCourseData();
+    clearInputs();
   }
 
 
   const removeCourse = async (selectedCourse) => {
     try {
-        await deleteCourse(selectedCourse.id);
-
+      await deleteCourse(selectedCourse.id);
     } catch (error) {
-        console.error('Erro ao remover um Curso:', error);
-    } finally {
-        loadData();
+      console.error('Erro ao remover um Curso:', error);
     }
-}
+  }
 
-  const columns = ['Nome',];
+  const columns = [' ',];
   const cellData = {
-    Nome: 'name',
+    ' ': 'name',
   };
   const sendCourseData = async () => {
     try {
@@ -53,13 +57,11 @@ export default function Course() {
     } catch (error) {
       Alert.alert('Erro ao criar Curso:', error);
     } finally {
-      loadData();
+      clearInputs();
     }
   };
 
-
   return (
-
     <DefaultPage>
       {data && data.length > 0 ? (
         <View>
@@ -73,7 +75,9 @@ export default function Course() {
             onpressDelete={(course) => removeCourse(course)}
 
           />
-          <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={console.log('criou?')} >
+          <DefaultModal isVisible={modalVisible}
+            onClose={() => { setModalVisible(!modalVisible); }}
+            sendData={sendUser} >
             <Text>Cadastrar um Curso</Text>
             <DefaultInput label="Nome do curso"
               hasStileColor={'black'}
@@ -95,7 +99,7 @@ export default function Course() {
         open={isFABOpen}
         icon={data && data.length > 0 ? 'plus' : 'account'}
         actions={[
-          { icon: 'plus', label: 'Criar Novo Curso', onPress: () => handleCreateCourse(), labelStyle: { color: 'white' } },
+          { icon: 'plus', label: 'Criar Novo Curso', onPress: () => setModalVisible((value) => !value), labelStyle: { color: 'white' } },
         ]}
         onStateChange={({ open }) => setFABOpen(open)}
         theme={{ colors: { background: 'transparent' } }}

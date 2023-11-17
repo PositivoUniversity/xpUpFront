@@ -1,5 +1,5 @@
 import config from "../config";
-import { loadData } from "../connection";
+import { deleteData, loadData, sendData } from "../connection";
 
 const URL = config.URL_API
 const COURSES = '/courses';
@@ -30,7 +30,7 @@ export const deleteCourse = async (id) => {
         const response = await deleteData(URL_DELETE_COURSE);
         return JSON.stringify(response);
     } catch (error) {
-        console.error('Erro ao remover Curso:', error);
+        console.log('Erro ao remover Curso:', error);
         throw error;
     }
 }
