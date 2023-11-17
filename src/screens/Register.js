@@ -33,9 +33,9 @@ export default function Register({ navigation }) {
         const upDomainRegex = /@up\.edu\.br$/; // Teachers
         const gmailDomainRegex = /@gmail\.com$/; // Students
         const outlookDomainRegex = /@outlook\.com$/; // Students
-    
+
         let selectedRole = null;
-    
+
         if (email.match(adminUpDomainRegex)) {
             roles.forEach((role) => {
                 if (role.name === 'Admin') {
@@ -67,14 +67,14 @@ export default function Register({ navigation }) {
         } else {
             console.log("No email matched");
         }
-    
+
         return selectedRole;
     };
-    
+
     const sendUserData = async () => {
         try {
             const selectedRole = await setUserRole();
-            
+
             const urlParams = {
                 name: name,
                 email: email,
@@ -92,7 +92,7 @@ export default function Register({ navigation }) {
             console.error('Error creating user in Register.js:', error);
             throw error;
         }
-    };    
+    };
 
     const sendRegister = () => {
         if (!name || !email || !password || !passwordConfirm) {
@@ -124,7 +124,7 @@ export default function Register({ navigation }) {
         };
 
         fetchCourses();
-    }, []);    
+    }, []);
 
     useEffect(() => {
         const loadedRoles = async () => {
@@ -137,7 +137,7 @@ export default function Register({ navigation }) {
                 throw error;
             }
         };
-    
+
         loadedRoles();
     }, []);
 

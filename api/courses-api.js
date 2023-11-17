@@ -3,6 +3,7 @@ import { loadData } from "../connection";
 
 const URL = config.URL_API
 const COURSES = '/courses';
+const CREATE_COURSE = '/Courses/CreateCourseDto';
 
 export const loadCourses = async () => {
     try {
@@ -13,3 +14,14 @@ export const loadCourses = async () => {
         throw error;
     }
 }
+export const createCourses = async (urlParams) => {
+    try {
+        const response = await sendData(URL + CREATE_COURSE, urlParams);
+        return JSON.stringify(response);
+    } catch (error) {
+        console.error('Erro ao criar curso:', error);
+        throw error;
+    }
+}
+
+

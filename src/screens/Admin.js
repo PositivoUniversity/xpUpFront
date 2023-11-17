@@ -160,7 +160,6 @@ export default function Admin() {
                         isHeader={false}
                         cellData={cellData}
                         columnNames={collums}
-
                         textDelete={' '}
                         textedit={' '}
                         data={data}
