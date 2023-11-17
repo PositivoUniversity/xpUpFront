@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from '@react-navigation/native'; // Importe o hook de navegação
+import { StyleSheet, Text, TouchableOpacity, } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import DefaultPage from "../components/DefaultPage";
 import DefaultDataTable from "../components/DefaultDataTable";
 import { loadCourses } from "../../api/courses-api";
 
-export default function Admin() {
+export default function Course() {
   const [data, setData] = useState([]);
-  const navigation = useNavigation(); // Obtenha a referência à navegação
 
   useEffect(() => {
     const loadData = async () => {
@@ -38,10 +37,7 @@ export default function Admin() {
     );
   };
 
-  const navigateToCourseEdit = (Course) => {
-    // Navegue para a página CourseEdit.js e passe o curso como parâmetro
-    navigation.navigate('CourseEdit', { Course });
-  };
+
 
   return (
     <DefaultPage>

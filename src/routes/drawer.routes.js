@@ -3,10 +3,10 @@ import { Feather } from '@expo/vector-icons';
 import Dashboard from '../screens/Dashboard';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
-import Login from '../screens/Login';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
 import Events from '../screens/Events';
+import Course from '../screens/Course';
 
 const Drawer = createDrawerNavigator();
 
@@ -130,7 +130,7 @@ export default function DrawerRoutes() {
                 }
             />
 
-            
+
 
         </Drawer.Navigator>
     );
