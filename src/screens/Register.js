@@ -95,12 +95,12 @@ export default function Register({ navigation }) {
     };    
 
     const sendRegister = () => {
-        if (!name || !email || !password || !passwordTip) {
+        if (!name || !email || !password || !passwordConfirm) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
 
-        if (password !== passwordTip) {
+        if (password !== passwordConfirm) {
             alert('As senhas não correspondem.');
             return;
         }
