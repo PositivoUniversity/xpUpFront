@@ -6,6 +6,7 @@ import Settings from '../screens/Settings';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
 import Events from '../screens/Events';
+import Course from '../screens/Course';
 
 const Drawer = createDrawerNavigator();
 
@@ -87,6 +88,20 @@ export default function DrawerRoutes() {
                 }
             />
 
+            <Drawer.Screen name="Course"
+                component={Course}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="edit"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar Cursos'
+                    }
+                }
+            />
+
             <Drawer.Screen name="settings"
                 component={Settings}
                 options={
@@ -115,7 +130,7 @@ export default function DrawerRoutes() {
                 }
             />
 
-            
+
 
         </Drawer.Navigator>
     );
