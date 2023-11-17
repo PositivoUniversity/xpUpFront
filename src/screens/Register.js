@@ -13,6 +13,7 @@ export default function Register({ navigation }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [passwordTip, setPasswordTip] = useState('');
     const [roles, setRoles] = useState([]);
     const [role, setRole] = useState(null);
@@ -165,8 +166,8 @@ export default function Register({ navigation }) {
                     />
 
                     <DefaultInput label="Confirmar Senha"
-                        value={passwordTip}
-                        onChangeText={setPasswordTip}
+                        value={passwordConfirm}
+                        onChangeText={setPasswordConfirm}
                         secureTextEntry={true}
                     />
 
