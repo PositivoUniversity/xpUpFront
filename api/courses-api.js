@@ -24,4 +24,15 @@ export const createCourses = async (urlParams) => {
     }
 }
 
+export const deleteCourse = async (id) => {
+    const URL_DELETE_COURSE = URL + '/Courses/' + id
+    try {
+        const response = await deleteData(URL_DELETE_COURSE);
+        return JSON.stringify(response);
+    } catch (error) {
+        console.error('Erro ao remover Curso:', error);
+        throw error;
+    }
+}
+
 

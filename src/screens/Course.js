@@ -29,9 +29,16 @@ export default function Course() {
   }
 
 
-  const removeUser = () => {
-    console.log('remover')
-  }
+  const removeCourse = async (selectedCourse) => {
+    try {
+        await deleteCourse(selectedCourse.id);
+
+    } catch (error) {
+        console.error('Erro ao remover um Curso:', error);
+    } finally {
+        loadData();
+    }
+}
 
   const columns = ['Nome',];
   const cellData = {
@@ -63,7 +70,7 @@ export default function Course() {
             textDelete={'Excluir'}
             data={data}
             textStyle={styles.styleText}
-            onpressDelete={(user) => removeUser(user)}
+            onpressDelete={(course) => removeCourse(course)}
 
           />
           <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={console.log('criou?')} >
