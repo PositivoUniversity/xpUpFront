@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
+import { getLikes } from '../../api/likes-api';
 import { getNews } from '../../api/news-api';
 import { loadUsers } from '../../api/users-api';
 import DefaultPage from "../components/DefaultPage";
 import NewsCard from '../components/NewsCard';
 
 export default function Dashboard() {
-    
-
     const [users, setUsers] = useState([]);
     useEffect(() => {
         const loadData = async () => {
@@ -36,19 +35,37 @@ export default function Dashboard() {
             }
         };
         loadNewsData();
-    }, []); 
+    }, []);
+
+    const [likes, setLikes] = useState([]);
+    useEffect(() => {
+        const loadLikesData = async () => {
+            try {
+                const likesData = await getLikes();
+                console.log("Likes: ", likesData)
+                console.log("--------------------------------")
+                setLikes(likesData);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        };
+        loadLikesData();
+    }, []);
     console.log("Carreguei!!!!!")
     return (
         <DefaultPage>
-            {news
-                ? (
-                    news.map((item) => {
-                        const userData = users.find((user) => user.id === item.publishedBy)
-                        
-                        return NewsCard(item, userData.name)
-                    })
-                )
-                : (<Text>Não existe dado para carregar...</Text>)}
+            <ScrollView>
+                {news
+                    ? (
+                        news.map((item) => {
+                            const userData = users.find((user) => user.id === item.publishedBy)
+                            const newsLikes = likes.filter((like) => like.NoticeId === item.id)
+                            return NewsCard(item, userData.name, newsLikes)
+                        })
+                    )
+                    : (<Text>Não existe dado para carregar...</Text>)
+                }
+            </ScrollView>
         </DefaultPage>
     );
 }

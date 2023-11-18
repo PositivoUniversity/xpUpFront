@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createLike } from "../../api/likes-api";
 import { AuthContext } from '../../contexts/auth';
 
-export default function NewsCard(data, userName) {
+export default function NewsCard(data, userName, newsLikes) {
   const { user } = useContext(AuthContext);
 
   const handleDelete = () => {
@@ -19,13 +20,15 @@ export default function NewsCard(data, userName) {
         "noticeId": data.id,
         "eventId": null
       };
-      await createNews(urlParams);
+      await createLike(urlParams);
     } catch (error) {
-      console.error('Erro ao criar usuário:', error);
+      console.error('Erro ao tentar dar like:', error);
     }
   }
+  const dismakeLike = async () => {
 
-  // const [liked, setLiked] = useState(false);
+  }
+
   
   return (
     <View style={styles.container} key={data.id}>
@@ -44,10 +47,8 @@ export default function NewsCard(data, userName) {
           <Text style={styles.userName}>{userName}</Text>
         </View>
         <View style={styles.action}>
-          {liked
-            ? <Icon name="heart" size={30} color="#900" />
-            : <Icon name="heart-outline" size={30} color="#000" />
-          }
+          <Icon name="heart-outline" size={30} color="#000" onPress={makeLike} />
+          <Icon name="heart" size={30} color="#900" />
         </View>
       </View>
     </View>
