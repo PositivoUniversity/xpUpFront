@@ -1,4 +1,4 @@
-import { sendData } from "../connection";
+import { loadData, sendData } from "../connection";
 import config from "../config";
 
 const URL = config.URL_API
@@ -11,6 +11,16 @@ export const createEvent = async (urlParams) => {
         return response;
     } catch (error) {
         console.error('Erro ao criar evento na events-api:', error);
+        throw error;
+    }
+}
+
+export const getEvents = async () => {
+    try {
+        const response = await loadData(URL_EVENTS);
+        return response;
+    } catch (error) {
+        console.error('Erro ao buscar eventos na events-api:', error);
         throw error;
     }
 }
