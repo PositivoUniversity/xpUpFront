@@ -1,18 +1,32 @@
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { deleteNews } from '../../api/news-api';
+import { AuthContext } from '../../contexts/auth';
 
-export default function NewsCard(data) {
-  console.log(data)
+export default function NewsCard(data, userName) {
+  const { user } = useContext(AuthContext);
+
   const handleDelete = () => {
     console.log(data.id, typeof data.id)
     deleteNews(data.id)
   }
-  const makeLike = () => {
-    
+  const makeLike = async () => {
+    try {
+      const urlParams = {
+        "like": true,
+        "likedByUserId": user.id,
+        "noticeId": data.id,
+        "eventId": null
+      };
+      await createNews(urlParams);
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error);
+    }
   }
 
+  // const [liked, setLiked] = useState(false);
+  
   return (
     <View style={styles.container} key={data.id}>
       <View style={styles.header}>
@@ -27,11 +41,13 @@ export default function NewsCard(data) {
       <View style={styles.footer}>
         <View style={styles.user}>
           <Icon2 name="user-alt" size={26} color="#000" />
-          <Text style={styles.userName}>Helton</Text>
+          <Text style={styles.userName}>{userName}</Text>
         </View>
         <View style={styles.action}>
-          <Icon name="heart-outline" size={30} color="#000" />
-          <Icon name="heart" size={30} color="#900" />
+          {liked
+            ? <Icon name="heart" size={30} color="#900" />
+            : <Icon name="heart-outline" size={30} color="#000" />
+          }
         </View>
       </View>
     </View>

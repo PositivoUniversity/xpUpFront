@@ -15,10 +15,10 @@ export default function News({ navigation }) {
     const register = async () => {
       try {
         const urlParams = {
-              id: 1,
               title: title,
               subtitle: subtitle,
               description: description,
+              publishedBy: null,
               createdAt: new Date(),
               updatedAt: new Date()
           };

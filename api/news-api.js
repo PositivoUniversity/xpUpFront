@@ -2,17 +2,17 @@ import config from "../config";
 import { deleteData, loadData, sendData } from "../connection";
 
 const URL = config.URL_API
-const URL_NEWS = URL + '/News'
+const URL_NEWS = URL + '/News/'
 const URL_CREATE_NEWS = URL + '/News/CreateNewsDto'
 
-export const loadNews = async () => {
+export const getNews = async () => {
     try {
-        const data = await loadData(URL_NEWS);
-        return data;
+        const response = await loadData(URL_NEWS);
+        return response;
     } catch (error) {
         console.error('Erro ao buscar cursos:', error);
         throw error;
-}
+    }
 }
 
 export const createNews = async (params) => {
@@ -28,11 +28,11 @@ export const createNews = async (params) => {
 
 export const deleteNews = async (params) => {
     try {
-        const response = await deleteData(URL_NEWS + "/" + params);
+        const response = await deleteData(URL_NEWS + params);
         return JSON.stringify(response);
     } catch (error) {
         console.error('Erro ao tentar deletar notícia:', error);
-        console.log(URL_NEWS + "/" + params)
+        console.log(URL_NEWS + params)
         throw error;
     }
 }
