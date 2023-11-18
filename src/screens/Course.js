@@ -73,7 +73,6 @@ export default function Course() {
             data={data}
             textStyle={styles.styleText}
             onpressDelete={(course) => removeCourse(course)}
-
           />
           <DefaultModal isVisible={modalVisible}
             onClose={() => { setModalVisible(!modalVisible); }}
