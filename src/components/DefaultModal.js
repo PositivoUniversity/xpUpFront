@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     lineButton: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 20,
     },
     buttonContainer: {

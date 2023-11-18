@@ -160,7 +160,6 @@ export default function Admin() {
                         isHeader={false}
                         cellData={cellData}
                         columnNames={collums}
-
                         textDelete={' '}
                         textedit={' '}
                         data={data}
@@ -168,7 +167,10 @@ export default function Admin() {
                         onpressDelete={(user) => removeUser(user)}
                         onpressEdit={(user) => handleEditUser(user)}
                     />
-                    <DefaultModal isVisible={modalVisible} onClose={() => { setModalVisible(!modalVisible); }} sendData={sendUser}>
+                    <DefaultModal isVisible={modalVisible}
+                        onClose={() => { setModalVisible(!modalVisible); }}
+                        sendData={sendUser}>
+                        
                         <Text>Cadastrar um Professor</Text>
                         <DefaultInput label="Nome"
                             hasStileColor={'black'}

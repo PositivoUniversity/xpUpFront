@@ -13,6 +13,7 @@ export default function Register({ navigation }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [passwordTip, setPasswordTip] = useState('');
     const [roles, setRoles] = useState([]);
     const [role, setRole] = useState(null);
@@ -32,9 +33,9 @@ export default function Register({ navigation }) {
         const upDomainRegex = /@up\.edu\.br$/; // Teachers
         const gmailDomainRegex = /@gmail\.com$/; // Students
         const outlookDomainRegex = /@outlook\.com$/; // Students
-    
+
         let selectedRole = null;
-    
+
         if (email.match(adminUpDomainRegex)) {
             roles.forEach((role) => {
                 if (role.name === 'Admin') {
@@ -66,14 +67,14 @@ export default function Register({ navigation }) {
         } else {
             console.log("No email matched");
         }
-    
+
         return selectedRole;
     };
-    
+
     const sendUserData = async () => {
         try {
             const selectedRole = await setUserRole();
-            
+
             const urlParams = {
                 name: name,
                 email: email,
@@ -91,15 +92,15 @@ export default function Register({ navigation }) {
             console.error('Error creating user in Register.js:', error);
             throw error;
         }
-    };    
+    };
 
     const sendRegister = () => {
-        if (!name || !email || !password || !passwordTip) {
+        if (!name || !email || !password || !passwordConfirm) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
 
-        if (password !== passwordTip) {
+        if (password !== passwordConfirm) {
             alert('As senhas não correspondem.');
             return;
         }
@@ -123,7 +124,7 @@ export default function Register({ navigation }) {
         };
 
         fetchCourses();
-    }, []);    
+    }, []);
 
     useEffect(() => {
         const loadedRoles = async () => {
@@ -136,7 +137,7 @@ export default function Register({ navigation }) {
                 throw error;
             }
         };
-    
+
         loadedRoles();
     }, []);
 
@@ -165,8 +166,8 @@ export default function Register({ navigation }) {
                     />
 
                     <DefaultInput label="Confirmar Senha"
-                        value={passwordTip}
-                        onChangeText={setPasswordTip}
+                        value={passwordConfirm}
+                        onChangeText={setPasswordConfirm}
                         secureTextEntry={true}
                     />
 
