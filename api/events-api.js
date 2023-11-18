@@ -1,9 +1,9 @@
-import { sendData, loadData, deleteData } from "../connection";
+import { sendData, loadData, deleteData, editData } from "../connection";
 import config from "../config";
 
 
 const URL = config.URL_API
-const URL_EVENTS = URL + '/Events'
+const URL_EVENTS = URL + '/Events/'
 const URL_CREATE_EVENT = URL + '/Events/createEventsDto'
 
 export const createEvent = async (urlParams) => {

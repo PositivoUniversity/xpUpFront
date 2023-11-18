@@ -1,76 +1,82 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import DefaultEvent from "../components/DefaultEvent";
 import { AuthContext } from '../../contexts/auth'
-import { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Text } from 'react-native';
 import { getEvent, deleteEvent } from '../../api/events-api';
-import { loadUsers } from '../../api/users-api'
+import { createLike, deleteLike, getLikes } from '../../api/likes-api';
 
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
-  const [data, setData] = useState([]);
+  
 
 
-  useEffect(() => {
-    const loadDataUsers = async () => {
-        try {
-
-            //const userId = { id: 5 };
-            const userData = await loadUsers();
-            
-            const filteredData = userData.filter((user) => user.id === data.id);
-            setData(filteredData);
-        } catch (error) {
-            //console.error('Erro ao buscar dados de usuário:', error);
-        }
-    };
-    loadDataUsers();
-  }, []);
   useEffect(() => {
     const loadEventsDetails = async () => {
       try {
-  
-        const events = await getEvent();
-        setEvents(events);
-                console.log('events aquiiiiiiii', events);
+        const loadedEvents = await getEvent();
+        setEvents(loadedEvents);
       } catch (error) {
         console.error('Error ao carregar dados de eventos:', error);
       }
     };
-  loadEventsDetails();
+    loadEventsDetails();
   }, []);
 
   
 
-  const sendLikeData = async (item) => {
-    try {
-      //await likeEvent();
-      console.log("Like enviado para evento de id: " + item)
-    } catch (error) {
-      console.error('Erro ao dar Like no Evento no Dashboard.js. ', id, error);
+  const sendLikeData = async (liked, id, eventObj) => {
+    if (liked) {
+      try {
+        const urlParams = {
+          like: liked,
+          likedByUserId: user.id,
+          noticeId: null,
+          eventId: id,
+        };
+        console.log("Like registrado com sucesso.");
+        // await createLike(urlParams);
+      } catch (error) {
+        console.error('Erro ao dar Like no Evento no Dashboard.js. ', liked, id, error);
+      }
+    } else {
+      try {
+        const likes = await getLikes();
+  
+        // Encontra o like com base no eventObj
+        const foundLike = likes.find((item) => item.eventId === id);
+        console.log('Found Like:', foundLike);
+  
+        if (foundLike) {
+          console.log('Like encontrado:', foundLike);
+          if (foundLike.likedByUserId === user.id) {
+            // Restante do código...
+          } else {
+            console.log('Não foi encontrado um like correspondente para deletar.');
+          }
+        } else {
+          console.log('Nenhum like encontrado para o evento fornecido.');
+        }
+      } catch (error) {
+        console.error('Erro ao dar Like no Evento no Dashboard.js.', error);
+      }
     }
   };
-  const sendCheckinData = async (item) => {
+  
+  
+  
+
+  const sendCheckinData = async (events) => {
     try {
       //await checkinEvent();
-      console.log("Checkin enviado para evento de id: " + item)
+      console.log("Checkin enviado para evento de id: " + events)
     } catch (error) {
-      console.error('Erro ao dar Checkin no Evento no Dashboard.js. ', id, error);
+      console.error('Erro ao dar Checkin no Evento no Dashboard.js. ', events, error);
     }
   };
-  // const sendUserName = async (item) => {
-  //   try {
-  //     //await checkinEvent();
-  //     console.log("Checkin enviado para evento de id: " + item.userId)
-  //   } catch (error) {
-  //     console.error('Erro ao dar Checkin no Evento no Dashboard.js. ', id, error);
-  //   }
-  // };
   const sendDeleteData = async (item) => {
-    console.log(item)
     try {
       await deleteEvent(item);
 

@@ -30,6 +30,7 @@ export default function Events({ navigation }) {
                 subtitle: subtitle,
                 description: description,
                 usersId: user.id,
+                userPost: user.name,
                 createdAt: new Date(),
                 updatedAt: new Date()
             };

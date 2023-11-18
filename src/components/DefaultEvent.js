@@ -5,30 +5,21 @@ import { getEvent, deleteEvent } from '../../api/events-api';
 import { loadUsers } from '../../api/users-api'
 
 
-export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sendCheckinData }) {  
+export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sendCheckinData, sendLikeDelete }) {  
   
   const [userData, setUserData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
+  //const [likesData, setLikesData] = useState([]);
   const [matchedUserName, setMatchedUserName] = useState('');
+  const [likes, setLikes] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [checkin, setCheckin] = useState(0);
+  const [checked, setChecked] = useState(false);
   
-  useEffect(() => {
-    const loadUserDetails = async () => {
-      try {
-        const userDetails = await loadUsers();
-        
-        setUserData(userDetails);
-      } catch (error) {
-        console.error('Error ao carregar dados de usuário:', error);
-      }
-    };
-    loadUserDetails();
-  }, []);
-
-
   useEffect(() => {
     const loadEventsDetails = async () => {
       try {
-        const eventsDetails = await getEvent(); 
+        const eventsDetails = await getEvent();
         setEventsData(eventsDetails);
       } catch (error) {
         console.error('Error ao carregar dados de usuário:', error);
@@ -36,17 +27,51 @@ export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sen
     };
     loadEventsDetails();
   }, []);
-  useEffect(() => {
-  if (userData.length > 0 && eventsData.length > 0) {
-    const matchedUserNames = eventsData.map(event => {
-      const matchedUser = userData.find(user => user.id === event.usersId);
-      console.log(matchedUser)
-      return matchedUser ? matchedUser.name : 'No matching user found';
-    });
-    setMatchedUserName(matchedUserNames);
-  }
-}, [eventsData, userData]);
 
+  // useEffect(() => {
+  //   const loadLikesDetails = async () => {
+  //     try {
+  //       const likesDetails = await getLikes();
+  //       setLikesData(likesDetails);
+  //     } catch (error) {
+  //       console.error('Error ao carregar dados de usuário:', error);
+  //     }
+  //   };
+  //   loadLikesDetails();
+  // }, []);
+//   const handleLike = () => {
+//     setLikes(likes + 1);
+//   sendLikeData(likes)
+// }
+  
+
+  const handleLike = (item) => {
+    if (liked == true)
+    {
+      setLikes(likes - 1);
+      setLiked(false);
+      sendLikeData(liked, item.id, item);
+      //console.log(likes);
+    }
+    else
+    {
+      setLikes(likes + 1);
+      setLiked(true);
+      sendLikeData(liked, item.id, item);
+      //console.log(likes)
+    }
+  };
+
+  const handleCheckin = () => {
+    if (checkin) {
+      setCheckin(checkin - 1);
+      setChecked(false);
+    } else {
+      setCheckin(checkin + 1);
+      setChecked(true);
+    }
+    //sendLikeData(likes);
+  };
   
   return (
     <View style={styles.container}>
@@ -56,7 +81,7 @@ export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sen
             <View style={styles.itemTitleContainer}>
               <Text style={styles.itemTitle}>{item.title}</Text>
               <TouchableOpacity onPress={() => sendDeleteData(item.id)}>
-                <Feather style={styles.featherDelete} name="delete" />
+                <Feather style={styles.featherDelete} name="trash" />
               </TouchableOpacity>
             </View>
             <Text style={styles.itemSubtitle}>{item.subtitle}</Text>
@@ -67,15 +92,18 @@ export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sen
               <TouchableOpacity>
               <Feather style={styles.featherPerson} name="user" />
               </TouchableOpacity>
-              <Text style={styles.featherText}>{matchedUserName}</Text>
+              <Text style={styles.featherText}>{item.userPost}</Text>
               <View style={styles.itemLikeCheckinContainer}>
-              <Text style={styles.featherText}>50</Text>
-              <TouchableOpacity onPress={() => sendLikeData(item.id)}>
-                
-              <Feather style={styles.featherHeart} name="heart" />
+
+
+              <Text style={styles.featherText}>{item.likes + likes}</Text>
+              <TouchableOpacity onPress={() => handleLike(item)}>
+              <Feather name={liked ? 'heart' : 'heart'} style={styles.featherHeart} />
+              
+              
               </TouchableOpacity>
-              <Text style={styles.featherText}>20</Text>
-              <TouchableOpacity onPress={() => sendCheckinData(item.id)}>
+              <Text style={styles.featherText}>{checkin}</Text>
+              <TouchableOpacity onPress={() => handleCheckin()}>
               <Feather style={styles.featherCalendar} name="calendar" />
               </TouchableOpacity>
               </View>
