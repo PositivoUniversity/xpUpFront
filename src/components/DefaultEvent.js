@@ -5,7 +5,8 @@ import { getEvent, deleteEvent } from '../../api/events-api';
 import { loadUsers } from '../../api/users-api'
 
 
-export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sendCheckinData, sendLikeDelete }) {  
+
+export default function DefaultEvent({ events, sendLikeData, sendCheckinData, sendLikeDelete }) {  
   
   const [userData, setUserData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
@@ -43,7 +44,7 @@ export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sen
 //     setLikes(likes + 1);
 //   sendLikeData(likes)
 // }
-  
+
 
   const handleLike = (item) => {
     if (liked == true)
@@ -51,26 +52,24 @@ export default function DefaultEvent({ events, sendDeleteData, sendLikeData, sen
       setLikes(likes - 1);
       setLiked(false);
       sendLikeData(liked, item.id, item);
-      //console.log(likes);
     }
     else
     {
       setLikes(likes + 1);
       setLiked(true);
       sendLikeData(liked, item.id, item);
-      //console.log(likes)
     }
   };
 
-  const handleCheckin = () => {
-    if (checkin) {
+  const handleCheckin = (item) => {
+    if (checked == true) {
       setCheckin(checkin - 1);
       setChecked(false);
     } else {
       setCheckin(checkin + 1);
       setChecked(true);
     }
-    //sendLikeData(likes);
+    sendCheckinData(checked, item.id, item);
   };
   
   return (

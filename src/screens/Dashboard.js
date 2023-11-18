@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-
+import React, { useContext, useState, useEffect} from 'react';
+import { StyleSheet, ScrollView, Text, Alert } from 'react-native';
 import DefaultEvent from "../components/DefaultEvent";
 import { AuthContext } from '../../contexts/auth'
-import { StyleSheet, ScrollView, Text } from 'react-native';
+
 import { getEvent, deleteEvent } from '../../api/events-api';
-import { createLike, deleteLike, getLikes } from '../../api/likes-api';
+import { createLike, deleteLike, getLikes, editLike } from '../../api/likes-api';
+import { createCheckin, deleteCheckin, getCheckin } from '../../api/checkin-api';
 
 
 export default function Dashboard() {
@@ -25,66 +26,86 @@ export default function Dashboard() {
     loadEventsDetails();
   }, []);
 
-  
-
-  const sendLikeData = async (liked, id, eventObj) => {
-    if (liked) {
-      try {
-        const urlParams = {
-          like: liked,
-          likedByUserId: user.id,
-          noticeId: null,
-          eventId: id,
-        };
-        console.log("Like registrado com sucesso.");
-        // await createLike(urlParams);
-      } catch (error) {
-        console.error('Erro ao dar Like no Evento no Dashboard.js. ', liked, id, error);
-      }
-    } else {
-      try {
-        const likes = await getLikes();
-  
-        // Encontra o like com base no eventObj
-        const foundLike = likes.find((item) => item.eventId === id);
-        console.log('Found Like:', foundLike);
-  
-        if (foundLike) {
-          console.log('Like encontrado:', foundLike);
-          if (foundLike.likedByUserId === user.id) {
-            // Restante do código...
-          } else {
-            console.log('Não foi encontrado um like correspondente para deletar.');
-          }
-        } else {
-          console.log('Nenhum like encontrado para o evento fornecido.');
-        }
-      } catch (error) {
-        console.error('Erro ao dar Like no Evento no Dashboard.js.', error);
-      }
-    }
-  };
-  
-  
-  
-
-  const sendCheckinData = async (events) => {
+  const checkExistingLike = async (userId, eventId) => {
     try {
-      //await checkinEvent();
-      console.log("Checkin enviado para evento de id: " + events)
+      const likes = await getLikes(userId, eventId);
+      console.log(likes, "likes")
+      return likes;
     } catch (error) {
-      console.error('Erro ao dar Checkin no Evento no Dashboard.js. ', events, error);
+      console.log('Erro ao checar se usuário já curtiu o evento no Dashboard.js. ', error);
     }
   };
   const sendDeleteData = async (item) => {
     try {
       await deleteEvent(item);
-
+  
       console.log('Evento deletado com sucesso no Dashboard.js.');
     } catch (error) {
       console.error('Erro ao deletar Evento no Dashboard.js. ', error);
     }
   };
+
+  const sendLikeData = async (liked, id, item) => {
+    try {
+      const existingLike = await checkExistingLike(user.id, id);
+
+      if (!liked && !existingLike) {
+        const urlParams = {
+          like: true,
+          likedByUserId: user.id,
+          noticeId: null,
+          eventId: id,
+        };
+
+        await createLike(urlParams);
+      } else {
+        console.log("Usuário já curtiu este evento.");
+        // console.log(item, "item")
+        await editLike(id, false);
+
+      }
+    } catch (error) {
+      Alert.alert('Erro ao dar Like no Evento no Dashboard.js. ', error);
+    }
+  };
+  
+  const checkExistingCheckin = async (userId, eventId) => {
+    try {
+      const checkins = await getCheckin(userId, eventId);
+      console.log(checkins, "checkins")
+      return checkins;
+    } catch (error) {
+      console.log('Erro ao checar se usuário já curtiu o evento no Dashboard.js. ', error);
+    }
+  };
+  
+
+  const sendCheckinData = async (checked, id, item) => {
+    try {
+      console.log("id no sendCheckinData: " + id)
+      const existingCheckin = await checkExistingCheckin(user.id, id);
+
+      if (checked && existingCheckin) {
+        const urlParams = {
+          check: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          checkedBy: user.id,
+          eventId: id,
+        };
+
+        await createCheckin(urlParams);
+      } else {
+        console.log("Usuário já curtiu este evento.");
+        // console.log(item, "item")
+        //await deleteCheckin(item.id);
+
+      }
+    } catch (error) {
+      Alert.alert('Erro ao dar Like no Evento no Dashboard.js. ', error);
+    }
+  };
+        
 
   return (
     <ScrollView style={styles.scrollView}>
