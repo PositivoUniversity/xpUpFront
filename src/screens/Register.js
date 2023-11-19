@@ -1,13 +1,14 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 import DefaultPage from "../components/DefaultPage";
 import DefaultInput from "../components/DefaultInput";
-import { registerUsers } from "../../api/register-api";
 import RNPickerSelect from 'react-native-picker-select';
+import {registerUsers} from "../../api/register-api";
 import { loadCourses } from "../../api/courses-api";
 import { loadRolesUsers } from "../../api/roles-api";
+import { AuthContext } from '../../contexts/auth';
 
 export default function Register({ navigation }) {
     const [name, setName] = useState('');
@@ -19,10 +20,15 @@ export default function Register({ navigation }) {
     const [role, setRole] = useState(null);
     const [courses, setCourses] = useState([]);
     const [course, setCourse] = useState(null);
+    const { user, setUser } = useContext(AuthContext);
 
     const handleChangeCourse = (value) => {
         setCourse(value);
     };
+
+    const goToHome = async () => {
+        navigation.navigate('menu');
+    }
 
     const setUserRole = async () => {
         const adminUpDomainRegex = /@xp\.up\.edu\.br$/; // Admins
@@ -81,9 +87,9 @@ export default function Register({ navigation }) {
                 role: selectedRole,
                 course: course,
             };
-            console.log("User registered successfully");
-            navigation.navigate("menu");
-
+            await registerUsers(urlParams);
+            setUser(urlParams);
+            await goToHome();
         } catch (error) {
             console.error('Error creating user in Register.js:', error);
             throw error;
