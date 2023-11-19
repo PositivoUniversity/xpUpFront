@@ -1,14 +1,14 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Feather } from '@expo/vector-icons';
-import Dashboard from '../screens/Dashboard';
+import TabRoutes from './tab.routes';
 import Profile from '../screens/Profile';
 import Settings from '../screens/Settings';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
-import Events from '../screens/Events';
 import Course from '../screens/Course';
 import { AuthContext } from '../../contexts/auth'
 import { useContext } from 'react';
+import CreateEvents from '../screens/CreateEvents';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,7 +41,7 @@ export default function DrawerRoutes() {
         }>
 
             <Drawer.Screen name="home"
-                component={Dashboard}
+                component={TabRoutes}
                 options={
                     {
                         drawerIcon: (
@@ -68,7 +68,7 @@ export default function DrawerRoutes() {
                 }
             />
             <Drawer.Screen name="Criar Evento"
-                component={Events}
+                component={CreateEvents}
                 options={
                     {
                         drawerIcon: (

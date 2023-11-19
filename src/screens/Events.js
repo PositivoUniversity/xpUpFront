@@ -1,135 +1,57 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import DefaultPage from '../components/DefaultPage';
-import Logo from '../components/Logo';
-import DefaultButton from '../components/DefaultButton';
-import DefaultTextBox from '../components/DefaultTextBox';
-import DefaultInput from '../components/DefaultInput';
-import { createEvent } from '../../api/events-api';
 import { AuthContext } from '../../contexts/auth';
+import { deleteEvent, getEvents } from '../../api/events-api';
+import { ScrollView } from 'react-native-gesture-handler';
+import DefaultEvent from '../components/DefaultEvent';
 
-export default function Events({ navigation }) {
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [description, setDescription] = useState('');
-  const { user } = useContext(AuthContext);
+export default function Events() {
+    const { user } = useContext(AuthContext);
 
-  const sendEventData = async () => {
-    try {
-      const urlParams = {
-        title: title,
-        subtitle: subtitle,
-        description: description,
-        usersId: user.id,
-        userPost: user.name,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+    const [events, setEvents] = useState([]);
 
-      const newEvent = await createEvent(urlParams);
-      navigation.navigate('home', { newEvent });
-    } catch (error) {
-      console.error('Error creating event in Events.js:', error);
-      throw error;
-    }
-  };  
+    useEffect(() => {
+        loadEvents();
+    }, []);
 
-  const sendEvent = () => {
-    sendEventData();
-  };
+    const sendDeleteData = async (item) => {
+        try {
+            await deleteEvent(item);
 
-  return (
-    <DefaultPage>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-      >
-        <View style={styles.container}>
-          <View style={styles.containerLogo}>
-            <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
-          </View>
+        } catch (error) {
+            console.error('Erro ao deletar Evento no Dashboard.js. ', error);
+        } finally {
+            loadEvents();
+        }
+    };
 
-          <View style={styles.containerInput}>
-            <Text style={styles.title}>Criação de Eventos</Text>
+    const loadEvents = async () => {
+        try {
+            const response = await getEvents();
+            setEvents(response);
+        } catch (error) {
+            console.error('Erro ao carregar eventos:', error);
+        }
+    };
 
-            <DefaultInput
-              label="Titulo"
-              value={title}
-              onChangeText={setTitle}
-            />
-
-            <DefaultInput
-              label="Subtitulo"
-              value={subtitle}
-              onChangeText={setSubtitle}
-            />
-
-            <DefaultTextBox
-              label="Descricao"
-              value={description}
-              onChangeText={setDescription}
-            />
-
-            <DefaultButton
-              text="Concluir Criação"
-              onPress={sendEvent}
-              styleButton={styles.btn}
-              styleText={styles.btnText}
-            />
-          </View>
-        </View>
-      </KeyboardAvoidingView>
-    </DefaultPage>
-  );
-
+    return (
+        <DefaultPage>
+            <ScrollView>
+                {events.length > 0 ? (
+                    events.map((item) => (
+                        <DefaultEvent
+                            sendDeleteData={sendDeleteData}
+                            sendLikeData={() => true}
+                            sendCheckinData={() => true}
+                            key={item.id}
+                            events={[item]}
+                        />
+                    ))
+                ) : (
+                    <Text>No events available.</Text>
+                )}
+            </ScrollView>
+        </DefaultPage>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 0,
-    flex: 1
-  },
-  logo: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain'
-  },
-  containerLogo: {
-    marginBottom: 0,
-  },
-  containerInput: {
-    height: 200,
-    width: '80%',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 140,
-  },
-  title: {
-    color: '#d5d5d5',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 0,
-  },
-  btn: {
-    backgroundColor: '#A101FE',
-    height: 45,
-    width: '60%',
-    borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  haveAccount: {
-    color: '#FCA311',
-    marginTop: 10,
-    fontSize: 14,
-  },
-});
