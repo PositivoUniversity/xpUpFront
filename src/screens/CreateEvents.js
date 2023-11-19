@@ -25,14 +25,14 @@ export default function CreateEvents({ navigation }) {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-
+  
       const newEvent = await createEvent(urlParams);
-      navigation.navigate('home', { newEvent });
+      navigation.navigate('Events', { newEvent });
     } catch (error) {
       console.error('Error creating event in Events.js:', error);
       throw error;
     }
-  };  
+  };
 
   const sendEvent = () => {
     sendEventData();
