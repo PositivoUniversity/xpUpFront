@@ -1,11 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useState, useContext } from "react";
-import Logo from "../components/Logo";
+import React, { useContext, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { AuthContext } from '../../contexts/auth';
 import DefaultButton from "../components/DefaultButton";
 import DefaultInput from "../components/DefaultInput";
 import DefaultPage from "../components/DefaultPage";
-import { AuthContext } from '../../contexts/auth'
+import Logo from "../components/Logo";
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
