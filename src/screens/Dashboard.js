@@ -2,74 +2,84 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import DefaultPage from '../components/DefaultPage';
 import { AuthContext } from '../../contexts/auth';
-import { getEvents } from '../../api/events-api';
+import { deleteEvent, getEvents } from '../../api/events-api';
 import { getNews } from '../../api/news-api';
+import { ScrollView } from 'react-native-gesture-handler';
+import DefaultEvent from '../components/DefaultEvent';
 
-export default function Dashboard({ route }) {
-  const { user } = useContext(AuthContext);
+export default function Dashboard() {
+    const { user } = useContext(AuthContext);
 
-  const [events, setEvents] = useState([]);
-  const [news, setNews] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [news, setNews] = useState([]);
 
-  useEffect(() => {
-    loadEvents();
-    loadNews();
-    handleEventCreation(route.params?.newEvent);
-  }, [route.params?.newEvent]);
+    useEffect(() => {
+        loadEvents();
+        loadNews();
+    }, []);
 
-  const loadEvents = async () => {
-    try {
-      const response = await getEvents();
-      setEvents(response);
-    } catch (error) {
-      console.error('Erro ao carregar eventos:', error);
-    }
-  };
+    const sendDeleteData = async (item) => {
+        try {
+            await deleteEvent(item);
 
-  const loadNews = async () => {
-    try {
-      const response = await getNews();
-      setNews(response);
-    } catch (error) {
-      console.error('Erro ao carregar notícias:', error);
-    }
-  };
+        } catch (error) {
+            console.error('Erro ao deletar Evento no Dashboard.js. ', error);
+        } finally {
+            loadNews();
+            loadEvents();
+        }
+    };
 
-  const handleEventCreation = (newEvent) => {
-    if (newEvent) {
-      setEvents((prevEvents) => [newEvent, ...prevEvents]);
-    }
-  };
+    const loadEvents = async () => {
+        try {
+            const response = await getEvents();
+            setEvents(response);
+        } catch (error) {
+            console.error('Erro ao carregar eventos:', error);
+        }
+    };
 
-  return (
-    <DefaultPage>
-      <Text style={{ color: 'white' }}>Olá {user.name}</Text>
+    const loadNews = async () => {
+        try {
+            const response = await getNews();
+            setNews(response);
+        } catch (error) {
+            console.error('Erro ao carregar notícias:', error);
+        }
+    };
 
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: 'white' }}>Notícias</Text>
-        <FlatList
-          data={news}
-          renderItem={({ item }) => (
-            <Text style={{ color: 'white' }}>
-              {[item.title, item.subtitle, item.description, item.likes, item.checkins]}
-            </Text>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+    return (
+        <DefaultPage>
+            <Text style={{ color: 'white' }}>Olá {user.name}</Text>
 
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: 'white' }}>Eventos</Text>
-        <FlatList
-          data={events}
-          renderItem={({ item }) => (
-            <Text style={{ color: 'white' }}>
-              {[item.title, item.subtitle, item.description, item.likes, item.checkins]}
-            </Text>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    </DefaultPage>
-  );
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ color: 'white' }}>Notícias</Text>
+                <FlatList
+                    data={news}
+                    renderItem={({ item }) => (
+                        <Text style={{ color: 'white' }}>
+                            {[item.title, item.subtitle, item.description, item.likes, item.checkins]}
+                        </Text>
+                    )}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+
+            <ScrollView>
+                {events.length > 0 ? (
+                    events.map((item) => (
+                        <DefaultEvent
+                            sendDeleteData={sendDeleteData}
+                            sendLikeData={() => true}
+                            sendCheckinData={() => true}
+                            key={item.id}
+                            events={[item]}
+                        />
+                    ))
+                ) : (
+                    <Text>No events available.</Text>
+                )}
+            </ScrollView>
+        </DefaultPage>
+    );
 }
