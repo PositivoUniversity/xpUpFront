@@ -1,13 +1,15 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Logo from "../components/Logo";
 import DefaultButton from "../components/DefaultButton";
 import DefaultPage from "../components/DefaultPage";
 import DefaultInput from "../components/DefaultInput";
-import { registerUsers } from "../../api/register-api";
 import RNPickerSelect from 'react-native-picker-select';
+import { registerUsers } from "../../api/register-api";
 import { loadCourses } from "../../api/courses-api";
 import { loadRolesUsers } from "../../api/roles-api";
+import { AuthContext } from '../../contexts/auth';
+import { loadUsers } from "../../api/users-api";
 
 export default function Register({ navigation }) {
     const [name, setName] = useState('');
@@ -19,6 +21,7 @@ export default function Register({ navigation }) {
     const [role, setRole] = useState(null);
     const [courses, setCourses] = useState([]);
     const [course, setCourse] = useState(null);
+    const { user, setUser } = useContext(AuthContext);
 
     const handleChangeCourse = (value) => {
         setCourse(value);
@@ -85,15 +88,27 @@ export default function Register({ navigation }) {
                 role: selectedRole,
                 course: course,
             };
-
             await registerUsers(urlParams);
             await goToHome();
+            await loadData();
         } catch (error) {
             console.error('Error creating user in Register.js:', error);
             throw error;
         }
     };
-
+    const loadData = async () => {
+        try {
+            const userData = await loadUsers();
+            const foundUser = userData.find((user) => user.email === email);
+            if (foundUser) {
+                setUser(foundUser);
+            } else {
+                Alert.alert('Email ou senha incorretos');
+            }
+        } catch (error) {
+            Alert.alert('Erro ao buscar dados de usuário:');
+        }
+    };
     const sendRegister = () => {
         if (!name || !email || !password || !passwordConfirm) {
             alert('Por favor, preencha todos os campos.');
