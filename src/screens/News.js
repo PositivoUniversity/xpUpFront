@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createNews } from '../../api/news-api';
+import { AuthContext } from '../../contexts/auth';
 import DefaultButton from '../components/DefaultButton';
 import DefaultInput from '../components/DefaultInput';
 import DefaultPage from '../components/DefaultPage';
@@ -8,24 +9,32 @@ import DefaultTextBox from '../components/DefaultTextBox';
 import Logo from '../components/Logo';
 
 export default function News({ navigation }) {
-    const [title, setTitle] = useState('');
-    const [subtitle, setSubtitle] = useState('');
-    const [description, setDescription] = useState('');
+  const { user } = useContext(AuthContext);
 
-    const register = async () => {
-      try {
-        const urlParams = {
-              title: title,
-              subtitle: subtitle,
-              description: description,
-              publishedBy: null,
-              createdAt: new Date(),
-              updatedAt: new Date()
-          };
-          await createNews(urlParams);
-      } catch (error) {
-          console.error('Erro ao criar usuário:', error);
-      }
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const goToHome = async () => {
+    navigation.navigate('menu');
+};
+
+  const register = async () => {
+    try {
+      const urlParams = {
+            title: title,
+            subtitle: subtitle,
+            description: description,
+            publishedBy: user.id,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+      await createNews(urlParams);
+      await goToHome();
+      
+    } catch (error) {
+        console.error('Erro ao criar usuário:', error);
+    }
   };
 
     return (

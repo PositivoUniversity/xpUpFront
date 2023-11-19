@@ -7,7 +7,7 @@ const URL_CREATE_LIKE = URL + '/Likes/CreateLikesDto'
 
 export const getLikes = async () => {
     try {
-        const response = await loadData(URL_NEWS);
+        const response = await loadData(URL_LIKE);
         return response;
     } catch (error) {
         console.error('Erro ao buscar cursos:', error);

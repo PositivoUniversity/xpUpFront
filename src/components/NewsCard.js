@@ -3,10 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createLike } from "../../api/likes-api";
+import { deleteNews } from "../../api/news-api";
 import { AuthContext } from '../../contexts/auth';
 
-export default function NewsCard(data, userName, newsLikes) {
+export default function NewsCard(data, userName, likes, isLiked) {
   const { user } = useContext(AuthContext);
+
+  console.log(likes)
 
   const handleDelete = () => {
     console.log(data.id, typeof data.id)
@@ -24,9 +27,10 @@ export default function NewsCard(data, userName, newsLikes) {
     } catch (error) {
       console.error('Erro ao tentar dar like:', error);
     }
+    isLiked = true;
   }
   const dismakeLike = async () => {
-
+    isLiked = false;
   }
 
   
@@ -46,9 +50,12 @@ export default function NewsCard(data, userName, newsLikes) {
           <Icon2 name="user-alt" size={26} color="#000" />
           <Text style={styles.userName}>{userName}</Text>
         </View>
-        <View style={styles.action}>
-          <Icon name="heart-outline" size={30} color="#000" onPress={makeLike} />
-          <Icon name="heart" size={30} color="#900" />
+        <View style={styles.likes}>
+          {isLiked
+            ? <Icon name="heart" size={30} color="#900" onPress={dismakeLike} />
+            : <Icon name="heart-outline" size={30} color="#000" onPress={makeLike} />
+          }
+          <Text style={styles.subtitle}>{likes.lenght || 0}</Text>
         </View>
       </View>
     </View>
@@ -109,5 +116,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#3781C6',
     marginLeft: 5,
+  },
+  likes: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   }
 });
