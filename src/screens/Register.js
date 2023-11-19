@@ -24,6 +24,10 @@ export default function Register({ navigation }) {
         setCourse(value);
     };
 
+    const goToHome = async () => {
+        navigation.navigate('menu');
+    }
+
     const setUserRole = async () => {
         const adminUpDomainRegex = /@xp\.up\.edu\.br$/; // Admins
         const upDomainRegex = /@up\.edu\.br$/; // Teachers
@@ -81,16 +85,16 @@ export default function Register({ navigation }) {
                 role: selectedRole,
                 course: course,
             };
-            console.log("User registered successfully");
-            navigation.navigate("menu");
 
+            await registerUsers(urlParams);
+            await goToHome();
         } catch (error) {
             console.error('Error creating user in Register.js:', error);
             throw error;
         }
     };
 
-    const sendRegister = async () => {
+    const sendRegister = () => {
         if (!name || !email || !password || !passwordConfirm) {
             alert('Por favor, preencha todos os campos.');
             return;
@@ -101,7 +105,7 @@ export default function Register({ navigation }) {
             return;
         }
 
-        await sendUserData();
+        sendUserData();
     }
 
     const goToLogin = () => {
