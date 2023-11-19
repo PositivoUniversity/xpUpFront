@@ -39,77 +39,103 @@ export default function DrawerRoutes() {
                 }
             }
         }>
+
             <Drawer.Screen name="home"
                 component={Dashboard}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="home"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Dashboard'
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="home"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Dashboard'
+                    }
+                }
+            />
+
             <Drawer.Screen name="profile"
                 component={Profile}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="user"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Profile'
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="user"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Profile'
+                    }
+                }
+            />
             <Drawer.Screen name="Criar Evento"
                 component={Events}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="calendar"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Criar Evento',
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="calendar"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Criar Evento',
+                    }
+                }
+            />
+
             <Drawer.Screen name="Admin"
                 component={Admin}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="edit"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Editar usuário'
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="edit"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar usuário'
+                    }
+                }
+            />
+
             <Drawer.Screen name="Course"
                 component={Course}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="edit"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Editar Cursos'
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="edit"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Editar Cursos'
+                    }
+                }
+            />
+
             <Drawer.Screen name="settings"
                 component={Settings}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="settings"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Settings'
-                }} />
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="settings"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Settings'
+                    }
+                }
+            />
+
             <Drawer.Screen name="logout"
                 component={ConfirmLogout}
-                options={{
-                    drawerIcon: (
-                        { size, color }
-                    ) => <Feather name="log-out"
-                        size={size}
-                        color={color} />,
-                    drawerLabel: 'Logout',
-                }} />
-
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="log-out"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Logout',
+                    }
+                }
+            />
         </Drawer.Navigator>
     );
 }
