@@ -38,8 +38,9 @@ export default function Dashboard({ route }) {
     }, []);
     return (
         <DefaultPage>
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Olá,  {user.name}</Text>
             <ScrollView>
-                <Text style={{ color: 'white' }}>Olá {user.name}</Text>
+
                 {isLoading
                     ? (
                         <View style={styles.loadingContainer}>
@@ -51,12 +52,10 @@ export default function Dashboard({ route }) {
                         ? (news.map((item) => {
                             const userData = users.find((userItem) => item.publishedBy === userItem.id);
 
-
                             return <DefaultNewsCard key={item.id} data={item} userName={userData ? userData.name : "Usuário Desconhecido"} />
                         }))
                         : (<Text>Não existe dado para carregar...</Text>)
                 }
-
             </ScrollView>
         </DefaultPage>
     );

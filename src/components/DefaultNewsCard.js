@@ -1,14 +1,21 @@
 import { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Icon2 from 'react-native-vector-icons/FontAwesome5';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from "../../contexts/auth";
+import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export default function DefaultNewsCard({ data, userName }) {
     const { user } = useContext(AuthContext);
 
-    const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState(0);
+    const [liked, setLiked] = useState(false);
+
+    const handleLike = () => {
+        likes ? setLikes(likes - 1) : setLikes(likes + 1);
+    }
+
+
     const [count, setCount] = useState(0);
 
     const handleDelete = () => {
@@ -26,91 +33,116 @@ export default function DefaultNewsCard({ data, userName }) {
         setIsLiked(false);
     }
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>{data.title}</Text>
-                {(user.id === data.publishedBy || user.role === 1) && <Icon2 name="trash-alt" size={26} style={styles.trashIcon} onPress={handleDelete} />}
+        <View key={data.id} style={styles.cardContainer}>
+            <View style={styles.itemTitleContainer}>
+                <Text style={styles.itemTitle}>{data.title}</Text>
+                {/* <TouchableOpacity onPress={() => sendDeleteData(data.id)}>
+                    <Feather style={styles.featherDelete} name="trash" />
+                </TouchableOpacity> */}
             </View>
+            <Text style={styles.itemSubtitle}>{data.subtitle}</Text>
+            <Text style={styles.itemDescription}>{data.description}</Text>
 
-            <Text style={styles.subtitle}>{data.subtitle}</Text>
+            <View style={styles.itemUserContainer}>
 
-            <Text style={styles.description}>{data.description}</Text>
+                <TouchableOpacity>
+                    <Feather style={styles.featherPerson} name="user" />
+                </TouchableOpacity>
+                <Text style={styles.featherText}>{userName}</Text>
+                <View style={styles.itemLikeCheckinContainer}>
 
-            <View style={styles.footer}>
-                <View style={styles.user}>
-                    <Icon2 name="user-alt" size={26} color="#000" />
-                    <Text style={styles.userName}>{userName}</Text>
-                </View>
-                <View style={styles.likes}>
-                    {isLiked
-                        ? <Icon name="heart" size={30} color="#900" onPress={dismakeLike} />
-                        : <Icon name="heart-outline" size={30} color="#000" onPress={makeLike} />
-                    }
-                    <Text style={styles.subtitle}>{count}</Text>
+
+                    <Text style={styles.featherText}>{data.likes + likes}</Text>
+                    <TouchableOpacity onPress={() => handleLike(data)}>
+                        <Feather name={liked ? 'heart' : 'heart'} style={styles.featherHeart} />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
+
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#d5d5d5',
-        minHeight: 100,
-        width: '80%',
+        backgroundColor: '#1A1818',
+        padding: 10,
+    },
+    cardContainer: {
+        backgroundColor: '#1A1818',
+        padding: 20,
+        marginVertical: 10,
         borderRadius: 10,
-        marginVertical: 10,
-        marginHorizontal: 40,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
+        backgroundColor: 'white',
+        borderWidth: 0.5,
+        borderColor: 'white',
     },
-    header: {
+    itemTitleContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
-        borderBottomWidth: 2,
-        borderColor: '#000',
     },
-    title: {
-        textAlign: 'center',
+    itemTitle: {
+        color: 'black',
         fontSize: 30,
-        width: '80%',
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    trashIcon: {
-        position: 'absolute',
-        top: 3,
-        right: 0,
-    },
-    subtitle: {
-        marginVertical: 10,
         textAlign: 'center',
-        fontSize: 25,
-        fontWeight: 'semibold',
-        color: '#1A1818',
+        fontWeight: 'bold',
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'black',
+        flex: 1,
     },
-    description: {
-        textAlign: 'justify',
+    itemSubtitle: {
+        color: 'black',
         fontSize: 20,
-        fontWeight: 'semibold',
-        color: '#1A1818',
+        fontWeight: 'bold',
     },
-    footer: {
+    itemDescription: {
+        color: 'black',
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    itemText: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop: 10,
     },
-    user: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    userName: {
+    featherCalendar: {
+        color: 'blue',
+        marginLeft: 'auto',
         fontSize: 20,
-        color: '#3781C6',
-        marginLeft: 5,
+        paddingRight: 5,
     },
-    likes: {
+    featherHeart: {
+        color: 'red',
+        marginLeft: 'auto',
+        fontSize: 20,
+        paddingRight: 5,
+    },
+    TouchableOpacity: {
+        color: 'black',
+
+    },
+    featherDelete: {
+        color: 'black',
+        marginLeft: 'auto',
+        fontSize: 20,
+    },
+    itemUserContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-    }
+        paddingTop: 20,
+    },
+    featherPerson: {
+        color: 'black',
+        marginRight: 10,
+        fontSize: 20,
+    },
+    itemLikeCheckinContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 'auto',
+    },
+    featherText: {
+        paddingLeft: 0,
+        paddingRight: 5,
+    },
 });

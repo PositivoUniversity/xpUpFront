@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import DefaultPage from '../components/DefaultPage';
 import { AuthContext } from '../../contexts/auth';
 import { deleteEvent, getEvents } from '../../api/events-api';
-import { ScrollView } from 'react-native-gesture-handler';
 import DefaultEvent from '../components/DefaultEvent';
+import { ActivityIndicator } from 'react-native-paper';
 
 export default function Events({ route }) {
-    const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -29,9 +29,9 @@ export default function Events({ route }) {
       const response = await getEvents();
       const updatedEvents = route.params?.newEvent
         ? [...response, route.params.newEvent].filter(
-            (event, index, self) =>
-              index === self.findIndex((e) => e.id === event.id)
-          )
+          (event, index, self) =>
+            index === self.findIndex((e) => e.id === event.id)
+        )
         : response;
       setEvents(updatedEvents);
     } catch (error) {
@@ -41,7 +41,7 @@ export default function Events({ route }) {
 
   return (
     <DefaultPage>
-      <ScrollView>
+      <ScrollView key={route.params?.newEvent ? 'withNewEvent' : 'withoutNewEvent'}>
         {events.length > 0 ? (
           events.map((item) => (
             <DefaultEvent
@@ -53,9 +53,24 @@ export default function Events({ route }) {
             />
           ))
         ) : (
-          <Text>No events available.</Text>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="purple" />
+            <Text style={styles.loadingText}>Carregando Eventos...</Text>
+          </View>
         )}
       </ScrollView>
     </DefaultPage>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingText: {
+    color: 'white',
+    marginTop: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
