@@ -23,15 +23,16 @@ export default function Events({ navigation }) {
         usersId: user.id,
         userPost: user.name,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
-      await createEvent(urlParams);
-      navigation.navigate('home');
+
+      const newEvent = await createEvent(urlParams);
+      navigation.navigate('home', { newEvent });
     } catch (error) {
       console.error('Error creating event in Events.js:', error);
       throw error;
     }
-  };
+  };  
 
   const sendEvent = () => {
     sendEventData();
