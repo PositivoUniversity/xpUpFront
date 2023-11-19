@@ -2,41 +2,34 @@ import { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext } from "../../contexts/auth";
 
 
-export default function DefaultNewsCard({ data, userName, likes }) {
+export default function DefaultNewsCard({ data, userName }) {
     const { user } = useContext(AuthContext);
 
     const [isLiked, setIsLiked] = useState(false);
+    const [count, setCount] = useState(0);
 
     const handleDelete = () => {
-        console.log(data.id, typeof data.id)
         deleteNews(data.id)
     }
     const makeLike = async () => {
-        try {
-            const urlParams = {
-                "like": true,
-                "likedByUserId": user.id,
-                "noticeId": data.id,
-                "eventId": null
-            };
-            await createLike(urlParams);
-        } catch (error) {
-            console.error('Erro ao tentar dar like:', error);
-        }
+
+        setCount(count + 1);
         setIsLiked(true);
     }
     const dismakeLike = async () => {
+        const allLikes = await getLikes();
+
+        setCount(count - 1);
         setIsLiked(false);
     }
-
     return (
-        <View style={styles.container} key={data.id}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>{data.title}</Text>
-                <Icon2 name="trash-alt" size={26} style={styles.trashIcon} onPress={handleDelete} />
+                {(user.id === data.publishedBy || user.role === 1) && <Icon2 name="trash-alt" size={26} style={styles.trashIcon} onPress={handleDelete} />}
             </View>
 
             <Text style={styles.subtitle}>{data.subtitle}</Text>
@@ -53,7 +46,7 @@ export default function DefaultNewsCard({ data, userName, likes }) {
                         ? <Icon name="heart" size={30} color="#900" onPress={dismakeLike} />
                         : <Icon name="heart-outline" size={30} color="#000" onPress={makeLike} />
                     }
-                    <Text style={styles.subtitle}>{likes.lenght || 0}</Text>
+                    <Text style={styles.subtitle}>{count}</Text>
                 </View>
             </View>
         </View>

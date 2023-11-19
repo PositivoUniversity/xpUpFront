@@ -6,6 +6,7 @@ import { createCourses, deleteCourse, loadCourses } from "../../api/courses-api"
 import { ActivityIndicator, FAB } from "react-native-paper";
 import DefaultModal from '../components/DefaultModal';
 import DefaultInput from '../components/DefaultInput';
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Course() {
   const [data, setData] = useState([]);
@@ -65,15 +66,17 @@ export default function Course() {
     <DefaultPage>
       {data && data.length > 0 ? (
         <View>
-          <DefaultDataTable
-            isHeader={true}
-            cellData={cellData}
-            columnNames={columns}
-            textDelete={'Excluir'}
-            data={data}
-            textStyle={styles.styleText}
-            onpressDelete={(course) => removeCourse(course)}
-          />
+          <ScrollView>
+            <DefaultDataTable
+              isHeader={true}
+              cellData={cellData}
+              columnNames={columns}
+              textDelete={' '}
+              data={data}
+              textStyle={styles.styleText}
+              onpressDelete={(course) => removeCourse(course)}
+            />
+          </ScrollView>
           <DefaultModal isVisible={modalVisible}
             onClose={() => { setModalVisible(!modalVisible); }}
             sendData={sendUser} >
