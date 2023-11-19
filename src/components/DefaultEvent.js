@@ -9,11 +9,12 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
     const handleLike = () => {
         likes ? setLikes(likes - 1) : setLikes(likes + 1);
     }
-    const [checkin, setCheckin] = useState(0);
-    const [checked, setChecked] = useState(false);
     const handleCheckin = () => {
         checked ? setChecked(checked - 1) : setChecked(checked + 1);
     }
+    const [checkin, setCheckin] = useState(0);
+    const [checked, setChecked] = useState(false);
+
     return (
         <View style={styles.container}>
             {events.length > 0 ? (
@@ -43,7 +44,7 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
 
 
                                 </TouchableOpacity>
-                                <Text style={styles.featherText}>{checkin}</Text>
+                                <Text style={styles.featherText}>{checked}</Text>
                                 <TouchableOpacity onPress={() => handleCheckin(item)}>
                                     <Feather style={styles.featherCalendar} name="calendar" />
                                 </TouchableOpacity>
