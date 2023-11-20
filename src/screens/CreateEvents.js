@@ -25,7 +25,7 @@ export default function CreateEvents({ navigation }) {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-  
+
       const newEvent = await createEvent(urlParams);
       navigation.navigate('Events', { newEvent });
     } catch (error) {
@@ -45,6 +45,7 @@ export default function CreateEvents({ navigation }) {
         style={{ flex: 1 }}
       >
         <View style={styles.container}>
+
           <View style={styles.containerLogo}>
             <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
           </View>
@@ -100,36 +101,36 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   containerInput: {
-    height: 200,
-    width: '80%',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 140,
-  },
+  
+  width: '80%',
+  borderRadius: 10,
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: 50,
+},
   title: {
-    color: '#d5d5d5',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 0,
-  },
+  color: '#d5d5d5',
+  fontWeight: 'bold',
+  fontSize: 20,
+  marginBottom: 0,
+},
   btn: {
-    backgroundColor: '#A101FE',
-    height: 45,
-    width: '60%',
-    borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  backgroundColor: '#A101FE',
+  height: 45,
+  width: '60%',
+  borderRadius: 10,
+  marginTop: 20,
+  marginBottom: 50,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
   btnText: {
-    color: '#fff',
-    fontSize: 18,
-  },
+  color: '#fff',
+  fontSize: 18,
+},
   haveAccount: {
-    color: '#FCA311',
-    marginTop: 10,
-    fontSize: 14,
-  },
+  color: '#FCA311',
+  marginTop: 10,
+  fontSize: 14,
+},
 });

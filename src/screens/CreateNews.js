@@ -7,6 +7,7 @@ import DefaultInput from '../components/DefaultInput';
 import DefaultPage from '../components/DefaultPage';
 import DefaultTextBox from '../components/DefaultTextBox';
 import Logo from '../components/Logo';
+import { KeyboardAvoidingView } from 'react-native';
 
 export default function CreateNews({ navigation }) {
   const { user } = useContext(AuthContext);
@@ -28,58 +29,58 @@ export default function CreateNews({ navigation }) {
   const register = async () => {
     try {
       const urlParams = {
-            title: title,
-            subtitle: subtitle,
-            description: description,
-            publishedBy: user.id,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        };
+        title: title,
+        subtitle: subtitle,
+        description: description,
+        publishedBy: user.id,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
       await createNews(urlParams);
       clearData();
       await goToHome();
 
     } catch (error) {
-        console.error('Erro ao criar usuário:', error);
+      console.error('Erro ao criar usuário:', error);
     }
   };
 
-    return (
-      <DefaultPage>
-        <View style={styles.container}>
-          <Logo />
+  return (
+    <DefaultPage>
+      <View style={styles.container}>
+        <Logo />
 
-          <View style={styles.containerInput}>
-            <Text style={styles.title}>Cadastro Notícia</Text>
+        <View style={styles.containerInput}>
+          <Text style={styles.title}>Criação de  Notícia</Text>
 
-            <DefaultInput
-              label="Titulo"
-              value={title}
-              onChangeText={setTitle}
-            />
+          <DefaultInput
+            label="Titulo"
+            value={title}
+            onChangeText={setTitle}
+          />
 
-            <DefaultInput
-              label="Subtitulo"
-              value={subtitle}
-              onChangeText={setSubtitle}
-            />
+          <DefaultInput
+            label="Subtitulo"
+            value={subtitle}
+            onChangeText={setSubtitle}
+          />
 
-            <DefaultTextBox
-              label="Descricao"
-              value={description}
-              onChangeText={setDescription}
-            />
+          <DefaultTextBox
+            label="Descricao"
+            value={description}
+            onChangeText={setDescription}
+          />
 
-            <DefaultButton
-              text="Cadastrar"
-              onPress={register}
-              styleButton={styles.btn}
-              styleText={styles.btnText}
-            />
-          </View>
+          <DefaultButton
+            text="Cadastrar"
+            onPress={register}
+            styleButton={styles.btn}
+            styleText={styles.btnText}
+          />
         </View>
-      </DefaultPage>
-    );
+      </View>
+    </DefaultPage >
+  );
 }
 
 const styles = StyleSheet.create({
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   containerInput: {
-    height: 200,
+    height: 100,
     width: '80%',
     borderRadius: 10,
     alignItems: 'center',
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#FCA311',
     fontWeight: 'bold',
-    fontSize: 35,
+    fontSize: 20,
     marginBottom: 20,
   },
   btn: {

@@ -8,12 +8,12 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const { user } = useContext(AuthContext);
-    
+
     const handleLike = () => {
         likes ? setLikes(likes - 1) : setLikes(likes + 1);
         liked ? setLiked(false) : setLiked(true);
     }
-    
+
     const handleCheckin = () => {
         checked ? setChecked(checked - 1) : setChecked(checked + 1);
     }
@@ -27,7 +27,7 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
                     <View key={item.id} style={styles.cardContainer}>
                         <View style={styles.itemTitleContainer}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
-                            {user.role === 1 && (
+                            {user.role === 2 || user.role === 1 && (
                                 <TouchableOpacity onPress={() => sendDeleteData(item.id)}>
                                     <Feather style={styles.featherDelete} name="trash" />
                                 </TouchableOpacity>

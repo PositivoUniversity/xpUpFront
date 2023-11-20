@@ -55,7 +55,7 @@ export default function DrawerRoutes() {
                 }
             />
 
-            {isAdmin && (
+            {(isAdmin || isteacher) && (
                 <Drawer.Screen name="Criar Evento"
                     component={CreateEvents}
                     options={
@@ -71,7 +71,7 @@ export default function DrawerRoutes() {
                 />
             )}
 
-            {(isAdmin || isteacher) && (
+            {isAdmin && (
                 <Drawer.Screen name="News"
                     component={CreateNews}
                     options={
@@ -88,7 +88,7 @@ export default function DrawerRoutes() {
             )}
 
 
-            {(isAdmin || isteacher) && (<Drawer.Screen name="Admin"
+            {isAdmin && <Drawer.Screen name="Admin"
                 component={Admin}
                 options={
                     {
@@ -97,11 +97,11 @@ export default function DrawerRoutes() {
                         ) => <Feather name="edit"
                             size={size}
                             color={color} />,
-                        drawerLabel: 'Editar usuário'
+                        drawerLabel: 'Editar Professor'
                     }
                 }
             />
-            )}
+            }
 
             {isteacher && (
                 <Drawer.Screen name="Course"

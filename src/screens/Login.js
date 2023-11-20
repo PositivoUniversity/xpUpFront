@@ -45,12 +45,12 @@ export default function Login({ navigation }) {
                     />
                 </View>
 
-                <View style={styles.rememberPassword}>
+                {/* <View style={styles.rememberPassword}>
                     <DefaultButton text="Esqueceu a senha?"
                         onPress={goToRecovery}
                         styleText={styles.btnRecoveryPassword}
                     />
-                </View>
+                </View> */}
                 <DefaultButton text="Entrar"
                     onPress={handleLogin}
                     styleButton={styles.btnLogin}
