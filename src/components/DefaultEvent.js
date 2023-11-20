@@ -27,12 +27,13 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
                     <View key={item.id} style={styles.cardContainer}>
                         <View style={styles.itemTitleContainer}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
-                            {user.role === 2 || user.role === 1 && (
+                            {user.role === 2 || user.role === 1 ? (
                                 <TouchableOpacity onPress={() => sendDeleteData(item.id)}>
                                     <Feather style={styles.featherDelete} name="trash" />
                                 </TouchableOpacity>
-                            )}
+                            ) : null}
                         </View>
+
                         <Text style={styles.itemSubtitle}>{item.subtitle}</Text>
                         <Text style={styles.itemDescription}>{item.description}</Text>
 

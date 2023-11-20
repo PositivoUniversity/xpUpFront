@@ -88,22 +88,23 @@ export default function DrawerRoutes() {
             )}
 
 
-            {isAdmin && <Drawer.Screen name="Admin"
-                component={Admin}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="edit"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Editar Professor'
+            {(isAdmin || isteacher) && (
+                <Drawer.Screen name="Admin"
+                    component={Admin}
+                    options={
+                        {
+                            drawerIcon: (
+                                { size, color }
+                            ) => <Feather name="edit"
+                                size={size}
+                                color={color} />,
+                            drawerLabel: 'Editar Professor'
+                        }
                     }
-                }
-            />
-            }
+                />
+            )}
 
-            {isteacher && (
+            {(isAdmin || isteacher) && (
                 <Drawer.Screen name="Course"
                     component={Course}
                     options={
