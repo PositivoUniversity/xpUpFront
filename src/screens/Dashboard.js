@@ -14,7 +14,6 @@ export default function Dashboard({ route }) {
     const [news, setNews] = useState([]);
     const [likes, setLikes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -35,7 +34,7 @@ export default function Dashboard({ route }) {
         };
 
         fetchData();
-    }, []);
+    }, [news]);
     return (
         <DefaultPage>
             <Text style={styles.helloWorld}>Olá, {user.name}</Text>
@@ -78,4 +77,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
-    

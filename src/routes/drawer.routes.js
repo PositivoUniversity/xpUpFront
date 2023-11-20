@@ -18,7 +18,7 @@ export default function DrawerRoutes() {
 
     const isAdmin = user.role == 1 ? true : false
     const isteacher = user.role == 2 ? true : false
-    const isstudent = user.role == 3 ? true : false
+    const isStudent = user.role == 3 ? true : false
     return (
         <Drawer.Navigator screenOptions={
             {
@@ -55,49 +55,40 @@ export default function DrawerRoutes() {
                 }
             />
 
-            <Drawer.Screen name="profile"
-                component={Profile}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="user"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Profile'
+            {isAdmin && (
+                <Drawer.Screen name="Criar Evento"
+                    component={CreateEvents}
+                    options={
+                        {
+                            drawerIcon: (
+                                { size, color }
+                            ) => <Feather name="calendar"
+                                size={size}
+                                color={color} />,
+                            drawerLabel: 'Criar Evento',
+                        }
                     }
-                }
-            />
-            
-            <Drawer.Screen name="Criar Evento"
-                component={CreateEvents}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="calendar"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Criar Evento',
-                    }
-                }
-            />
+                />
+            )}
 
-            <Drawer.Screen name="News"
-                component={CreateNews}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="calendar"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Criar Notícia',
+            {(isAdmin || isteacher) && (
+                <Drawer.Screen name="News"
+                    component={CreateNews}
+                    options={
+                        {
+                            drawerIcon: (
+                                { size, color }
+                            ) => <Feather name="calendar"
+                                size={size}
+                                color={color} />,
+                            drawerLabel: 'Criar Notícia',
+                        }
                     }
-                }
-            />
+                />
+            )}
 
-            <Drawer.Screen name="Admin"
+
+            {(isAdmin || isteacher) && (<Drawer.Screen name="Admin"
                 component={Admin}
                 options={
                     {
@@ -110,34 +101,23 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+            )}
 
-            <Drawer.Screen name="Course"
-                component={Course}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="edit"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Editar Cursos'
+            {isteacher && (
+                <Drawer.Screen name="Course"
+                    component={Course}
+                    options={
+                        {
+                            drawerIcon: (
+                                { size, color }
+                            ) => <Feather name="edit"
+                                size={size}
+                                color={color} />,
+                            drawerLabel: 'Editar Cursos'
+                        }
                     }
-                }
-            />
-
-            <Drawer.Screen name="settings"
-                component={Settings}
-                options={
-                    {
-                        drawerIcon: (
-                            { size, color }
-                        ) => <Feather name="settings"
-                            size={size}
-                            color={color} />,
-                        drawerLabel: 'Settings'
-                    }
-                }
-            />
+                />
+            )}
 
             <Drawer.Screen name="logout"
                 component={ConfirmLogout}
