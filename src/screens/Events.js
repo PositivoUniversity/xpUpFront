@@ -9,35 +9,57 @@ import { ActivityIndicator } from 'react-native-paper';
 export default function Events({ route }) {
   const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadEvents();
+    const loadEventsData = async () => {
+      try {
+        const response = await getEvents();
+        const updatedEvents = route.params?.newEvent
+          ? [route.params.newEvent, ...response].filter(
+            (event, index, self) => index === self.findIndex((e) => e.id === event.id)
+          )
+          : response;
+
+        setEvents(updatedEvents);
+      } catch (error) {
+        console.error('Erro ao carregar eventos:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEventsData();
   }, [route.params?.newEvent]);
 
   const sendDeleteData = async (item) => {
     try {
       await deleteEvent(item);
+      loadEvents(); 
     } catch (error) {
       console.error('Erro ao deletar Evento no Dashboard.js. ', error);
-    } finally {
-      loadEvents();
     }
   };
 
   const loadEvents = async () => {
     try {
       const response = await getEvents();
-      const updatedEvents = route.params?.newEvent
-        ? [...response, route.params.newEvent].filter(
-          (event, index, self) =>
-            index === self.findIndex((e) => e.id === event.id)
-        )
-        : response;
-      setEvents(updatedEvents);
+      setEvents(response);
     } catch (error) {
       console.error('Erro ao carregar eventos:', error);
     }
   };
+
+  if (isLoading) {
+    return (
+      <DefaultPage>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="purple" />
+          <Text style={styles.loadingText}>Carregando Eventos...</Text>
+        </View>
+      </DefaultPage>
+    );
+  }
 
   return (
     <DefaultPage>
@@ -54,8 +76,7 @@ export default function Events({ route }) {
           ))
         ) : (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="purple" />
-            <Text style={styles.loadingText}>Carregando Eventos...</Text>
+            <Text style={styles.loadingText}>Não há eventos disponíveis.</Text>
           </View>
         )}
       </ScrollView>

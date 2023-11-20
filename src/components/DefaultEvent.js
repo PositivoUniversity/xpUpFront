@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { AuthContext } from '../../contexts/auth';
 
 export default function DefaultEvent({ events, sendLikeData, sendCheckinData, sendLikeDelete, sendDeleteData }) {
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
-
+    const { user } = useContext(AuthContext);
     const handleLike = () => {
         likes ? setLikes(likes - 1) : setLikes(likes + 1);
     }
@@ -22,9 +23,11 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
                     <View key={item.id} style={styles.cardContainer}>
                         <View style={styles.itemTitleContainer}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
-                            <TouchableOpacity onPress={() => sendDeleteData(item.id)}>
-                                <Feather style={styles.featherDelete} name="trash" />
-                            </TouchableOpacity>
+                            {user.role === 1 && (
+                                <TouchableOpacity onPress={() => sendDeleteData(item.id)}>
+                                    <Feather style={styles.featherDelete} name="trash" />
+                                </TouchableOpacity>
+                            )}
                         </View>
                         <Text style={styles.itemSubtitle}>{item.subtitle}</Text>
                         <Text style={styles.itemDescription}>{item.description}</Text>
