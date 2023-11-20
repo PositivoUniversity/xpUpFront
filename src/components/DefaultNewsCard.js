@@ -53,7 +53,7 @@ export default function DefaultNewsCard({ data, userName }) {
 
                     <Text style={styles.featherText}>{data.likes + likes}</Text>
                     <TouchableOpacity onPress={() => handleLike(data)}>
-                        <Icon name={liked ? 'heart' : 'heart-outline'} color={liked ? '#900' : '#000'} style={styles.featherHeart} />
+                        <Icon name={liked ? 'heart' : 'heart-outline'} color={liked ? '#900' : 'red'} style={styles.featherHeart} />
                     </TouchableOpacity>
                 </View>
             </View>

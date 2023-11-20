@@ -35,25 +35,29 @@ export default function Dashboard({ route }) {
 
         fetchData();
     }, [news]);
+
+    if (isLoading) {
+        return (
+          <DefaultPage>
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="purple" />
+              <Text style={styles.loadingText}>Carregando Notícias...</Text>
+            </View>
+          </DefaultPage>
+        );
+      }
+
     return (
         <DefaultPage>
             <Text style={styles.helloWorld}>Olá, {user.name}</Text>
             <ScrollView>
+                {news
+                    ? (news.map((item) => {
+                        const userData = users.find((userItem) => item.publishedBy === userItem.id);
 
-                {isLoading
-                    ? (
-                        <View style={styles.loadingContainer}>
-                            <ActivityIndicator size="large" color="purple" />
-                            <Text style={styles.loadingText}>Carregando Notícias...</Text>
-                        </View>
-                    )
-                    : news
-                        ? (news.map((item) => {
-                            const userData = users.find((userItem) => item.publishedBy === userItem.id);
-
-                            return <DefaultNewsCard key={item.id} data={item} userName={userData ? userData.name : "Usuário Desconhecido"} />
-                        }))
-                        : (<Text>Não existe dado para carregar...</Text>)
+                        return <DefaultNewsCard key={item.id} data={item} userName={userData ? userData.name : "Usuário Desconhecido"} />
+                    }))
+                    : (<Text>Não existe dado para carregar...</Text>)
                 }
             </ScrollView>
         </DefaultPage>
