@@ -1,8 +1,10 @@
+import { Feather } from "@expo/vector-icons";
 import { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AuthContext } from "../../contexts/auth";
-import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { deleteNews } from "../../api/news-api";
+import { AuthContext } from "../../contexts/auth";
 
 
 export default function DefaultNewsCard({ data, userName }) {
@@ -13,32 +15,29 @@ export default function DefaultNewsCard({ data, userName }) {
 
     const handleLike = () => {
         likes ? setLikes(likes - 1) : setLikes(likes + 1);
+        liked ? setLiked(false) : setLiked(true);
     }
 
+    const handleDelete = async (id) => {
+        try {
+            await deleteNews(id);
+        } catch (error) {
+            console.error('Erro ao deletar notícia no Dashboard.js. ', error);
+        }
+      };
 
-    const [count, setCount] = useState(0);
-
-    const handleDelete = () => {
-        deleteNews(data.id)
-    }
-    const makeLike = async () => {
-
-        setCount(count + 1);
-        setIsLiked(true);
-    }
-    const dismakeLike = async () => {
-        const allLikes = await getLikes();
-
-        setCount(count - 1);
-        setIsLiked(false);
-    }
     return (
-        <View key={data.id} style={styles.cardContainer}>
+        <View style={styles.cardContainer}>
             <View style={styles.itemTitleContainer}>
                 <Text style={styles.itemTitle}>{data.title}</Text>
-                {/* <TouchableOpacity onPress={() => sendDeleteData(data.id)}>
-                    <Feather style={styles.featherDelete} name="trash" />
-                </TouchableOpacity> */}
+                {(user.id === data.publishedBy || user.role === 1) && 
+                    (
+                        <TouchableOpacity onPress={() => handleDelete(data.id)}>
+                            <Feather style={styles.featherDelete} name="trash" />
+                        </TouchableOpacity>
+                    )
+                }
+                
             </View>
             <Text style={styles.itemSubtitle}>{data.subtitle}</Text>
             <Text style={styles.itemDescription}>{data.description}</Text>
@@ -54,7 +53,7 @@ export default function DefaultNewsCard({ data, userName }) {
 
                     <Text style={styles.featherText}>{data.likes + likes}</Text>
                     <TouchableOpacity onPress={() => handleLike(data)}>
-                        <Feather name={liked ? 'heart' : 'heart'} style={styles.featherHeart} />
+                        <Icon name={liked ? 'heart' : 'heart-outline'} color={liked ? '#900' : '#000'} style={styles.featherHeart} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#1A1818',
         padding: 20,
         marginVertical: 10,
+        marginHorizontal: 15,
         borderRadius: 10,
         backgroundColor: 'white',
         borderWidth: 0.5,
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         paddingRight: 5,
     },
     featherHeart: {
-        color: 'red',
         marginLeft: 'auto',
         fontSize: 20,
         paddingRight: 5,

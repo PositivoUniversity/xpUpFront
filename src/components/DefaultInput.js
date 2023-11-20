@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Animated, StyleSheet } from 'react-native';
+import { Animated, StyleSheet, TextInput } from 'react-native';
 
 export default function DefaultInput({ label, value, onChangeText, stylesLabel, hasStile, hasStileColor, styleAnimated }) {
     const [isFocused, setIsFocused] = useState(false);

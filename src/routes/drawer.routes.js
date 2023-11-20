@@ -1,14 +1,15 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Feather } from '@expo/vector-icons';
-import TabRoutes from './tab.routes';
-import Profile from '../screens/Profile';
-import Settings from '../screens/Settings';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/auth';
 import ConfirmLogout from '../components/ConfirmLogout';
 import Admin from '../screens/Admin';
 import Course from '../screens/Course';
-import { AuthContext } from '../../contexts/auth'
-import { useContext } from 'react';
 import CreateEvents from '../screens/CreateEvents';
+import CreateNews from '../screens/CreateNews';
+import Profile from '../screens/Profile';
+import Settings from '../screens/Settings';
+import TabRoutes from './tab.routes';
 
 const Drawer = createDrawerNavigator();
 
@@ -67,6 +68,7 @@ export default function DrawerRoutes() {
                     }
                 }
             />
+            
             <Drawer.Screen name="Criar Evento"
                 component={CreateEvents}
                 options={
@@ -77,6 +79,20 @@ export default function DrawerRoutes() {
                             size={size}
                             color={color} />,
                         drawerLabel: 'Criar Evento',
+                    }
+                }
+            />
+
+            <Drawer.Screen name="News"
+                component={CreateNews}
+                options={
+                    {
+                        drawerIcon: (
+                            { size, color }
+                        ) => <Feather name="calendar"
+                            size={size}
+                            color={color} />,
+                        drawerLabel: 'Criar Notícia',
                     }
                 }
             />
