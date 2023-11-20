@@ -26,13 +26,13 @@ export const createNews = async (params) => {
     }
 }
 
-export const deleteNews = async (params) => {
+export const deleteNews = async (id) => {
     try {
-        const response = await deleteData(URL_NEWS + params);
-        return JSON.stringify(response);
+        const response = await deleteData(URL_NEWS + id);
+        return response;
     } catch (error) {
         console.error('Erro ao tentar deletar notícia:', error);
-        console.log(URL_NEWS + params)
+        console.log(URL_NEWS + id)
         throw error;
     }
 }

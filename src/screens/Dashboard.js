@@ -38,7 +38,7 @@ export default function Dashboard({ route }) {
     }, []);
     return (
         <DefaultPage>
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Olá,  {user.name}</Text>
+            <Text style={styles.helloWorld}>Olá, {user.name}</Text>
             <ScrollView>
 
                 {isLoading
@@ -71,4 +71,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    helloWorld: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: 'bold',
+    }
 })
+    
