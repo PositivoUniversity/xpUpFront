@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/img/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,7 +25,7 @@
       "package": "com.pedro736.ph.xpup"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/img/logo.png"
     },
     "extra": {
       "eas": {
