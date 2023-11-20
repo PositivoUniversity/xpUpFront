@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../../contexts/auth';
 
 export default function DefaultEvent({ events, sendLikeData, sendCheckinData, sendLikeDelete, sendDeleteData }) {
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const { user } = useContext(AuthContext);
+    
     const handleLike = () => {
         likes ? setLikes(likes - 1) : setLikes(likes + 1);
+        liked ? setLiked(false) : setLiked(true);
     }
+    
     const handleCheckin = () => {
         checked ? setChecked(checked - 1) : setChecked(checked + 1);
     }
@@ -43,9 +47,7 @@ export default function DefaultEvent({ events, sendLikeData, sendCheckinData, se
 
                                 <Text style={styles.featherText}>{item.likes + likes}</Text>
                                 <TouchableOpacity onPress={() => handleLike(item)}>
-                                    <Feather name={liked ? 'heart' : 'heart'} style={styles.featherHeart} />
-
-
+                                    <Icon name={liked ? 'heart' : 'heart-outline'} color={liked ? '#900' : 'red'} style={styles.featherHeart} />
                                 </TouchableOpacity>
                                 <Text style={styles.featherText}>{checked}</Text>
                                 <TouchableOpacity onPress={() => handleCheckin(item)}>
@@ -111,7 +113,6 @@ const styles = StyleSheet.create({
         paddingRight: 5,
     },
     featherHeart: {
-        color: 'red',
         marginLeft: 'auto',
         fontSize: 20,
         paddingRight: 5,
